@@ -5,17 +5,41 @@ public class SkewerController : MonoBehaviour
 {
     [SerializeField, Tooltip("最大で刺せる団子数")]
     private int maxDango;
+    [SerializeField, Tooltip("団子の基準点")]
+    private GameObject dangoAnchor;
+    [SerializeField, Tooltip("団子の配置間隔")]
+    private float dangoSpacing;
     [SerializeField, Tooltip("団子リスト")]
     private List<Dango> dangoList = new List<Dango>();
 
     [Tooltip("串の現在の状態")]
     private SkewerState currentState;
 
+    private void Awake()
+    {
+        //=====
+        // 初期状態の設定
+        if (dangoList.Count == 0) ChangeState(SkewerState.Empty);
+        else if (dangoList.Count >= maxDango) ChangeState(SkewerState.Full);
+        else ChangeState(SkewerState.Stack);
+    }
+
     /// <summary>
     /// 状態を変更    </summary>
     /// <param name="nextState">
     /// 変更先の状態  </param>
-    public void ChangeState(SkewerState nextState){ currentState = nextState; }
+    private void ChangeState(SkewerState nextState){ currentState = nextState; }
+    /// <summary>
+    /// 団子の座標設定    </summary>
+    /// <param name="dango">
+    /// 設定する団子    </param>
+    /// <param name="index">
+    /// 設定する団子のリスト内インデックス番号 </param>
+    private void SetDangoPosition(Dango dango, int index)
+    {
+        dango.transform.parent = dangoAnchor.transform;
+        dango.transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * index;
+    }
 
     /// <summary>
     /// 団子を追加できるか判定    </summary>
@@ -30,8 +54,10 @@ public class SkewerController : MonoBehaviour
     {
         if (dango == null) return;
         dangoList.Add(dango);
+        SetDangoPosition(dango, dangoList.Count - 1);
         // 団子の数が最大数に達したら、状態遷移
         if (dangoList.Count >= maxDango) ChangeState(SkewerState.Full);
+        else ChangeState(SkewerState.Stack);
     }
     /// <summary>
     /// 一番上の団子を取得    </summary>

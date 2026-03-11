@@ -71,6 +71,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDango: 3
+  dangoAnchor: {fileID: 2073719867867742497}
+  dangoSpacing: 0.7
   dangoList: []
 --- !u!1 &2073719867867742497
 GameObject:
