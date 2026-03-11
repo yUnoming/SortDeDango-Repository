@@ -8,6 +8,9 @@
     /// 団子が刺さっている    </summary>
     Stack,
     /// <summary>
+    /// 串が埋まっている    </summary>
+    Full,
+    /// <summary>
     /// 串が完成している    </summary>
     Complete,
 }
