@@ -28,6 +28,7 @@ public class SkewerController : MonoBehaviour
     /// 追加する団子    </param>
     public void AddDango(Dango dango)
     {
+        if (dango == null) return;
         dangoList.Add(dango);
         // 団子の数が最大数に達したら、状態遷移
         if (dangoList.Count >= maxDango) ChangeState(SkewerState.Full);
@@ -47,6 +48,7 @@ public class SkewerController : MonoBehaviour
     /// 除外する一番上の団子    </returns>
     public Dango RemoveTopDango()
     {
+        if (currentState == SkewerState.Empty) return null;
         Dango topDango = dangoList[dangoList.Count - 1];
         dangoList.Remove(topDango);
         /* 団子が無くなれば、Empty状態へ遷移
