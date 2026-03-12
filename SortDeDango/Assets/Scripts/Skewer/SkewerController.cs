@@ -26,9 +26,8 @@ public class SkewerController : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log(gameObject.name + " clicked!");
-        /* 団子が刺さっていて、完成していない状態なら判定成功
-         * → 選択中の串として、自身をGameplayControllerに渡す  */
-        if(currentState != SkewerState.Empty && currentState != SkewerState.Complete)
+        // 完成していない状態なら、選択中の串として自身をGameplayControllerに渡す
+        if(currentState != SkewerState.Complete)
             GameplayController.Instance.OnSelectedSkewer(this);
     }
 
@@ -91,5 +90,18 @@ public class SkewerController : MonoBehaviour
         else ChangeState(SkewerState.Stack);
 
         return topDango;
+    }
+
+    /// <summary>
+    /// 選択時のイベント    </summary>
+    public void OnSelect()
+    {
+        transform.position += Vector3.up;
+    }
+    /// <summary>
+    /// 選択解除時のイベント    </summary>
+    public void OnDeselect()
+    {
+        transform.position -= Vector3.up;
     }
 }
