@@ -32,19 +32,28 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 串が選択された際のイベント    </summary>
+    /// <param name="skewer">
+    /// 選択された串    </param>
     public void OnSelectedSkewer(SkewerController skewer)
     {
+        // 既に選択されていなければ、今回選択された串を保持
         if (selectingSkewer == null)
         {
             selectingSkewer = skewer;
+            selectingSkewer.OnSelect();
             return;
         }
-        else
+        /* 既に選択された串が保持している串と違ったら、
+         * 団子移動処理へ  */
+        else if(selectingSkewer != skewer)
         {
             skewer.AddDango(selectingSkewer.GetTopDango());
             selectingSkewer.RemoveTopDango();
         }
 
+        selectingSkewer.OnDeselect();
         selectingSkewer = null;
     }
 }
