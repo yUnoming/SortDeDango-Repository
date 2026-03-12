@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dango_Green
       objectReference: {fileID: 0}
+    - target: {fileID: 7879635953349831116, guid: e59e5e67ecb50f043ab07f4808de054b, type: 3}
+      propertyPath: color
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
