@@ -45,9 +45,8 @@ public class GameplayController : MonoBehaviour
             selectingSkewer.OnSelect();
             return;
         }
-        /* 既に選択された串が保持している串と違ったら、
-         * 団子移動処理へ  */
-        else if(selectingSkewer != skewer)
+        // 団子が移動可能であれば、団子移動処理へ
+        else if (skewer.CanMoveDango(selectingSkewer))
         {
             skewer.AddDango(selectingSkewer.GetTopDango());
             selectingSkewer.RemoveTopDango();

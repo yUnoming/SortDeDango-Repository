@@ -49,10 +49,22 @@ public class SkewerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 団子を追加できるか判定    </summary>
+    /// 団子を移動可能か判定    </summary>
+    /// <param name="from">
+    /// 現在、追加予定の団子が刺さっている串    </param>
     /// <returns>
     /// 空きあり; TRUE / 空き無し: FALSE    </returns>
-    public bool CanAddDango() { return currentState != SkewerState.Full && currentState != SkewerState.Complete; }
+    public bool CanMoveDango(SkewerController from)
+    {
+        // 同じ串だったら、FALSEを返す
+        if (from == this) return false;
+        // 団子で埋まっている / 完成している状態なら、FALSEを返す
+        else if (currentState == SkewerState.Full || currentState == SkewerState.Complete) return false;
+        // 団子が刺さっていないなら、TRUEを返す
+        else if(currentState == SkewerState.Empty) return true;
+        // 団子の色が合致するかどうかで、真偽値を返す
+        return from.GetTopDango().Color == GetTopDango().Color;
+    }
     /// <summary>
     /// 団子を追加    </summary>
     /// <param name="dango">
