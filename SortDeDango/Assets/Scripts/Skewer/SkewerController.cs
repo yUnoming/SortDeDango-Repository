@@ -47,6 +47,20 @@ public class SkewerController : MonoBehaviour
         dango.transform.parent = dangoAnchor.transform;
         dango.transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * index;
     }
+    /// <summary>
+    /// 完成状態であるか判定    </summary>
+    /// <returns>
+    /// 団子の色が全一致; TRUE / いつでも色が一致しない; FALSE    </returns>
+    private bool IsComplete()
+    {
+        // 団子同士の色を確認し、一致しなければFALSEを返す
+        for(int i = 0; i < dangoList.Count - 1; i++)
+        {
+            if (dangoList[i].Color != dangoList[i + 1].Color) return false;
+        }
+        // ここまで到達したら、全ての団子の色が一致しているのでTRUEを返す
+        return true;
+    }
 
     /// <summary>
     /// 団子を移動可能か判定    </summary>
@@ -75,7 +89,11 @@ public class SkewerController : MonoBehaviour
         dangoList.Add(dango);
         SetDangoPosition(dango, dangoList.Count - 1);
         // 団子の数が最大数に達したら、状態遷移
-        if (dangoList.Count >= maxDango) ChangeState(SkewerState.Full);
+        if (dangoList.Count >= maxDango)
+        {
+            if (IsComplete()) ChangeState(SkewerState.Complete);
+            else ChangeState(SkewerState.Full);
+        }
         else ChangeState(SkewerState.Stack);
     }
     /// <summary>
