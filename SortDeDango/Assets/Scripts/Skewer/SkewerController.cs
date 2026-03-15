@@ -14,6 +14,7 @@ public class SkewerController : MonoBehaviour
 
     [Tooltip("串の現在の状態")]
     private SkewerState currentState;
+    public SkewerState CurrentState { get { return currentState; } }
 
     private void Awake()
     {
