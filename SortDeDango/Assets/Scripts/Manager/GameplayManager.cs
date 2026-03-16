@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class GameplayManager : SceneManagerBase<GameplayManager>
 {
+    [SerializeField]
+    private TextMeshProUGUI clearText;
+
     [Tooltip("串リスト")]
     private List<SkewerController> skewerList = new List<SkewerController>();
+    [Tooltip("クリアしたかどうか")]
+    private bool isClear;
 
     protected override void StateInit()
     {
@@ -14,7 +20,15 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     }
     protected override void StateRunning()
     {
-        if (IsClear()) Debug.Log("ステージクリア！！");
+        if (IsClear() && !isClear)
+        {
+            // クリア表示
+            Debug.Log("ステージクリア！！");
+            clearText.enabled = true;
+
+            PauseGame();
+            isClear = true;
+        }
     }
 
     /// <summary>
@@ -32,5 +46,20 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         }
         // ここまで来たら条件達成のため、TRUEを返す
         return true;
+    }
+
+    /// <summary>
+    /// ゲームを停止    </summary>
+    public void PauseGame()
+    {
+        // 串の機能停止
+        foreach(var skewer in skewerList) skewer.enabled = false;
+    }
+    /// <summary>
+    /// ゲームを再開   </summary>
+    public void ResumeGame()
+    {
+        // 串の機能再開
+        foreach (var skewer in skewerList) skewer.enabled = true;
     }
 }
