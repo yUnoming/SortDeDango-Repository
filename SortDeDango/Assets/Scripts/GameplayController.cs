@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameplayController : MonoBehaviour
 {
+    [SerializeField, Tooltip("ステージ初期化キー")]
+    private KeyCode StageResetKey = KeyCode.R;
+
     private static GameplayController instance;
     public static GameplayController Instance { get { return instance; } }
 
@@ -13,6 +16,10 @@ public class GameplayController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(StageResetKey)) GameplayManager.Instance.ResetStage();
     }
 
     /// <summary>
