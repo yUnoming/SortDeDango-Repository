@@ -218,6 +218,7 @@ public abstract class SceneManagerBase<T> : SceneManagerBase where T : SceneMana
         else if (instance == null)
         {
             instance = this as T;
+            sceneName = SceneManager.GetActiveScene().name;
         }
     }
     protected virtual void Start(){}

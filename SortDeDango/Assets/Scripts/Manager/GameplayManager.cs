@@ -2,6 +2,7 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameplayManager : SceneManagerBase<GameplayManager>
 {
@@ -61,5 +62,11 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     {
         // 串の機能再開
         foreach (var skewer in skewerList) skewer.enabled = true;
+    }
+    /// <summary>
+    /// ステージを初期化    </summary>
+    public void ResetStage()
+    {
+        ChangeScene(SceneType.Gameplay, true, sceneName);
     }
 }
