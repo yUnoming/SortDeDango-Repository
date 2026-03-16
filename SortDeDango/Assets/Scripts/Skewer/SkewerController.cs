@@ -18,10 +18,14 @@ public class SkewerController : MonoBehaviour
 
     private void Awake()
     {
-        //=====
         // 初期状態の設定
         if (dangoList.Count == 0) ChangeState(SkewerState.Empty);
-        else if (dangoList.Count >= maxDango) ChangeState(SkewerState.Full);
+        else if (dangoList.Count >= maxDango)
+        {
+            if (IsComplete()) ChangeState(SkewerState.Complete);
+            else ChangeState(SkewerState.Full);
+
+        }
         else ChangeState(SkewerState.Stack);
     }
     private void OnMouseDown()
