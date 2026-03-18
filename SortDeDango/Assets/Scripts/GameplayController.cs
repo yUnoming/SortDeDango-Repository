@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameplayController : MonoBehaviour
 {
     [SerializeField, Tooltip("ステージ初期化キー")]
-    private KeyCode StageResetKey = KeyCode.R;
+    private KeyCode stageResetKey = KeyCode.R;
+    [SerializeField, Tooltip("ステージを進めるキー")]
+    private KeyCode nextStageKey = KeyCode.RightArrow;
+    [SerializeField, Tooltip("ステージを戻すキー")]
+    private KeyCode previousStageKey = KeyCode.LeftArrow;
 
     private static GameplayController instance;
     public static GameplayController Instance { get { return instance; } }
@@ -19,7 +21,13 @@ public class GameplayController : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(StageResetKey)) GameplayManager.Instance.ResetStage();
+#if UNITY_EDITOR
+        // ステージリセット
+        if(Input.GetKeyDown(stageResetKey)) GameplayManager.Instance.ResetStage();
+        // ステージ進行・後退
+        if(Input.GetKeyDown(nextStageKey)) GameplayManager.Instance.LoadNextStage();
+        else if (Input.GetKeyDown(previousStageKey)) GameplayManager.Instance.LoadPreviousStage();
+#endif
     }
 
     /// <summary>

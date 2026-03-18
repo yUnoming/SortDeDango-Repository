@@ -1,32 +1,33 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameplayManager : SceneManagerBase<GameplayManager>
 {
-    [SerializeField]
-    private TextMeshProUGUI clearText;
-    [SerializeField]
-    private StageData stageData;
-
-    [Tooltip("串リスト")]
+    private StageGenerator stageGenerator;
     private List<SkewerController> skewerList = new List<SkewerController>();
     [Tooltip("クリアしたかどうか")]
     private bool isClear;
-
-    private StageGenerator stageGenerator;
+    [Tooltip("クリア時の表示用テキスト")]
+    private TextMeshProUGUI clearText;
 
     protected override void StateInit()
     {
         // ステージ生成
         stageGenerator = FindAnyObjectByType<StageGenerator>();
-        skewerList = stageGenerator.Generate(stageData);
+        skewerList = stageGenerator.Generate(StageManager.Instance.CurrentStageData);
+
+        clearText = GameObject.Find("ClearText").GetComponent<TextMeshProUGUI>();
         base.StateInit();
+    }
+    protected override void StateStart()
+    {
+        isClear = false;    // クリア状態の初期化
+        base.StateStart();
     }
     protected override void StateRunning()
     {
+        // クリア判定
         if (IsClear() && !isClear)
         {
             // クリア表示
@@ -69,10 +70,25 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         // 串の機能再開
         foreach (var skewer in skewerList) skewer.enabled = true;
     }
+
     /// <summary>
     /// ステージを初期化    </summary>
     public void ResetStage()
     {
         ChangeScene(SceneType.Gameplay, true, sceneName);
+    }
+    /// <summary>
+    /// 次のステージをロード    </summary>
+    public void LoadNextStage()
+    {
+        StageManager.Instance.GoToNextStage();
+        ResetStage();
+    }
+    /// <summary>
+    /// 前のステージをロード    </summary>
+    public void LoadPreviousStage()
+    {
+        StageManager.Instance.GoToPreviousStage();
+        ResetStage();
     }
 }

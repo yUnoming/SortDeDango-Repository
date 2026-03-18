@@ -47,15 +47,15 @@ public class StageManager : MonoBehaviour
     /// セットするステージ番号    </param>
     public void SetStage(int newStageNumber) { stageNumber = newStageNumber; }
     /// <summary>
-    /// ステージ番号を一つ進める    </summary>
-    public void MoveStage()
+    /// 次のステージに進む    </summary>
+    public void GoToNextStage()
     {
         stageNumber++;
         if (stageNumber > stageDataList.Count) stageNumber = 1;
     }
     /// <summary>
-    /// ステージ番号を一つ戻す    </summary>
-    public void ReturnStage()
+    /// 前のステージに戻る    </summary>
+    public void GoToPreviousStage()
     { 
         stageNumber--;
         if (stageNumber <= 0) stageNumber = stageDataList.Count;
