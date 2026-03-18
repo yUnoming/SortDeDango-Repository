@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d510ddefe94735a4dbaafd1ef8fefdbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clearText: {fileID: 0}
+  stageData: {fileID: 11400000, guid: 7d75e15bde648864a802ccf07705048b, type: 2}

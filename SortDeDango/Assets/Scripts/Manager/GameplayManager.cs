@@ -8,15 +8,21 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
 {
     [SerializeField]
     private TextMeshProUGUI clearText;
+    [SerializeField]
+    private StageData stageData;
 
     [Tooltip("串リスト")]
     private List<SkewerController> skewerList = new List<SkewerController>();
     [Tooltip("クリアしたかどうか")]
     private bool isClear;
 
+    private StageGenerator stageGenerator;
+
     protected override void StateInit()
     {
-        skewerList = FindObjectsByType<SkewerController>(FindObjectsSortMode.None).ToList();
+        // ステージ生成
+        stageGenerator = FindAnyObjectByType<StageGenerator>();
+        skewerList = stageGenerator.Generate(stageData);
         base.StateInit();
     }
     protected override void StateRunning()
