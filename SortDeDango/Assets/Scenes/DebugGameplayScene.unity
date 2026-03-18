@@ -593,6 +593,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5670182254402190770, guid: a5209ea53e216cf45ad0ba099f076684, type: 3}
+      propertyPath: skewerRoot
+      value: 
+      objectReference: {fileID: 487193908}
     - target: {fileID: 6351118681423744074, guid: a5209ea53e216cf45ad0ba099f076684, type: 3}
       propertyPath: m_Name
       value: StageGenerator

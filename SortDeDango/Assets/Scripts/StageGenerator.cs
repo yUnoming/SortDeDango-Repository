@@ -5,18 +5,13 @@ public class StageGenerator : MonoBehaviour
 {
     [SerializeField, Tooltip("串の間隔")]
     private float skewerSpacing;
+    [SerializeField, Tooltip("串の格納先")]
+    Transform skewerRoot;
     [SerializeField, Tooltip("串プレハブ")]
     private GameObject skewerPrefab;
     [SerializeField, Tooltip("団子プレハブ")]
     private GameObject dangoPrefab;
 
-    [Tooltip("串の格納先")]
-    Transform skewerRoot;
-
-    private void Awake()
-    {
-        skewerRoot = transform.Find("SkewerRoot");
-    }
     /// <summary>
     /// ステージ生成    </summary>
     /// <param name="stageData">
