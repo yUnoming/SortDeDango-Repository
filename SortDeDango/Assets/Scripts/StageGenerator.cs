@@ -51,7 +51,7 @@ public class StageGenerator : MonoBehaviour
                 // 団子の生成・初期設定
                 GameObject dangoObj = Instantiate(dangoPrefab);
                 Dango dango = dangoObj.GetComponent<Dango>();
-                dango.Color = dangoColor;                       // 団子色の設定
+                dango.SetColor(dangoColor);                     // 団子色の設定
                 skewer.AddDango(dango.GetComponent<Dango>());   // 串に団子を追加
             }
             skewers.Add(skewer);

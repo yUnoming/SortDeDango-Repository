@@ -45,7 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7ce3cac3e48d24dba36e2a968b24ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dangoColor: 0
+  color: 0
+  meshRenderer: {fileID: 789151438020154855}
+  colorMaterials:
+  - {fileID: 2100000, guid: 7b7abbff5c251784c9e401c01196a628, type: 2}
+  - {fileID: 2100000, guid: 11a9c81ef3075304dbe21c74f6d68f1e, type: 2}
+  - {fileID: 2100000, guid: cc216a667665a504d8e7436a4d351dc9, type: 2}
 --- !u!1 &5993336162661547081
 GameObject:
   m_ObjectHideFlags: 0
