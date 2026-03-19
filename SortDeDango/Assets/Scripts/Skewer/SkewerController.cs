@@ -51,7 +51,11 @@ public class SkewerController : MonoBehaviour
     private void SetDangoPosition(Dango dango, int index)
     {
         dango.transform.parent = dangoAnchor.transform;
-        dango.transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * index;
+        //dango.transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * index;
+        dango.GetComponent<DangoMoveAnimator>().PlayAnimation(
+            dango.transform,
+            dangoAnchor.transform.position + Vector3.up * dangoSpacing * index
+            );
     }
     /// <summary>
     /// 完成状態であるか判定    </summary>
