@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2816946003117734824}
   - component: {fileID: 7879635953349831116}
+  - component: {fileID: 3849883771821116885}
   m_Layer: 0
   m_Name: Dango
   m_TagString: Untagged
@@ -51,6 +52,22 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7b7abbff5c251784c9e401c01196a628, type: 2}
   - {fileID: 2100000, guid: 11a9c81ef3075304dbe21c74f6d68f1e, type: 2}
   - {fileID: 2100000, guid: cc216a667665a504d8e7436a4d351dc9, type: 2}
+--- !u!114 &3849883771821116885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626082536218945048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86d4348111b0ed4592768af5741da7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  liftHeight: 1
+  liftDuration: 0.2
+  moveDuration: 0.2
+  dropDuration: 0.2
 --- !u!1 &5993336162661547081
 GameObject:
   m_ObjectHideFlags: 0
