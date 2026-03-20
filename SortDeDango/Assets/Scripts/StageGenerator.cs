@@ -47,7 +47,8 @@ public class StageGenerator : MonoBehaviour
                 GameObject dangoObj = Instantiate(dangoPrefab);
                 Dango dango = dangoObj.GetComponent<Dango>();
                 dango.SetColor(dangoColor);                     // 団子色の設定
-                skewer.AddDango(dango.GetComponent<Dango>());   // 串に団子を追加
+                skewer.AddDango(dango.GetComponent<Dango>());   // 団子の追加
+                skewer.SetTopDangoPosition(dango);              // 団子の配置
             }
             skewers.Add(skewer);
         }

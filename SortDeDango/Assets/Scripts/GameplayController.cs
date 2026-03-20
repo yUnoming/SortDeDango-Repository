@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class GameplayController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GameplayController : MonoBehaviour
 
     [Tooltip("現在選択中の串")]
     private SkewerController selectingSkewer;
+    [Tooltip("入力制限中かどうか")]
+    private bool isInputLocked;
 
     private void Awake()
     {
@@ -31,11 +34,38 @@ public class GameplayController : MonoBehaviour
     }
 
     /// <summary>
+    /// 団子の移動制御    </summary>
+    /// <param name="from">
+    /// 移動元の串    </param>
+    /// <param name="to">
+    /// 移動先の串    </param>
+    private IEnumerator MoveDangoSequence(SkewerController from, SkewerController to)
+    {
+        isInputLocked = true;
+
+        Dango movingDango = from.RemoveTopDango();
+        to.AddDango(movingDango);
+
+        from.OnDeselect();
+        selectingSkewer = null;
+
+        yield return movingDango.GetComponent<DangoMoveAnimator>()
+            .PlayAnimation(
+                movingDango.transform,
+                to.GetTopDangoPosition()
+            );
+
+        isInputLocked = false;
+    }
+
+    /// <summary>
     /// 串が選択された際のイベント    </summary>
     /// <param name="skewer">
     /// 選択された串    </param>
     public void OnSelectedSkewer(SkewerController skewer)
     {
+        if (isInputLocked) return;
+
         // 既に選択されていなければ、今回選択された串を保持
         if (selectingSkewer == null)
         {
@@ -46,8 +76,11 @@ public class GameplayController : MonoBehaviour
         // 団子が移動可能であれば、団子移動処理へ
         else if (skewer.CanMoveDango(selectingSkewer))
         {
-            skewer.AddDango(selectingSkewer.GetTopDango());
-            selectingSkewer.RemoveTopDango();
+            StartCoroutine(MoveDangoSequence(
+                    selectingSkewer,
+                    skewer
+                ));
+            return;
         }
 
         selectingSkewer.OnDeselect();

@@ -17,7 +17,7 @@ public class DangoMoveAnimator : MonoBehaviour
     public bool IsAnimation {  get { return isAnimation; } }
 
     /// <summary>
-    /// アニメーションシーケンス    </summary>
+    /// アニメーション挙動    </summary>
     /// <param name="myTransform">
     /// 自身のTransform    </param>
     /// <param name="endPos">
@@ -69,10 +69,13 @@ public class DangoMoveAnimator : MonoBehaviour
     /// 自身のTransform    </param>
     /// <param name="endPos">
     /// アニメーションの最終到達地点    </param>
-    public void PlayAnimation(Transform myTransform, Vector3 endPos)
+    public IEnumerator PlayAnimation(Transform myTransform, Vector3 endPos)
     {
-        isAnimation = true;
-        StartCoroutine(AnimationSequence(myTransform, endPos));
+        if(!isAnimation)
+        {
+            isAnimation = true;
+            yield return StartCoroutine(AnimationSequence(myTransform, endPos));
+        }
     }
 
 }
