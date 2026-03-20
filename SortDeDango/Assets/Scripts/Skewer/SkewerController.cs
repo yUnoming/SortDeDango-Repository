@@ -43,21 +43,6 @@ public class SkewerController : MonoBehaviour
     /// 変更先の状態  </param>
     private void ChangeState(SkewerState nextState){ currentState = nextState; }
     /// <summary>
-    /// 団子の座標設定    </summary>
-    /// <param name="dango">
-    /// 設定する団子    </param>
-    /// <param name="index">
-    /// 設定する団子のリスト内インデックス番号 </param>
-    private void SetDangoPosition(Dango dango, int index)
-    {
-        dango.transform.parent = dangoAnchor.transform;
-        //dango.transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * index;
-        dango.GetComponent<DangoMoveAnimator>().PlayAnimation(
-            dango.transform,
-            dangoAnchor.transform.position + Vector3.up * dangoSpacing * index
-            );
-    }
-    /// <summary>
     /// 完成状態であるか判定    </summary>
     /// <returns>
     /// 団子の色が全一致; TRUE / いつでも色が一致しない; FALSE    </returns>
@@ -96,8 +81,9 @@ public class SkewerController : MonoBehaviour
     public void AddDango(Dango dango)
     {
         if (dango == null) return;
+
         dangoList.Add(dango);
-        SetDangoPosition(dango, dangoList.Count - 1);
+        dango.transform.parent = dangoAnchor.transform;
         // 団子の数が最大数に達したら、状態遷移
         if (dangoList.Count >= maxDango)
         {
@@ -130,6 +116,19 @@ public class SkewerController : MonoBehaviour
         else ChangeState(SkewerState.Stack);
 
         return topDango;
+    }
+
+    /// <summary>
+    /// 一番上の団子の座標を設定    </summary>
+    public void SetTopDangoPosition(Dango topDango)
+    {
+        topDango.transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * (dangoList.Count - 1);
+    }
+    /// <summary>
+    /// 一番上の団子の座標を取得    </summary>
+    public Vector3 GetTopDangoPosition()
+    {
+        return dangoAnchor.transform.position + Vector3.up * dangoSpacing * (dangoList.Count - 1);
     }
 
     /// <summary>
