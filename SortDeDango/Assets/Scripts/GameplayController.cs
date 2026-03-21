@@ -87,7 +87,7 @@ public class GameplayController : MonoBehaviour
     /// 串が選択された際のイベント    </summary>
     /// <param name="skewer">
     /// 選択された串    </param>
-    public void OnSelectedSkewer(SkewerController skewer)
+    public void OnSkewerSelected(SkewerController skewer)
     {
         if (isInputLocked) return;
 

@@ -8,16 +8,19 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     private List<SkewerController> skewerList = new List<SkewerController>();
     [Tooltip("クリアしたかどうか")]
     private bool isClear;
-    [Tooltip("クリア時の表示用テキスト")]
-    private TextMeshProUGUI clearText;
+    [Tooltip("リザルトUI")]
+    private ResultUIController resultUI;
 
     protected override void StateInit()
     {
         // ステージ生成
         stageGenerator = FindAnyObjectByType<StageGenerator>();
         skewerList = stageGenerator.Generate(StageManager.Instance.CurrentStageData);
+        // リザルトUIの初期設定
+        resultUI = FindAnyObjectByType<ResultUIController>();
+        resultUI.OnNextClicked += HandleNextClicked;
+        resultUI.Hide();
 
-        clearText = GameObject.Find("ClearText").GetComponent<TextMeshProUGUI>();
         base.StateInit();
     }
     protected override void StateStart()
@@ -32,7 +35,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         {
             // クリア表示
             Debug.Log("ステージクリア！！");
-            clearText.enabled = true;
+            resultUI.Show();
 
             PauseGame();
             isClear = true;
@@ -54,6 +57,12 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         }
         // ここまで来たら条件達成のため、TRUEを返す
         return true;
+    }
+    /// <summary>
+    /// Nextボタン押下時の処理    </summary>
+    private void HandleNextClicked()
+    {
+        LoadNextStage();
     }
 
     /// <summary>

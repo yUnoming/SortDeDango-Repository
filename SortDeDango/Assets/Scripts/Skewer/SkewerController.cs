@@ -34,7 +34,7 @@ public class SkewerController : MonoBehaviour
         Debug.Log(gameObject.name + " clicked!");
         // 完成していない状態なら、選択中の串として自身をGameplayControllerに渡す
         if(currentState != SkewerState.Complete)
-            GameplayController.Instance.OnSelectedSkewer(this);
+            GameplayController.Instance.OnSkewerSelected(this);
     }
 
     /// <summary>
