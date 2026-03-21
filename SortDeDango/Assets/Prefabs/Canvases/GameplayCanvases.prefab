@@ -126,15 +126,64 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUDCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6858470573960635270, guid: 26f3f73ccb099c44b8bd001555eb2445, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2793833406993279579, guid: 26f3f73ccb099c44b8bd001555eb2445, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2065584109276675734}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26f3f73ccb099c44b8bd001555eb2445, type: 3}
 --- !u!224 &4223073999428803857 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2793833406993279579, guid: 26f3f73ccb099c44b8bd001555eb2445, type: 3}
   m_PrefabInstance: {fileID: 2044334902028040010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2994533409688893763
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4223073999428803857}
+    m_Modifications:
+    - target: {fileID: 3829420365808601045, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829420365808601045, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829420365808601045, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829420365808601045, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829420365808601045, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248190302247840357, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
+      propertyPath: m_Name
+      value: GameplayUIRoot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
+--- !u!224 &2065584109276675734 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3829420365808601045, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
+  m_PrefabInstance: {fileID: 2994533409688893763}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3939942622111896482
 PrefabInstance:
