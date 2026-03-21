@@ -26,14 +26,20 @@ public class GameplayController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        // ゲームプレイUIへのイベント設定・ステージ番号設定
+        GameplayUIController gameplayUI = FindAnyObjectByType<GameplayUIController>();
+        gameplayUI.onRestartClicked += HandleRestartClicked;
+        gameplayUI.onUndoClicked += HandleUndoClicked;
+        gameplayUI.SetStageNumber(StageManager.Instance.CurrentStageNumber);
     }
     private void Update()
     {
 #if UNITY_EDITOR
         // ステージリセット
-        if(Input.GetKeyDown(resetKey)) GameplayManager.Instance.ResetStage();
+        if(Input.GetKeyDown(resetKey)) HandleRestartClicked();
         // 一手戻す
-        if(Input.GetKeyDown(undoKey)) Undo();
+        if(Input.GetKeyDown(undoKey)) HandleUndoClicked();
         // ステージ進行・後退
         if(Input.GetKeyDown(nextStageKey)) GameplayManager.Instance.LoadNextStage();
         else if (Input.GetKeyDown(previousStageKey)) GameplayManager.Instance.LoadPreviousStage();
@@ -69,8 +75,20 @@ public class GameplayController : MonoBehaviour
     }
 
     /// <summary>
+    /// Restartボタン押下時の処理    </summary>
+    private void HandleRestartClicked()
+    {
+        GameplayManager.Instance.ResetStage();
+    }
+    /// <summary>
+    /// Undoボタン押下時の処理    </summary>
+    private void HandleUndoClicked()
+    {
+        Undo();
+    }
+    /// <summary>
     /// 一手戻す    </summary>
-    public void Undo()
+    private void Undo()
     {
         if (isInputLocked || moveDataList.Count == 0) return;
 

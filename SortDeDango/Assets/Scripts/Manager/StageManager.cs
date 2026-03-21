@@ -25,9 +25,11 @@ public class StageManager : MonoBehaviour
             return instance;
         }
     }
-    /// <summary>
-    /// 現在のステージデータ  </summary>
+    
+    [Tooltip("現在のステージデータ")]
     public StageData CurrentStageData => stageDataList[stageNumber - 1];
+    [Tooltip("現在のステージ番号")]
+    public int CurrentStageNumber { get { return stageNumber; } }
 
     protected void Awake()
     {

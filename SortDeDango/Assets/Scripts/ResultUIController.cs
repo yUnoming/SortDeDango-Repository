@@ -10,11 +10,11 @@ public class ResultUIController : MonoBehaviour
     private Button nextButton;
 
     [Tooltip("Nextボタン押下時のイベント")]
-    public event Action OnNextClicked;
+    public event Action onNextClicked;
 
     private void Awake()
     {
-        nextButton.onClick.AddListener(() => OnNextClicked?.Invoke());
+        nextButton.onClick.AddListener(() => onNextClicked?.Invoke());
     }
 
     /// <summary>

@@ -18,7 +18,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         skewerList = stageGenerator.Generate(StageManager.Instance.CurrentStageData);
         // リザルトUIの初期設定
         resultUI = FindAnyObjectByType<ResultUIController>();
-        resultUI.OnNextClicked += HandleNextClicked;
+        resultUI.onNextClicked += HandleNextClicked;
         resultUI.Hide();
 
         base.StateInit();
