@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameplayController : MonoBehaviour
 {
-    [SerializeField, Tooltip("ステージ初期化キー")]
-    private KeyCode stageResetKey = KeyCode.R;
+    [SerializeField, Tooltip("ステージリセットキー")]
+    private KeyCode resetKey = KeyCode.R;
+    [SerializeField, Tooltip("一手戻すキー")]
+    private KeyCode undoKey = KeyCode.U;
     [SerializeField, Tooltip("ステージを進めるキー")]
     private KeyCode nextStageKey = KeyCode.RightArrow;
     [SerializeField, Tooltip("ステージを戻すキー")]
@@ -17,6 +20,8 @@ public class GameplayController : MonoBehaviour
     private SkewerController selectingSkewer;
     [Tooltip("入力制限中かどうか")]
     private bool isInputLocked;
+    [Tooltip("移動データリスト")]
+    private List<MoveData> moveDataList = new List<MoveData>();
 
     private void Awake()
     {
@@ -26,7 +31,9 @@ public class GameplayController : MonoBehaviour
     {
 #if UNITY_EDITOR
         // ステージリセット
-        if(Input.GetKeyDown(stageResetKey)) GameplayManager.Instance.ResetStage();
+        if(Input.GetKeyDown(resetKey)) GameplayManager.Instance.ResetStage();
+        // 一手戻す
+        if(Input.GetKeyDown(undoKey)) Undo();
         // ステージ進行・後退
         if(Input.GetKeyDown(nextStageKey)) GameplayManager.Instance.LoadNextStage();
         else if (Input.GetKeyDown(previousStageKey)) GameplayManager.Instance.LoadPreviousStage();
@@ -42,10 +49,13 @@ public class GameplayController : MonoBehaviour
     private IEnumerator MoveDangoSequence(SkewerController from, SkewerController to)
     {
         isInputLocked = true;
-
+        
+        // 団子を移動
         Dango movingDango = from.RemoveTopDango();
         to.AddDango(movingDango);
-
+        // 移動データを追加
+        moveDataList.Add(new MoveData(from, to, movingDango));
+        // 串の選択状態を解除
         from.OnDeselect();
         selectingSkewer = null;
 
@@ -56,6 +66,21 @@ public class GameplayController : MonoBehaviour
             );
 
         isInputLocked = false;
+    }
+
+    /// <summary>
+    /// 一手戻す    </summary>
+    public void Undo()
+    {
+        if (isInputLocked || moveDataList.Count == 0) return;
+
+        // 最終移動データを元に、団子を元の串へ戻す
+        MoveData lastData = moveDataList[moveDataList.Count - 1];
+        Dango movedDango = lastData.to.RemoveTopDango();
+        lastData.from.AddDango(movedDango);
+        lastData.from.SetTopDangoPosition(movedDango);
+        // 使用済みの移動データを除外
+        moveDataList.RemoveAt(moveDataList.Count - 1);
     }
 
     /// <summary>
@@ -83,6 +108,7 @@ public class GameplayController : MonoBehaviour
             return;
         }
 
+        // 串の選択状態を解除
         selectingSkewer.OnDeselect();
         selectingSkewer = null;
     }
