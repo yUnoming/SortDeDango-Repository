@@ -1,15 +1,20 @@
 ﻿using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class GameplayManager : SceneManagerBase<GameplayManager>
 {
+    [SerializeField]
+    private GameMode gameMode = GameMode.Normal;
+
     private StageGenerator stageGenerator;
     private List<SkewerController> skewerList = new List<SkewerController>();
     [Tooltip("クリアしたかどうか")]
     private bool isClear;
     [Tooltip("リザルトUI")]
     private ResultUIController resultUI;
+
+    [Tooltip("現在のゲームモード")]
+    public GameMode CurrentGameMode => gameMode;
 
     protected override void StateInit()
     {
