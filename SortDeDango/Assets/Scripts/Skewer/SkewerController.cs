@@ -34,7 +34,10 @@ public class SkewerController : MonoBehaviour
         Debug.Log(gameObject.name + " clicked!");
         // 完成していない状態なら、選択中の串として自身をGameplayControllerに渡す
         if(currentState != SkewerState.Complete)
-            GameplayController.Instance.OnSkewerSelected(this);
+        {
+            if(GameplayManager.Instance.CurrentGameMode == GameMode.Normal) GameplayController.Instance.OnSkewerSelected(this);
+            else PrototypeGameplayController.Instance.OnSkewerSelected(this);
+        }
     }
 
     /// <summary>
@@ -87,7 +90,11 @@ public class SkewerController : MonoBehaviour
         // 団子の数が最大数に達したら、状態遷移
         if (dangoList.Count >= maxDango)
         {
-            if (IsComplete()) ChangeState(SkewerState.Complete);
+            if (IsComplete())
+            {
+                if (GameplayManager.Instance.CurrentGameMode == GameMode.Prototype) PrototypeGameplayController.Instance.OnSkewerCompleted(this);
+                ChangeState(SkewerState.Complete);
+            }
             else ChangeState(SkewerState.Full);
         }
         else ChangeState(SkewerState.Stack);
@@ -112,7 +119,11 @@ public class SkewerController : MonoBehaviour
         dangoList.Remove(topDango);
         /* 団子が無くなれば、Empty状態へ遷移
          * それ以外は、Stack状態へ遷移 */
-        if (dangoList.Count == 0) ChangeState(SkewerState.Empty);
+        if (dangoList.Count == 0)
+        { 
+            if (GameplayManager.Instance.CurrentGameMode == GameMode.Prototype) PrototypeGameplayController.Instance.OnSkewerEmptied(this);
+            ChangeState(SkewerState.Empty);
+        }
         else ChangeState(SkewerState.Stack);
 
         return topDango;

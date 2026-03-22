@@ -36,14 +36,19 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     protected override void StateRunning()
     {
         // クリア判定
-        if (IsClear() && !isClear)
+        switch(CurrentGameMode)
         {
-            // クリア表示
-            Debug.Log("ステージクリア！！");
-            resultUI.Show();
+            case GameMode.Normal:
+                if (IsClear() && !isClear)
+                {
+                    // クリア表示
+                    Debug.Log("ステージクリア！！");
+                    resultUI.Show();
 
-            PauseGame();
-            isClear = true;
+                    PauseGame();
+                    isClear = true;
+                }
+                break;
         }
     }
 
