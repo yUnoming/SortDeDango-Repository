@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SkewerController : MonoBehaviour
@@ -15,6 +16,9 @@ public class SkewerController : MonoBehaviour
     [Tooltip("串の現在の状態")]
     private SkewerState currentState;
     public SkewerState CurrentState { get { return currentState; } }
+
+    [Tooltip("現在の団子数")]
+    public int CurrentDangoCount => dangoList.Count;
 
     private void Awake()
     {
@@ -59,13 +63,30 @@ public class SkewerController : MonoBehaviour
         // ここまで到達したら、全ての団子の色が一致しているのでTRUEを返す
         return true;
     }
+    /// <summary>
+    /// 団子の削除    </summary>
+    private Dango RemoveDango(int index)
+    {
+        Dango removeDango = dangoList[index - 1];
+        dangoList.Remove(removeDango);
+        /* 団子が無くなれば、Empty状態へ遷移
+         * それ以外は、Stack状態へ遷移 */
+        if (dangoList.Count == 0) ChangeState(SkewerState.Empty);
+        else ChangeState(SkewerState.Stack);
 
+        return removeDango;
+    }
+
+    /// <summary>
+    /// 団子を所持しているか判定    </summary>
+    public bool HasDango()
+    {
+        return dangoList.Count > 0;
+    }
     /// <summary>
     /// 団子を移動可能か判定    </summary>
     /// <param name="from">
     /// 現在、追加予定の団子が刺さっている串    </param>
-    /// <returns>
-    /// 空きあり; TRUE / 空き無し: FALSE    </returns>
     public bool CanMoveDango(SkewerController from)
     {
         // 同じ串だったら、FALSEを返す
@@ -109,24 +130,30 @@ public class SkewerController : MonoBehaviour
         return dangoList[dangoList.Count - 1];
     }
     /// <summary>
-    /// 一番上の団子を除外    </summary>
+    /// 一番上の団子を削除    </summary>
     /// <returns>
-    /// 除外する一番上の団子    </returns>
+    /// 削除した団子    </returns>
     public Dango RemoveTopDango()
     {
+        // 団子を所持しているか判定
         if (currentState == SkewerState.Empty) return null;
-        Dango topDango = dangoList[dangoList.Count - 1];
-        dangoList.Remove(topDango);
-        /* 団子が無くなれば、Empty状態へ遷移
-         * それ以外は、Stack状態へ遷移 */
-        if (dangoList.Count == 0)
-        { 
-            if (GameplayManager.Instance.CurrentGameMode == GameMode.Prototype) PrototypeGameplayController.Instance.OnSkewerEmptied(this);
-            ChangeState(SkewerState.Empty);
-        }
-        else ChangeState(SkewerState.Stack);
 
-        return topDango;
+        Dango removedDango = RemoveDango(dangoList.Count);
+        return removedDango;
+    }
+    /// <summary>
+    /// 指定した団子の削除    </summary>
+    /// <param name="index">
+    /// 団子の指定番号    </param>
+    /// <returns>
+    /// 削除した団子  </returns>
+    public Dango RemoveDangoAt(int index)
+    {
+        // 指定番号が所持数に収まっているか判定
+        if (index > dangoList.Count) return null;
+
+        Dango removedDango = RemoveDango(index);
+        return removedDango;
     }
 
     /// <summary>

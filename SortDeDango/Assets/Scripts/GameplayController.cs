@@ -8,10 +8,14 @@ public class GameplayController : MonoBehaviour
     private KeyCode resetKey = KeyCode.R;
     [SerializeField, Tooltip("一手戻すキー")]
     private KeyCode undoKey = KeyCode.U;
+    [SerializeField, Tooltip("食べるアクション用の入力キー")]
+    private KeyCode eatKey = KeyCode.E;
     [SerializeField, Tooltip("ステージを進めるキー")]
     private KeyCode nextStageKey = KeyCode.RightArrow;
     [SerializeField, Tooltip("ステージを戻すキー")]
     private KeyCode previousStageKey = KeyCode.LeftArrow;
+    [SerializeField]
+    private EatModule eatModule;
 
     private static GameplayController instance;
     public static GameplayController Instance { get { return instance; } }
@@ -23,7 +27,7 @@ public class GameplayController : MonoBehaviour
     [Tooltip("移動データリスト")]
     private List<MoveData> moveDataList = new List<MoveData>();
 
-    private void Awake()
+    private void Start()
     {
         instance = this;
 
@@ -40,6 +44,12 @@ public class GameplayController : MonoBehaviour
         if(Input.GetKeyDown(resetKey)) HandleRestartClicked();
         // 一手戻す
         if(Input.GetKeyDown(undoKey)) HandleUndoClicked();
+        // 食べるアクション
+        if (Input.GetKeyDown(eatKey) && !isInputLocked)
+        {
+            if (eatModule.CanEat(selectingSkewer)) StartCoroutine(EatDangoSequence());
+        }
+
         // ステージ進行・後退
         if(Input.GetKeyDown(nextStageKey)) GameplayManager.Instance.LoadNextStage();
         else if (Input.GetKeyDown(previousStageKey)) GameplayManager.Instance.LoadPreviousStage();
@@ -99,6 +109,18 @@ public class GameplayController : MonoBehaviour
         lastData.from.SetTopDangoPosition(movedDango);
         // 使用済みの移動データを除外
         moveDataList.RemoveAt(moveDataList.Count - 1);
+    }
+    /// <summary>
+    /// 団子を食べる    </summary>
+    private IEnumerator EatDangoSequence()
+    {
+        isInputLocked = true;
+
+        yield return eatModule.EatSequence(selectingSkewer);
+        selectingSkewer.OnDeselect();
+        selectingSkewer = null;
+
+        isInputLocked = false;
     }
 
     /// <summary>
