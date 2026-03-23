@@ -159,10 +159,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1880472542080523501, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
-      propertyPath: gameMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1880472542080523501, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
       propertyPath: clearText
       value: 
       objectReference: {fileID: 183558566384653635}
@@ -554,10 +550,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5848683549725467453, guid: 64328cf97acbc8a4f9378ee0b08134f7, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5848683549725467453, guid: 64328cf97acbc8a4f9378ee0b08134f7, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -577,7 +572,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042064015338619632}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f141b40c15008094ea1128c54ce62615, type: 3}
   m_Name: 
@@ -588,6 +583,12 @@ MonoBehaviour:
   generateKey: 103
   nextStageKey: 275
   previousStageKey: 276
+  totalSkewers: 4
+  currentSkewers: 1
+  requiredCompleteSkewer: 3
+  completeSkewerCount: 0
+  generateMoveNumber: 3
+  generateRemainMoveNumber: 5
 --- !u!1001 &3066127369603552476
 PrefabInstance:
   m_ObjectHideFlags: 0
