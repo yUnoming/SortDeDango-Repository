@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bafb9b32d9e60a4383a6de653d30551, type: 3}
   m_Name: PrototypeStageData
   m_EditorClassIdentifier: 
-  totalSkewers: 1
+  totalSkewers: 2
   dangoLists:
   - dangoColors: 0200000001000000
+  - dangoColors: 

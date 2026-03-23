@@ -28,11 +28,18 @@ public class PrototypeGameplayController : MonoBehaviour
     [Tooltip("移動データリスト")]
     private List<MoveData> moveDataList = new List<MoveData>();
 
-    private int totalSkewers = 5;
+    [Header("プロトタイプ用設定")]
+    [SerializeField, Tooltip("串の許容数")]
+    private int totalSkewers = 4;
+    [SerializeField, Tooltip("串の現存数")]
     private int currentSkewers = 1;
+    [SerializeField, Tooltip("クリアに必要な完成数")]
     private int requiredCompleteSkewer = 3;
+    [SerializeField, Tooltip("完成した串数")]
     private int completeSkewerCount;
+    [SerializeField, Tooltip("生成に必要な手数")]
     private int generateMoveNumber = 3;         // 生成に必要な手数
+    [SerializeField, Tooltip("生成までの残り手数")]
     private int generateRemainMoveNumber = 5;   // 生成までの残り手数
 
     private void Start()
@@ -75,7 +82,7 @@ public class PrototypeGameplayController : MonoBehaviour
         }
 
         if (completeSkewerCount >= requiredCompleteSkewer) Debug.Log("ゲームクリア！！");
-        else if (currentSkewers >= totalSkewers) Debug.Log("ゲームオーバー！！");
+        else if (currentSkewers > totalSkewers) Debug.Log("ゲームオーバー！！");
 
 #endif
     }
@@ -158,7 +165,7 @@ public class PrototypeGameplayController : MonoBehaviour
             new DangoList()
         };
 
-        int dangoCount = UnityEngine.Random.Range(1, 4);
+        int dangoCount = UnityEngine.Random.Range(2, 4);
         for(int dangoAddCount = 0; dangoAddCount <  dangoCount; dangoAddCount++)
         {
             int dangoColor = UnityEngine.Random.Range(1, 4);
