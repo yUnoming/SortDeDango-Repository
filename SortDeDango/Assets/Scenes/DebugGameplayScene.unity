@@ -166,14 +166,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GlobalManagers
       objectReference: {fileID: 0}
-    - target: {fileID: 5609517101031202320, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
-      propertyPath: stageDataList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5609517101031202320, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
-      propertyPath: 'stageDataList.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 7d75e15bde648864a802ccf07705048b, type: 2}
     - target: {fileID: 7643699129418872798, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -746,11 +738,11 @@ SceneRoots:
   m_Roots:
   - {fileID: 1493817719}
   - {fileID: 1455574264}
+  - {fileID: 1074607449}
+  - {fileID: 487193908}
   - {fileID: 3795323783683992512}
-  - {fileID: 2042064015338619631}
   - {fileID: 3066127369603552476}
   - {fileID: 2168136133824882167}
-  - {fileID: 487193908}
-  - {fileID: 937814122}
+  - {fileID: 2042064015338619631}
   - {fileID: 183558566384653634}
-  - {fileID: 1074607449}
+  - {fileID: 937814122}

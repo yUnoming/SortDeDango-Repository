@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class GameplayManager : SceneManagerBase<GameplayManager>
 {
+    [SerializeField, Tooltip("クリアに必要な完成串数")]
+    private int requiredCompleteSkewerCount = 3;
+    [SerializeField, Tooltip("串の許容数")]
+    private int maxSkewerCount = 4;
     [SerializeField]
     private GameMode gameMode = GameMode.Normal;
 
     private StageGenerator stageGenerator;
     private List<SkewerController> skewerList = new List<SkewerController>();
-    [Tooltip("クリアしたかどうか")]
-    private bool isClear;
+    [Tooltip("現在の完成串数")]
+    private int currentCompleteSkewerCount;
     [Tooltip("リザルトUI")]
     private ResultUIController resultUI;
 
@@ -30,7 +34,8 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     }
     protected override void StateStart()
     {
-        isClear = false;    // クリア状態の初期化
+        // 値の初期化
+        currentCompleteSkewerCount = 0;
         base.StateStart();
     }
     protected override void StateRunning()
@@ -39,14 +44,19 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         switch(CurrentGameMode)
         {
             case GameMode.Normal:
-                if (IsClear() && !isClear)
+                if (IsClear())
                 {
                     // クリア表示
                     Debug.Log("ステージクリア！！");
                     resultUI.Show();
 
                     PauseGame();
-                    isClear = true;
+                    base.StateRunning();
+                }
+                else if (IsGameOver())
+                {
+                    Debug.Log("ゲームオーバー！！");
+                    PauseGame();
                 }
                 break;
         }
@@ -55,18 +65,18 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     /// <summary>
     /// クリア状態か判定    </summary>
     /// <returns>
-    /// 全串が空or完成状態: TRUE / ひとつでも条件を満たさない: FALSE    </returns>
+    /// 串を必要な数だけ完成していたかどうか </returns>
     private bool IsClear()
     {
-        // 全串の状態判定
-        foreach (var skewer in skewerList)
-        {
-            // 空or完成状態でなければ、FALSEを返す
-            if (skewer.CurrentState != SkewerState.Empty && skewer.CurrentState != SkewerState.Complete)
-                return false;
-        }
-        // ここまで来たら条件達成のため、TRUEを返す
-        return true;
+        return currentCompleteSkewerCount >= requiredCompleteSkewerCount;
+    }
+    /// <summary>
+    /// ゲームオーバー状態か判定    </summary>
+    /// <returns>
+    /// 串の現存数が許容数を超えているかどうか    </returns>
+    private bool IsGameOver()
+    {
+        return skewerList.Count > maxSkewerCount;
     }
     /// <summary>
     /// Nextボタン押下時の処理    </summary>
@@ -79,15 +89,13 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     /// ゲームを停止    </summary>
     public void PauseGame()
     {
-        // 串の機能停止
-        foreach(var skewer in skewerList) skewer.enabled = false;
+        GameplayController.Instance.SetInputLocked(true);
     }
     /// <summary>
     /// ゲームを再開   </summary>
     public void ResumeGame()
     {
-        // 串の機能再開
-        foreach (var skewer in skewerList) skewer.enabled = true;
+        GameplayController.Instance.SetInputLocked(false);
     }
 
     /// <summary>
@@ -109,5 +117,15 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     {
         StageManager.Instance.GoToPreviousStage();
         ResetStage();
+    }
+
+    /// <summary>
+    /// 串を追加    </summary>
+    public void AddSkewer(SkewerController skewer) { skewerList.Add(skewer); }
+    // 串が完成した際のイベント
+    public void OnSkewerCompleted(SkewerController skewer)
+    {
+        skewerList.Remove(skewer);      // 完成した串を除外
+        currentCompleteSkewerCount++;   // 完成数を増加
     }
 }
