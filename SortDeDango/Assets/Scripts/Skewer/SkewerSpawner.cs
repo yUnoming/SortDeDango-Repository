@@ -19,15 +19,20 @@ public class SkewerSpawner : MonoBehaviour
 
     private void Update()
     {
-        // 一定時間経過で生成
-        spawnTimer += Time.deltaTime;
-        if(spawnTimer >= spawnInterval)
+        if(GameplayManager.currentState == SceneState.Running)
         {
-            Spawn();
-            spawnTimer -= spawnInterval;
+            // 一定時間経過で生成
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= spawnInterval)
+            {
+                Spawn();
+                spawnTimer -= spawnInterval;
+            }
         }
     }
 
+    /// <summary>
+    /// 串を生成    </summary>
     private void Spawn()
     {
         // 生成番号を乱数取得
@@ -48,5 +53,8 @@ public class SkewerSpawner : MonoBehaviour
             skewer.AddDango(dango.GetComponent<Dango>());   // 団子の追加
             skewer.SetTopDangoPosition(dango);              // 団子の配置
         }
+
+        // 生成した串を GameplayManager に追加
+        GameplayManager.Instance.AddSkewer(skewer);
     }
 }

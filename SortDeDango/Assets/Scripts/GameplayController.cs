@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -74,12 +75,18 @@ public class GameplayController : MonoBehaviour
         // 串の選択状態を解除
         from.OnDeselect();
         selectingSkewer = null;
-
+        // 移動アニメーション
         yield return movingDango.GetComponent<DangoMoveAnimator>()
             .PlayAnimation(
                 movingDango.transform,
                 to.GetTopDangoPosition()
             );
+        // 串が完成したら、完成串数を増加させてから削除
+        if (to.CurrentState == SkewerState.Complete)
+        {
+            GameplayManager.Instance.OnSkewerCompleted(to);
+            Destroy(to.gameObject);
+        }
 
         isInputLocked = false;
     }
@@ -123,6 +130,12 @@ public class GameplayController : MonoBehaviour
         isInputLocked = false;
     }
 
+    /// <summary>
+    /// 入力状態の設定    </summary>
+    public void SetInputLocked(bool isLocked)
+    {
+        isInputLocked = isLocked;
+    }
     /// <summary>
     /// 串が選択された際のイベント    </summary>
     /// <param name="skewer">
