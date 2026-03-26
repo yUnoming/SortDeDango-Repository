@@ -66,21 +66,30 @@ public class GameplayController : MonoBehaviour
     private IEnumerator MoveDangoSequence(SkewerController from, SkewerController to)
     {
         isInputLocked = true;
-        
-        // 団子を移動
-        Dango movingDango = from.RemoveTopDango();
-        to.AddDango(movingDango);
-        // 移動データを追加
-        moveDataList.Add(new MoveData(from, to, movingDango));
+        // 移動データを作成
+        MoveData moveData = new MoveData(from, to);
+
+        // 移動させられるだけ、揃っている団子を全て移動
+        for (int index = from.CurrentDangoCount; index > 0; index--)
+        {
+            if(to.CanMoveDango(from))
+            {
+                Dango movingDango = from.RemoveTopDango();
+                to.AddDango(movingDango);
+                moveData.dangoList.Add(movingDango);
+                // 移動アニメーション
+                yield return movingDango.GetComponent<DangoMoveAnimator>()
+                    .PlayAnimation(
+                        movingDango.transform,
+                        to.GetTopDangoPosition()
+                    );
+            }
+        }
+        // 作成した移動データを追加
+        moveDataList.Add(moveData);
         // 串の選択状態を解除
         from.OnDeselect();
         selectingSkewer = null;
-        // 移動アニメーション
-        yield return movingDango.GetComponent<DangoMoveAnimator>()
-            .PlayAnimation(
-                movingDango.transform,
-                to.GetTopDangoPosition()
-            );
         // 串が完成したら、完成串数を増加させてから削除
         if (to.CurrentState == SkewerState.Complete)
         {
@@ -111,9 +120,12 @@ public class GameplayController : MonoBehaviour
 
         // 最終移動データを元に、団子を元の串へ戻す
         MoveData lastData = moveDataList[moveDataList.Count - 1];
-        Dango movedDango = lastData.to.RemoveTopDango();
-        lastData.from.AddDango(movedDango);
-        lastData.from.SetTopDangoPosition(movedDango);
+        for(int movedCount = lastData.dangoList.Count; movedCount > 0; movedCount--)
+        {
+            Dango movedDango = lastData.to.RemoveTopDango();
+            lastData.from.AddDango(movedDango);
+            lastData.from.SetTopDangoPosition(movedDango);
+        }
         // 使用済みの移動データを除外
         moveDataList.RemoveAt(moveDataList.Count - 1);
     }
@@ -151,8 +163,8 @@ public class GameplayController : MonoBehaviour
             selectingSkewer.OnSelect();
             return;
         }
-        // 団子が移動可能であれば、団子移動処理へ
-        else if (skewer.CanMoveDango(selectingSkewer))
+        // 保持中の串とは別の串を選択したら、移動処理へ
+        else if (skewer != selectingSkewer)
         {
             StartCoroutine(MoveDangoSequence(
                     selectingSkewer,
