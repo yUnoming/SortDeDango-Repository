@@ -137,6 +137,12 @@ public class GameplayController : MonoBehaviour
     }
 
     /// <summary>
+    /// 食べるアクションを使用可能かどうか    </summary>
+    public bool CanUseEatAction()
+    {
+        return eatModule.RemainingEatActionCount > 0;
+    }
+    /// <summary>
     /// 入力状態の設定    </summary>
     public void SetInputLocked(bool isLocked)
     {

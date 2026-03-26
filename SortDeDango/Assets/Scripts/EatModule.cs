@@ -8,6 +8,7 @@ public class EatModule : MonoBehaviour
     private int maxEatActionCount;
     [Tooltip("食べられる残り回数")]
     private int remainingEatActionCount;
+    public int RemainingEatActionCount => remainingEatActionCount;
 
     private void Start()
     {
