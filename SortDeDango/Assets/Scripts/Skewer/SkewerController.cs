@@ -37,9 +37,9 @@ public class SkewerController : MonoBehaviour
     {
         if(!enabled) return;
         Debug.Log(gameObject.name + " clicked!");
-        // 完成していない状態なら、選択中の串として自身をGameplayControllerに渡す
-        if(currentState != SkewerState.Complete)
-            GameplayController.Instance.OnSkewerSelected(this);
+
+        // 選択中の串として自身をGameplayControllerに渡す
+        GameplayController.Instance.OnSkewerSelected(this);
     }
 
     /// <summary>
