@@ -9,7 +9,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     [SerializeField]
     private GameMode gameMode = GameMode.Normal;
 
-    [Tooltip("リザルトUI")]
+    private GameplayController gameplayController;
     private ResultUIController resultUI;
 
     [Tooltip("現在のゲームモード")]
@@ -26,6 +26,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         resultUI.onNextClicked += HandleNextClicked;
         resultUI.Hide();
 
+        gameplayController = FindAnyObjectByType<GameplayController>();
         base.StateInit();
     }
     protected override void StateStart()
@@ -49,11 +50,11 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     PauseGame();
                     base.StateRunning();
                 }
-/*                else if (IsGameOver())
+                else if (IsGameOver())
                 {
                     Debug.Log("ゲームオーバー！！");
                     PauseGame();
-                }*/
+                }
                 break;
         }
     }
@@ -72,7 +73,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     /// 串の現存数が許容数を超えているかどうか    </returns>
     private bool IsGameOver()
     {
-        return false;
+        return !gameplayController.CanUseEatAction() && eatenDangoCount < targetDangoCount;
     }
     /// <summary>
     /// Nextボタン押下時の処理    </summary>
