@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MoveData
 {
@@ -7,12 +8,12 @@ public class MoveData
     [Tooltip("移動先の串")]
     public SkewerController to;
     [Tooltip("移動させた団子")]
-    public Dango dango;
+    public List<Dango> dangoList;
 
-    public MoveData(SkewerController from, SkewerController to, Dango dango)
+    public MoveData(SkewerController from, SkewerController to)
     {
         this.from = from;
         this.to = to;
-        this.dango = dango;
+        this.dangoList = new List<Dango>();
     }
 }

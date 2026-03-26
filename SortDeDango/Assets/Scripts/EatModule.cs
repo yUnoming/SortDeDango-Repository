@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EatModule : MonoBehaviour
@@ -31,10 +32,12 @@ public class EatModule : MonoBehaviour
     public bool TryEat(SkewerController targetSkewer, int eatDangoIndex)
     {
         // 団子を食べることに成功
-        Dango eatenDango = targetSkewer.RemoveDangoAt(eatDangoIndex);
-        if (eatenDango != null)
+        List<Dango> eatenDangoList = targetSkewer.RemoveMatchDangoAll(eatDangoIndex);
+        if (eatenDangoList != null)
         {
-            Destroy(eatenDango.gameObject);    // オブジェクト削除
+            foreach(Dango eatenDango  in eatenDangoList)
+                Destroy(eatenDango.gameObject);    // オブジェクト削除
+
             remainingEatCount--;
             return true;
         }
