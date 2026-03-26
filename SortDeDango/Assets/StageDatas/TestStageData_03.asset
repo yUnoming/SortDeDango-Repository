@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bafb9b32d9e60a4383a6de653d30551, type: 3}
   m_Name: TestStageData_03
   m_EditorClassIdentifier: 
+  targetDangoCount: 6
+  maxEatActionCount: 2
   totalSkewers: 3
   dangoLists:
   - dangoColors: 010000000100000001000000

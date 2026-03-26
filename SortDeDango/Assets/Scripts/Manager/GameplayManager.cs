@@ -1,19 +1,14 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameplayManager : SceneManagerBase<GameplayManager>
 {
-    [SerializeField, Tooltip("クリアに必要な完成串数")]
-    private int requiredCompleteSkewerCount = 3;
-    [SerializeField, Tooltip("串の許容数")]
-    private int maxSkewerCount = 4;
+    [SerializeField, Tooltip("クリア目標となる食べた団子数")]
+    private int targetDangoCount;
+    [SerializeField, Tooltip("現在の食べた団子数")]
+    private int eatenDangoCount;
     [SerializeField]
     private GameMode gameMode = GameMode.Normal;
 
-    private StageGenerator stageGenerator;
-    private List<SkewerController> skewerList = new List<SkewerController>();
-    [Tooltip("現在の完成串数")]
-    private int currentCompleteSkewerCount;
     [Tooltip("リザルトUI")]
     private ResultUIController resultUI;
 
@@ -22,9 +17,10 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
 
     protected override void StateInit()
     {
-        // ステージ生成
-        stageGenerator = FindAnyObjectByType<StageGenerator>();
-        skewerList = stageGenerator.Generate(StageManager.Instance.CurrentStageData);
+        // ステージのセットアップ
+        StageData data = StageManager.Instance.CurrentStageData;
+        FindAnyObjectByType<StageGenerator>().Generate(data);   // ステージ生成
+        targetDangoCount = data.targetDangoCount;               // 目標数のセット
         // リザルトUIの初期設定
         resultUI = FindAnyObjectByType<ResultUIController>();
         resultUI.onNextClicked += HandleNextClicked;
@@ -35,7 +31,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     protected override void StateStart()
     {
         // 値の初期化
-        currentCompleteSkewerCount = 0;
+        eatenDangoCount = 0;
         base.StateStart();
     }
     protected override void StateRunning()
@@ -53,11 +49,11 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     PauseGame();
                     base.StateRunning();
                 }
-                else if (IsGameOver())
+/*                else if (IsGameOver())
                 {
                     Debug.Log("ゲームオーバー！！");
                     PauseGame();
-                }
+                }*/
                 break;
         }
     }
@@ -68,7 +64,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     /// 串を必要な数だけ完成していたかどうか </returns>
     private bool IsClear()
     {
-        return currentCompleteSkewerCount >= requiredCompleteSkewerCount;
+        return eatenDangoCount >= targetDangoCount;
     }
     /// <summary>
     /// ゲームオーバー状態か判定    </summary>
@@ -76,7 +72,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     /// 串の現存数が許容数を超えているかどうか    </returns>
     private bool IsGameOver()
     {
-        return skewerList.Count > maxSkewerCount;
+        return false;
     }
     /// <summary>
     /// Nextボタン押下時の処理    </summary>
@@ -120,12 +116,11 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     }
 
     /// <summary>
-    /// 串を追加    </summary>
-    public void AddSkewer(SkewerController skewer) { skewerList.Add(skewer); }
-    // 串が完成した際のイベント
-    public void OnSkewerCompleted(SkewerController skewer)
+    /// 団子を食べた際のイベント    </summary>
+    /// <param name="eatenCount">
+    /// 食べた個数    </param>
+    public void OnDangoEaten(int eatenCount)
     {
-        skewerList.Remove(skewer);      // 完成した串を除外
-        currentCompleteSkewerCount++;   // 完成数を増加
+        eatenDangoCount += eatenCount;
     }
 }

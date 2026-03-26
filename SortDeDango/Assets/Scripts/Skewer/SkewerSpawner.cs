@@ -53,8 +53,5 @@ public class SkewerSpawner : MonoBehaviour
             skewer.AddDango(dango.GetComponent<Dango>());   // 団子の追加
             skewer.SetTopDangoPosition(dango);              // 団子の配置
         }
-
-        // 生成した串を GameplayManager に追加
-        GameplayManager.Instance.AddSkewer(skewer);
     }
 }

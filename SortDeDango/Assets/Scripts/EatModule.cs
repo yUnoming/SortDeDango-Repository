@@ -5,13 +5,14 @@ using UnityEngine;
 public class EatModule : MonoBehaviour
 {
     [SerializeField, Tooltip("食べられる最大回数")]
-    private int maxEatCount;
+    private int maxEatActionCount;
     [Tooltip("食べられる残り回数")]
-    private int remainingEatCount;
+    private int remainingEatActionCount;
 
-    private void Awake()
+    private void Start()
     {
-        remainingEatCount = maxEatCount;
+        maxEatActionCount = StageManager.Instance.CurrentStageData.maxEatActionCount;
+        remainingEatActionCount = maxEatActionCount;
     }
 
     /// <summary>
@@ -20,7 +21,11 @@ public class EatModule : MonoBehaviour
     /// 判定対象の串    </param>
     public bool CanEat(SkewerController targetSkewer)
     {
-        if (targetSkewer == null || remainingEatCount == 0) return false;
+        if (targetSkewer == null || remainingEatActionCount == 0)
+        {
+            Debug.Log("食べられません");
+            return false;
+        }
         return targetSkewer.HasDango();
     }
     /// <summary>
@@ -37,8 +42,8 @@ public class EatModule : MonoBehaviour
         {
             foreach(Dango eatenDango  in eatenDangoList)
                 Destroy(eatenDango.gameObject);    // オブジェクト削除
-
-            remainingEatCount--;
+            GameplayManager.Instance.OnDangoEaten(eatenDangoList.Count);
+            remainingEatActionCount--;
             return true;
         }
         // 団子を食べることに失敗

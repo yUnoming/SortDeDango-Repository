@@ -90,12 +90,6 @@ public class GameplayController : MonoBehaviour
         // 串の選択状態を解除
         from.OnDeselect();
         selectingSkewer = null;
-        // 串が完成したら、完成串数を増加させてから削除
-        if (to.CurrentState == SkewerState.Complete)
-        {
-            GameplayManager.Instance.OnSkewerCompleted(to);
-            Destroy(to.gameObject);
-        }
 
         isInputLocked = false;
     }
