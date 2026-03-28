@@ -13,17 +13,22 @@ public class GameplayUIController : MonoBehaviour
     private Button restartButton;
     [SerializeField]
     private Button undoButton;
-
+    [SerializeField]
+    private Button eatButton;
+    
     [Tooltip("Restartボタン押下時のイベント")]
     public event Action onRestartClicked;
     [Tooltip("Undoボタン押下時のイベント")]
     public event Action onUndoClicked;
+    [Tooltip("Eatボタン押下時のイベント")]
+    public event Action onEatClicked;
 
 
     private void Awake()
     {
         restartButton.onClick.AddListener(() => onRestartClicked?.Invoke());
         undoButton.onClick.AddListener(() => onUndoClicked?.Invoke());
+        eatButton.onClick.AddListener(() => onEatClicked?.Invoke());
     }
 
     /// <summary>

@@ -36,6 +36,7 @@ public class GameplayController : MonoBehaviour
         GameplayUIController gameplayUI = FindAnyObjectByType<GameplayUIController>();
         gameplayUI.onRestartClicked += HandleRestartClicked;
         gameplayUI.onUndoClicked += HandleUndoClicked;
+        gameplayUI.onEatClicked += HandleEatClicked;
         gameplayUI.SetStageNumber(StageManager.Instance.CurrentStageNumber);
     }
     private void Update()
@@ -98,13 +99,22 @@ public class GameplayController : MonoBehaviour
     /// Restartボタン押下時の処理    </summary>
     private void HandleRestartClicked()
     {
-        GameplayManager.Instance.ResetStage();
+        if (!isInputLocked)
+            GameplayManager.Instance.ResetStage();
     }
     /// <summary>
     /// Undoボタン押下時の処理    </summary>
     private void HandleUndoClicked()
     {
-        Undo();
+        if (!isInputLocked)
+            Undo();
+    }
+    /// <summary>
+    /// Eatボタン押下時の処理    </summary>
+    private void HandleEatClicked()
+    {
+        if (!isInputLocked && eatModule.CanEat(selectingSkewer))
+            StartCoroutine(EatDangoSequence());
     }
     /// <summary>
     /// 一手戻す    </summary>
