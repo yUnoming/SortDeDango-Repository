@@ -63,4 +63,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91cfca0206fa25e4b8205685420349c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEatCount: 3
+  maxEatActionCount: 0
+  eatSE: {fileID: 11400000, guid: fdb45a146f3d98046af1471cb0f2d52f, type: 2}
+  eatFailSE: {fileID: 11400000, guid: a4c07c22a0afa32479528a9a15f3cff7, type: 2}
