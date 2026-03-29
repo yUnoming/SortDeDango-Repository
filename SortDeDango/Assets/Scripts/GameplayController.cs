@@ -27,6 +27,8 @@ public class GameplayController : MonoBehaviour
     private SkewerController selectingSkewer;
     [Tooltip("入力制限中かどうか")]
     private bool isInputLocked;
+    [Tooltip("食べる状態かどうか")]
+    private bool isEatMode;
     [Tooltip("移動データリスト")]
     private List<MoveData> moveDataList = new List<MoveData>();
     [Tooltip("手数")]
@@ -55,10 +57,7 @@ public class GameplayController : MonoBehaviour
         // 一手戻す
         if(Input.GetKeyDown(undoKey)) HandleUndoClicked();
         // 食べるアクション
-        if (Input.GetKeyDown(eatKey) && !isInputLocked)
-        {
-            if (eatModule.CanEat(selectingSkewer)) StartCoroutine(EatDangoSequence());
-        }
+        if (Input.GetKeyDown(eatKey)) HandleEatClicked();
 
         // ステージ進行・後退
         if(Input.GetKeyDown(nextStageKey)) GameplayManager.Instance.LoadNextStage();
@@ -124,7 +123,7 @@ public class GameplayController : MonoBehaviour
     /// Eatボタン押下時の処理    </summary>
     private void HandleEatClicked()
     {
-        if (!isInputLocked && eatModule.CanEat(selectingSkewer))
+        if (!isInputLocked && eatModule.CanEat())
             StartCoroutine(EatDangoSequence());
     }
     /// <summary>
@@ -149,16 +148,16 @@ public class GameplayController : MonoBehaviour
     private IEnumerator EatDangoSequence()
     {
         isInputLocked = true;
+        isEatMode = true;
 
-        yield return eatModule.EatSequence(selectingSkewer);
+        yield return eatModule.EatSequence();
         gameplayUI.UpdateEatActionCount(
                 eatModule.RemainingEatActionCount,
                 eatModule.MaxEatActionCount
             );
-        selectingSkewer.OnDeselect();
-        selectingSkewer = null;
 
         isInputLocked = false;
+        isEatMode = false;
     }
 
     /// <summary>
@@ -201,5 +200,18 @@ public class GameplayController : MonoBehaviour
         // 串の選択状態を解除
         selectingSkewer.OnDeselect();
         selectingSkewer = null;
+    }
+    public void OnDangoSelected(Dango dango)
+    {
+        // 選択した団子を食べる
+        if (isEatMode)
+        {
+            eatModule.SetTargetDango(dango);
+        }
+        // 自身が所属している串の選択
+        else
+        {
+            if (!isInputLocked) OnSkewerSelected(dango.CurrentSkewer);
+        }
     }
 }

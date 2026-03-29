@@ -35,10 +35,8 @@ public class SkewerController : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if(!enabled) return;
+        // 串クリックイベントを通知
         Debug.Log(gameObject.name + " clicked!");
-
-        // 選択中の串として自身をGameplayControllerに渡す
         GameplayController.Instance.OnSkewerSelected(this);
     }
 
@@ -56,7 +54,7 @@ public class SkewerController : MonoBehaviour
         // 団子同士の色を確認し、一致しなければFALSEを返す
         for(int i = 0; i < dangoList.Count - 1; i++)
         {
-            if (dangoList[i].Color != dangoList[i + 1].Color) return false;
+            if (dangoList[i].DangoColor != dangoList[i + 1].DangoColor) return false;
         }
         // ここまで到達したら、全ての団子の色が一致しているのでTRUEを返す
         return true;
@@ -95,7 +93,7 @@ public class SkewerController : MonoBehaviour
         // 団子が刺さっていないなら、TRUEを返す
         else if(currentState == SkewerState.Empty) return true;
         // 団子の色が合致するかどうかで、真偽値を返す
-        return from.GetTopDango().Color == GetTopDango().Color;
+        return from.GetTopDango().DangoColor == GetTopDango().DangoColor;
     }
     /// <summary>
     /// 団子を追加    </summary>
@@ -107,6 +105,7 @@ public class SkewerController : MonoBehaviour
 
         dangoList.Add(dango);
         dango.transform.parent = dangoAnchor.transform;
+        dango.SetCurrentSkewer(this);
         // 団子の数が最大数に達したら、状態遷移
         if (dangoList.Count >= maxDango)
         {
@@ -151,27 +150,36 @@ public class SkewerController : MonoBehaviour
         return removedDango;
     }
     /// <summary>
-    /// 揃っている団子を全て削除    </summary>
-    public List<Dango> RemoveMatchDangoAll(int index)
+    /// 指定した団子に連なる同色団子を削除    </summary>
+    public List<Dango> RemoveMatchedDangos(Dango dango)
     {
         List<Dango> removedDangoList = new List<Dango>();
-        DangoColor targetColor = dangoList[index - 1].Color;
-        // 揃っている団子の中で、一番上の団子の番号取得
-        if (dangoList.Count > 1)
+        DangoColor targetColor = dango.DangoColor;
+
+        // 現在の団子の番号取得
+        int targetIndex = 0;
+        for (int i = 0; i < dangoList.Count; i++)
         {
-            while (index < dangoList.Count)
+            if (dangoList[i] == dango)
             {
-                if (dangoList[index].Color == targetColor) index++;
-                else break;
+                targetIndex = i;
+                break;
             }
         }
-        // 揃っている団子を上から順に削除
-        while (index > 0)
+        // 揃っている団子の中で、一番上の団子の番号取得
+        int currentIndex = targetIndex;
+        while (currentIndex < dangoList.Count)
         {
-            if (dangoList[index - 1].Color == targetColor)
+            if (dangoList[currentIndex].DangoColor == targetColor) currentIndex++;
+            else break;
+        }
+        // 揃っている団子を上から順に削除
+        while (currentIndex > 0)
+        {
+            if (dangoList[currentIndex - 1].DangoColor == targetColor)
             {
-                removedDangoList.Add(RemoveDango(index));
-                index--;
+                removedDangoList.Add(RemoveDango(currentIndex));
+                currentIndex--;
             }
             else break;
         }
