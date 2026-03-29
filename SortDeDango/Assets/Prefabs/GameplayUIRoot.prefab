@@ -696,6 +696,7 @@ GameObject:
   - component: {fileID: 15863288928114902}
   - component: {fileID: 901169549465453198}
   - component: {fileID: 9002592402041980020}
+  - component: {fileID: 1765232705153580808}
   m_Layer: 0
   m_Name: EatButton
   m_TagString: Untagged
@@ -805,6 +806,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1765232705153580808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711605157485703531}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.7329927, b: 0, a: 0.5882353}
+  m_EffectDistance: {x: 5, y: -5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &4336266501781594889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1135,7 @@ MonoBehaviour:
   restartButton: {fileID: 6640105487618229664}
   undoButton: {fileID: 976496117165968945}
   eatButton: {fileID: 9002592402041980020}
+  eatButtonOutline: {fileID: 1765232705153580808}
 --- !u!1 &8380705809335040681
 GameObject:
   m_ObjectHideFlags: 0
