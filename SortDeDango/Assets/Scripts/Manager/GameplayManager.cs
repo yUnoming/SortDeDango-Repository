@@ -10,6 +10,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     private GameMode gameMode = GameMode.Normal;
 
     private GameplayController gameplayController;
+    private GameplayUIController gameplayUI;
     private ResultUIController resultUI;
 
     [Tooltip("現在のゲームモード")]
@@ -21,6 +22,9 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         StageData data = StageManager.Instance.CurrentStageData;
         FindAnyObjectByType<StageGenerator>().Generate(data);   // ステージ生成
         targetDangoCount = data.targetDangoCount;               // 目標数のセット
+        // ゲームプレイUIの初期設定
+        gameplayUI = FindAnyObjectByType<GameplayUIController>();
+        gameplayUI.SetEatenDangoCount(eatenDangoCount, targetDangoCount);
         // リザルトUIの初期設定
         resultUI = FindAnyObjectByType<ResultUIController>();
         resultUI.onNextClicked += HandleNextClicked;
@@ -123,5 +127,6 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     public void OnDangoEaten(int eatenCount)
     {
         eatenDangoCount += eatenCount;
+        gameplayUI.SetEatenDangoCount(eatenDangoCount, targetDangoCount);
     }
 }

@@ -21,23 +21,31 @@ public class GameplayController : MonoBehaviour
     private static GameplayController instance;
     public static GameplayController Instance { get { return instance; } }
 
+    GameplayUIController gameplayUI;
+
     [Tooltip("現在選択中の串")]
     private SkewerController selectingSkewer;
     [Tooltip("入力制限中かどうか")]
     private bool isInputLocked;
     [Tooltip("移動データリスト")]
     private List<MoveData> moveDataList = new List<MoveData>();
+    [Tooltip("手数")]
+    private int moveCount;
 
     private void Start()
     {
         instance = this;
 
-        // ゲームプレイUIへのイベント設定・ステージ番号設定
-        GameplayUIController gameplayUI = FindAnyObjectByType<GameplayUIController>();
+        // ゲームプレイUIへのイベント設定・表示セット
+        gameplayUI = FindAnyObjectByType<GameplayUIController>();
         gameplayUI.onRestartClicked += HandleRestartClicked;
         gameplayUI.onUndoClicked += HandleUndoClicked;
         gameplayUI.onEatClicked += HandleEatClicked;
         gameplayUI.SetStageNumber(StageManager.Instance.CurrentStageNumber);
+        gameplayUI.SetEatActionCount(
+            eatModule.RemainingEatActionCount,
+            eatModule.MaxEatActionCount);
+        gameplayUI.SetMoveCount(moveCount);
     }
     private void Update()
     {
@@ -88,6 +96,9 @@ public class GameplayController : MonoBehaviour
         }
         // 作成した移動データを追加
         moveDataList.Add(moveData);
+        // 手数を増やして表示
+        ++moveCount;
+        gameplayUI.SetMoveCount(moveCount);
         // 串の選択状態を解除
         from.OnDeselect();
         selectingSkewer = null;
@@ -140,6 +151,10 @@ public class GameplayController : MonoBehaviour
         isInputLocked = true;
 
         yield return eatModule.EatSequence(selectingSkewer);
+        gameplayUI.SetEatActionCount(
+                eatModule.RemainingEatActionCount,
+                eatModule.MaxEatActionCount
+            );
         selectingSkewer.OnDeselect();
         selectingSkewer = null;
 
