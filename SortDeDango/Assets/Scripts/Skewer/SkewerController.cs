@@ -73,6 +73,15 @@ public class SkewerController : MonoBehaviour
 
         return removeDango;
     }
+    /// <summary>
+    /// 団子を再配置    </summary>
+    private void RefreshDangoPosition()
+    {
+        for(int index = 0;  index < dangoList.Count; index++)
+        {
+            dangoList[index].transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * index;
+        }
+    }
 
     /// <summary>
     /// 団子を所持しているか判定    </summary>
@@ -147,6 +156,7 @@ public class SkewerController : MonoBehaviour
         if (index > dangoList.Count) return null;
 
         Dango removedDango = RemoveDango(index);
+        RefreshDangoPosition();
         return removedDango;
     }
     /// <summary>
@@ -183,6 +193,7 @@ public class SkewerController : MonoBehaviour
             }
             else break;
         }
+        RefreshDangoPosition();
         return removedDangoList;
     }
 
