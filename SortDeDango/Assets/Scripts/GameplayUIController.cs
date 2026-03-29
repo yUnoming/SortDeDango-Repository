@@ -45,18 +45,18 @@ public class GameplayUIController : MonoBehaviour
     public void Hide() { content.SetActive(false); }
     
     /// <summary>
-    /// ステージ番号を設定    </summary>
-    public void SetStageNumber(int stageNumber)
+    /// ステージ番号を更新    </summary>
+    public void UpdateStageNumber(int stageNumber)
     {
         stageNumberTMP.text = $"Stage {stageNumber}";
     }
     /// <summary>
-    /// 食べるアクション回数を設定    </summary>
+    /// 食べる使用回数を更新    </summary>
     /// <param name="remaining">
     /// 残り回数    </param>
     /// <param name="max">
     /// 最大回数    </param>
-    public void SetEatActionCount(int remaining, int max)
+    public void UpdateEatActionCount(int remaining, int max)
     {
         eatActionCountTMP.text = $"{remaining} / {max}";
     }
@@ -66,13 +66,13 @@ public class GameplayUIController : MonoBehaviour
     /// 現在の食べた数    </param>
     /// <param name="target">
     /// 目標数    </param>
-    public void SetEatenDangoCount(int current, int target)
+    public void UpdateEatenDangoCount(int current, int target)
     {
         eatenDangoCountTMP.text = $"Dango {current} / {target}";
     }
     /// <summary>
     /// 手数の設定    </summary>
-    public void SetMoveCount(int count)
+    public void UpdateMoveCount(int count)
     {
         moveCountTMP.text = $"Moves {count}";
     }

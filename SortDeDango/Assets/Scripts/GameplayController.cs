@@ -41,11 +41,11 @@ public class GameplayController : MonoBehaviour
         gameplayUI.onRestartClicked += HandleRestartClicked;
         gameplayUI.onUndoClicked += HandleUndoClicked;
         gameplayUI.onEatClicked += HandleEatClicked;
-        gameplayUI.SetStageNumber(StageManager.Instance.CurrentStageNumber);
-        gameplayUI.SetEatActionCount(
+        gameplayUI.UpdateStageNumber(StageManager.Instance.CurrentStageNumber);
+        gameplayUI.UpdateEatActionCount(
             eatModule.RemainingEatActionCount,
             eatModule.MaxEatActionCount);
-        gameplayUI.SetMoveCount(moveCount);
+        gameplayUI.UpdateMoveCount(moveCount);
     }
     private void Update()
     {
@@ -98,7 +98,7 @@ public class GameplayController : MonoBehaviour
         moveDataList.Add(moveData);
         // 手数を増やして表示
         ++moveCount;
-        gameplayUI.SetMoveCount(moveCount);
+        gameplayUI.UpdateMoveCount(moveCount);
         // 串の選択状態を解除
         from.OnDeselect();
         selectingSkewer = null;
@@ -151,7 +151,7 @@ public class GameplayController : MonoBehaviour
         isInputLocked = true;
 
         yield return eatModule.EatSequence(selectingSkewer);
-        gameplayUI.SetEatActionCount(
+        gameplayUI.UpdateEatActionCount(
                 eatModule.RemainingEatActionCount,
                 eatModule.MaxEatActionCount
             );
