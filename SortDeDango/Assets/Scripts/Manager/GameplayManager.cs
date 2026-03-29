@@ -24,7 +24,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         targetDangoCount = data.targetDangoCount;               // 目標数のセット
         // ゲームプレイUIの初期設定
         gameplayUI = FindAnyObjectByType<GameplayUIController>();
-        gameplayUI.SetEatenDangoCount(eatenDangoCount, targetDangoCount);
+        gameplayUI.UpdateEatenDangoCount(eatenDangoCount, targetDangoCount);
         // リザルトUIの初期設定
         resultUI = FindAnyObjectByType<ResultUIController>();
         resultUI.onNextClicked += HandleNextClicked;
@@ -127,6 +127,6 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     public void OnDangoEaten(int eatenCount)
     {
         eatenDangoCount += eatenCount;
-        gameplayUI.SetEatenDangoCount(eatenDangoCount, targetDangoCount);
+        gameplayUI.UpdateEatenDangoCount(eatenDangoCount, targetDangoCount);
     }
 }
