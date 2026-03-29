@@ -10,6 +10,12 @@ public class GameplayUIController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI stageNumberTMP;
     [SerializeField]
+    private TextMeshProUGUI eatActionCountTMP;
+    [SerializeField]
+    private TextMeshProUGUI eatenDangoCountTMP;
+    [SerializeField]
+    private TextMeshProUGUI moveCountTMP;
+    [SerializeField]
     private Button restartButton;
     [SerializeField]
     private Button undoButton;
@@ -37,10 +43,37 @@ public class GameplayUIController : MonoBehaviour
     /// <summary>
     /// UI非表示    </summary>
     public void Hide() { content.SetActive(false); }
+    
     /// <summary>
     /// ステージ番号を設定    </summary>
     public void SetStageNumber(int stageNumber)
     {
         stageNumberTMP.text = $"Stage {stageNumber}";
+    }
+    /// <summary>
+    /// 食べるアクション回数を設定    </summary>
+    /// <param name="remaining">
+    /// 残り回数    </param>
+    /// <param name="max">
+    /// 最大回数    </param>
+    public void SetEatActionCount(int remaining, int max)
+    {
+        eatActionCountTMP.text = $"{remaining} / {max}";
+    }
+    /// <summary>
+    /// 食べた団子数を設定    </summary>
+    /// <param name="current">
+    /// 現在の食べた数    </param>
+    /// <param name="target">
+    /// 目標数    </param>
+    public void SetEatenDangoCount(int current, int target)
+    {
+        eatenDangoCountTMP.text = $"Dango {current} / {target}";
+    }
+    /// <summary>
+    /// 手数の設定    </summary>
+    public void SetMoveCount(int count)
+    {
+        moveCountTMP.text = $"Moves {count}";
     }
 }

@@ -6,6 +6,7 @@ public class EatModule : MonoBehaviour
 {
     [SerializeField, Tooltip("食べられる最大回数")]
     private int maxEatActionCount;
+    public int MaxEatActionCount => maxEatActionCount;
     [Tooltip("食べられる残り回数")]
     private int remainingEatActionCount;
     public int RemainingEatActionCount => remainingEatActionCount;
