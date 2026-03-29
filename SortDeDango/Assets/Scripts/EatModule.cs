@@ -7,9 +7,12 @@ public class EatModule : MonoBehaviour
     [SerializeField, Tooltip("食べられる最大回数")]
     private int maxEatActionCount;
     public int MaxEatActionCount => maxEatActionCount;
+    
     [Tooltip("食べられる残り回数")]
     private int remainingEatActionCount;
     public int RemainingEatActionCount => remainingEatActionCount;
+    [Tooltip("食べる対象の団子")]
+    private Dango targetDango;
 
     private void Start()
     {
@@ -21,25 +24,20 @@ public class EatModule : MonoBehaviour
     /// 団子を食べられるか判定    </summary>
     /// <param name="selectingSkewer">
     /// 判定対象の串    </param>
-    public bool CanEat(SkewerController targetSkewer)
+    public bool CanEat()
     {
-        if (targetSkewer == null || remainingEatActionCount == 0)
-        {
-            Debug.Log("食べられません");
-            return false;
-        }
-        return targetSkewer.HasDango();
+        return remainingEatActionCount > 0;
     }
     /// <summary>
     /// 指定した串をから団子食べる処理を行い、成功判定を返す    </summary>
     /// <param name="targetSkewer">
     /// 食べる対象の串    </param>
-    /// <param name="eatDangoIndex">
-    /// 食べる団子のインデックス番号    </param>
-    public bool TryEat(SkewerController targetSkewer, int eatDangoIndex)
+    /// <param name="targetDango">
+    /// 食べる団子   </param>
+    private bool TryEat(SkewerController targetSkewer, Dango targetDango)
     {
         // 団子を食べることに成功
-        List<Dango> eatenDangoList = targetSkewer.RemoveMatchDangoAll(eatDangoIndex);
+        List<Dango> eatenDangoList = targetSkewer.RemoveMatchedDangos(targetDango);
         if (eatenDangoList != null)
         {
             foreach(Dango eatenDango  in eatenDangoList)
@@ -51,34 +49,21 @@ public class EatModule : MonoBehaviour
         // 団子を食べることに失敗
         return false;
     }
+
     /// <summary>
     /// 団子を食べる処理の制御    </summary>
     /// <param name="targetSkewer">
     /// 食べる対象の串    </param>
-    public IEnumerator EatSequence(SkewerController targetSkewer)
+    public IEnumerator EatSequence()
     {
-        // 入力されたキー入力を元に、食べる団子を指定
-        int eatDangoIndex = 0;
-        while (true)
+        while (targetDango == null)
         {
-            if(Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                eatDangoIndex = 1;
-                break;
-            }
-            else if(Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                eatDangoIndex = 2;
-                break;
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                eatDangoIndex = 3;
-                break;
-            }
             yield return null;
         }
         // 食べるのを試みる
-        TryEat(targetSkewer, eatDangoIndex);
+        TryEat(targetDango.CurrentSkewer, targetDango);
     }
+    /// <summary>
+    /// 食べる対象の団子を設定    </summary>
+    public void SetTargetDango(Dango dango) { targetDango = dango; }
 }
