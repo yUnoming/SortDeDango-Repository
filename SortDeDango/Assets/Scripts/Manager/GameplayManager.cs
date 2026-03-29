@@ -54,11 +54,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     PauseGame();
                     base.StateRunning();
                 }
-                else if (IsGameOver())
-                {
-                    Debug.Log("ゲームオーバー！！");
-                    PauseGame();
-                }
+                else if (IsGameOver()) Debug.Log("ゲームオーバー！！");
                 break;
         }
     }
