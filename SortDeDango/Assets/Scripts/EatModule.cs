@@ -7,7 +7,11 @@ public class EatModule : MonoBehaviour
     [SerializeField, Tooltip("食べられる最大回数")]
     private int maxEatActionCount;
     public int MaxEatActionCount => maxEatActionCount;
-    
+    [SerializeField]
+    private AudioData eatSE;
+    [SerializeField]
+    private AudioData eatFailSE;
+
     [Tooltip("食べられる残り回数")]
     private int remainingEatActionCount;
     public int RemainingEatActionCount => remainingEatActionCount;
@@ -26,7 +30,14 @@ public class EatModule : MonoBehaviour
     /// 判定対象の串    </param>
     public bool CanEat()
     {
-        return remainingEatActionCount > 0;
+        // 使用回数が残っていない
+        if(remainingEatActionCount == 0)
+        {
+            AudioManager.Instance.PlaySE(eatFailSE);
+            return false;
+        }
+        // 使用回数が残っている
+        return true;
     }
     /// <summary>
     /// 指定した串をから団子食べる処理を行い、成功判定を返す    </summary>
@@ -43,6 +54,7 @@ public class EatModule : MonoBehaviour
             foreach(Dango eatenDango  in eatenDangoList)
                 Destroy(eatenDango.gameObject);    // オブジェクト削除
             GameplayManager.Instance.OnDangoEaten(eatenDangoList.Count);
+            AudioManager.Instance.PlaySE(eatSE);
             remainingEatActionCount--;
             return true;
         }
