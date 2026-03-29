@@ -147,17 +147,17 @@ public class GameplayController : MonoBehaviour
     /// 団子を食べる    </summary>
     private IEnumerator EatDangoSequence()
     {
-        isInputLocked = true;
-        isEatMode = true;
+        SetInputLocked(true);
+        SetEatModeActive(true);
 
         yield return eatModule.EatSequence();
         gameplayUI.UpdateEatActionCount(
                 eatModule.RemainingEatActionCount,
                 eatModule.MaxEatActionCount
             );
-
-        isInputLocked = false;
-        isEatMode = false;
+        
+        SetInputLocked(false);
+        SetEatModeActive(false);
     }
 
     /// <summary>
@@ -171,6 +171,11 @@ public class GameplayController : MonoBehaviour
     public void SetInputLocked(bool isLocked)
     {
         isInputLocked = isLocked;
+    }
+    public void SetEatModeActive(bool isActive)
+    {
+        isEatMode = isActive;
+        gameplayUI.UpdateEatModeUI(isEatMode);
     }
     /// <summary>
     /// 串が選択された際のイベント    </summary>

@@ -21,7 +21,9 @@ public class GameplayUIController : MonoBehaviour
     private Button undoButton;
     [SerializeField]
     private Button eatButton;
-    
+    [SerializeField]
+    private Outline eatButtonOutline;
+
     [Tooltip("Restartボタン押下時のイベント")]
     public event Action onRestartClicked;
     [Tooltip("Undoボタン押下時のイベント")]
@@ -43,15 +45,15 @@ public class GameplayUIController : MonoBehaviour
     /// <summary>
     /// UI非表示    </summary>
     public void Hide() { content.SetActive(false); }
-    
+
     /// <summary>
-    /// ステージ番号を更新    </summary>
+    /// ステージ番号の表示更新    </summary>
     public void UpdateStageNumber(int stageNumber)
     {
         stageNumberTMP.text = $"Stage {stageNumber}";
     }
     /// <summary>
-    /// 食べる使用回数を更新    </summary>
+    /// 食べる使用回数の表示更新    </summary>
     /// <param name="remaining">
     /// 残り回数    </param>
     /// <param name="max">
@@ -61,7 +63,7 @@ public class GameplayUIController : MonoBehaviour
         eatActionCountTMP.text = $"{remaining} / {max}";
     }
     /// <summary>
-    /// 食べた団子数を設定    </summary>
+    /// 食べた団子数の表示更新    </summary>
     /// <param name="current">
     /// 現在の食べた数    </param>
     /// <param name="target">
@@ -71,9 +73,15 @@ public class GameplayUIController : MonoBehaviour
         eatenDangoCountTMP.text = $"Dango {current} / {target}";
     }
     /// <summary>
-    /// 手数の設定    </summary>
+    /// 手数の表示更新    </summary>
     public void UpdateMoveCount(int count)
     {
         moveCountTMP.text = $"Moves {count}";
+    }
+    /// <summary>
+    /// 食べる状態によるUI更新    </summary>
+    public void UpdateEatModeUI(bool isEatMode)
+    {
+        eatButtonOutline.enabled = isEatMode;
     }
 }
