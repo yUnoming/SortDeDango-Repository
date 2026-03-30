@@ -86,13 +86,13 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     /// ゲームを停止    </summary>
     public void PauseGame()
     {
-        GameplayController.Instance.SetInputLocked(true);
+        gameplayController.SetInputLocked(true);
     }
     /// <summary>
     /// ゲームを再開   </summary>
     public void ResumeGame()
     {
-        GameplayController.Instance.SetInputLocked(false);
+        gameplayController.SetInputLocked(false);
     }
 
     /// <summary>

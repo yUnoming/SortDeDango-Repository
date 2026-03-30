@@ -17,6 +17,8 @@ public class EatModule : MonoBehaviour
     public int RemainingEatActionCount => remainingEatActionCount;
     [Tooltip("食べる対象の団子")]
     private Dango targetDango;
+    [Tooltip("キャンセルされたかどうか")]
+    private bool isCanceled;
 
     private void Start()
     {
@@ -68,14 +70,22 @@ public class EatModule : MonoBehaviour
     /// 食べる対象の串    </param>
     public IEnumerator EatSequence()
     {
-        while (targetDango == null)
+        // 食べる対象の発見またはキャンセルされるまで待機
+        while (targetDango == null && !isCanceled)
         {
             yield return null;
         }
-        // 食べるのを試みる
-        TryEat(targetDango.CurrentSkewer, targetDango);
+        if(!isCanceled) TryEat(targetDango.CurrentSkewer, targetDango);
+        isCanceled = false;
     }
     /// <summary>
     /// 食べる対象の団子を設定    </summary>
     public void SetTargetDango(Dango dango) { targetDango = dango; }
+    /// <summary>
+    /// 食べるアクションの中止    </summary>
+    public void CancelEat()
+    {
+        isCanceled = true;
+    }
+
 }

@@ -33,12 +33,6 @@ public class SkewerController : MonoBehaviour
         }
         else ChangeState(SkewerState.Stack);
     }
-    private void OnMouseDown()
-    {
-        // 串クリックイベントを通知
-        Debug.Log(gameObject.name + " clicked!");
-        GameplayController.Instance.OnSkewerSelected(this);
-    }
 
     /// <summary>
     /// 状態を変更    </summary>

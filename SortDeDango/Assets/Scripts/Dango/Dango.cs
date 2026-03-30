@@ -15,13 +15,6 @@ public class Dango : MonoBehaviour
     private SkewerController currentSkewer;
     public SkewerController CurrentSkewer => currentSkewer;
 
-    private void OnMouseDown()
-    {
-        // 団子クリックイベントを通知
-        Debug.Log(gameObject.name + " clicked!");
-        GameplayController.Instance.OnDangoSelected(this);
-    }
-
     /// <summary>
     /// 団子の色をセット    </summary>
     public void SetColor(DangoColor color)
