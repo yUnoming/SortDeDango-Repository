@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameplayController : MonoBehaviour
 {
@@ -18,9 +19,6 @@ public class GameplayController : MonoBehaviour
     [SerializeField]
     private EatModule eatModule;
 
-    private static GameplayController instance;
-    public static GameplayController Instance { get { return instance; } }
-
     GameplayUIController gameplayUI;
 
     [Tooltip("現在選択中の串")]
@@ -36,8 +34,6 @@ public class GameplayController : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
-
         // ゲームプレイUIへのイベント設定・表示セット
         gameplayUI = FindAnyObjectByType<GameplayUIController>();
         gameplayUI.onRestartClicked += HandleRestartClicked;
@@ -63,6 +59,8 @@ public class GameplayController : MonoBehaviour
         if(Input.GetKeyDown(nextStageKey)) GameplayManager.Instance.LoadNextStage();
         else if (Input.GetKeyDown(previousStageKey)) GameplayManager.Instance.LoadPreviousStage();
 #endif
+        // 左クリックの判定
+        if(Input.GetMouseButtonDown(0)) HandleLeftClick();
     }
 
     /// <summary>
@@ -73,10 +71,10 @@ public class GameplayController : MonoBehaviour
     /// 移動先の串    </param>
     private IEnumerator MoveDangoSequence(SkewerController from, SkewerController to)
     {
-        isInputLocked = true;
+        SetInputLocked(true);
+
         // 移動データを作成
         MoveData moveData = new MoveData(from, to);
-
         // 移動させられるだけ、揃っている団子を全て移動
         for (int index = from.CurrentDangoCount; index > 0; index--)
         {
@@ -98,13 +96,57 @@ public class GameplayController : MonoBehaviour
         // 手数を増やして表示
         ++moveCount;
         gameplayUI.UpdateMoveCount(moveCount);
-        // 串の選択状態を解除
-        from.OnDeselect();
-        selectingSkewer = null;
 
-        isInputLocked = false;
+        DeselectCurrentSkewer();
+        SetInputLocked(false);
     }
+    /// <summary>
+    /// 左クリック時の処理    </summary>
+    private void HandleLeftClick()
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
+        // クリック位置へRaycast
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            // 対象オブジェクトのクリック
+            if (hit.collider != null)
+            {
+                // 団子選択の判定
+                Dango dango = hit.collider.GetComponent<Dango>();
+                if (dango != null)
+                {
+                    OnDangoSelected(dango);
+                    return;
+                }
+                // 串選択の判定
+                SkewerController skewer = hit.collider.GetComponent<SkewerController>();
+                if (skewer != null)
+                {
+                    OnSkewerSelected(skewer);
+                    return;
+                }
+            }
+        }
+        // 空クリックor対象外オブジェクトのクリック
+        DeselectCurrentSelection();
+    }
+    /// <summary>
+    /// 現在の選択を解除    </summary>
+    private void DeselectCurrentSelection()
+    {
+        if (isEatMode) eatModule.CancelEat();
+        else if(selectingSkewer != null) DeselectCurrentSkewer();
+    }
+    /// <summary>
+    /// 現在選択している串の選択解除    </summary>
+    private void DeselectCurrentSkewer()
+    {
+        selectingSkewer.OnDeselect();
+        selectingSkewer = null;
+    }
     /// <summary>
     /// Restartボタン押下時の処理    </summary>
     private void HandleRestartClicked()
@@ -181,7 +223,7 @@ public class GameplayController : MonoBehaviour
     /// 串が選択された際のイベント    </summary>
     /// <param name="skewer">
     /// 選択された串    </param>
-    public void OnSkewerSelected(SkewerController skewer)
+    private void OnSkewerSelected(SkewerController skewer)
     {
         if (isInputLocked) return;
 
@@ -202,11 +244,13 @@ public class GameplayController : MonoBehaviour
             return;
         }
 
-        // 串の選択状態を解除
-        selectingSkewer.OnDeselect();
-        selectingSkewer = null;
+        DeselectCurrentSkewer();
     }
-    public void OnDangoSelected(Dango dango)
+    /// <summary>
+    /// 団子が選択された際のイベント    </summary>
+    /// <param name="dango">
+    /// 選択された団子 </param>
+    private void OnDangoSelected(Dango dango)
     {
         // 選択した団子を食べる
         if (isEatMode)
