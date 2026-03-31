@@ -83,9 +83,7 @@ public class GameplayUIController : MonoBehaviour
     public void UpdateEatModeUI(bool isEatMode, int remainingCount)
     {
         eatButtonOutline.enabled = isEatMode;
-        if(remainingCount == 0)
-        {
-            eatButton.interactable = false;
-        }
+        if(remainingCount == 0) eatButton.interactable = false;
+        else eatButton.interactable = true;
     }
 }

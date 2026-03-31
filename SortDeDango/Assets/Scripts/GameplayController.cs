@@ -151,8 +151,8 @@ public class GameplayController : MonoBehaviour
     /// Restartボタン押下時の処理    </summary>
     private void HandleRestartClicked()
     {
-        if (!isInputLocked)
-            GameplayManager.Instance.ResetStage();
+        GameplayManager.Instance.ResetStage();
+        Initialize();
     }
     /// <summary>
     /// Undoボタン押下時の処理    </summary>
@@ -213,6 +213,24 @@ public class GameplayController : MonoBehaviour
         foreach (Dango dango in dangos) dango.SetOutlineVisible(isVisible);
     }
 
+    /// <summary>
+    /// 初期化    </summary>
+    public void Initialize()
+    {
+        // 移動データ
+        moveDataList.Clear();
+        moveCount = 0;
+        // 食べるアクション・UI
+        eatModule.Initialize();
+        gameplayUI.UpdateEatActionCount(
+            eatModule.RemainingEatActionCount,
+            eatModule.MaxEatActionCount);
+        gameplayUI.UpdateMoveCount(moveCount);
+        // ゲームの状態
+        SetInputLocked(false);
+        SetEatModeActive(false);
+        SetAllDangoOutlineVisible(false);
+    }
     /// <summary>
     /// 食べるアクションを使用可能かどうか    </summary>
     public bool CanUseEatAction()

@@ -23,24 +23,9 @@ public class EatModule : MonoBehaviour
     private void Start()
     {
         maxEatActionCount = StageManager.Instance.CurrentStageData.maxEatActionCount;
-        remainingEatActionCount = maxEatActionCount;
+        Initialize();
     }
 
-    /// <summary>
-    /// 団子を食べられるか判定    </summary>
-    /// <param name="selectingSkewer">
-    /// 判定対象の串    </param>
-    public bool CanEat()
-    {
-        // 使用回数が残っていない
-        if(remainingEatActionCount == 0)
-        {
-            AudioManager.Instance.PlaySE(eatFailSE);
-            return false;
-        }
-        // 使用回数が残っている
-        return true;
-    }
     /// <summary>
     /// 指定した串をから団子食べる処理を行い、成功判定を返す    </summary>
     /// <param name="targetSkewer">
@@ -64,6 +49,27 @@ public class EatModule : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// 初期化    </summary>
+    public void Initialize()
+    {
+        remainingEatActionCount = maxEatActionCount;
+    }
+    /// <summary>
+    /// 団子を食べられるか判定    </summary>
+    /// <param name="selectingSkewer">
+    /// 判定対象の串    </param>
+    public bool CanEat()
+    {
+        // 使用回数が残っていない
+        if (remainingEatActionCount == 0)
+        {
+            AudioManager.Instance.PlaySE(eatFailSE);
+            return false;
+        }
+        // 使用回数が残っている
+        return true;
+    }
     /// <summary>
     /// 団子を食べる処理の制御    </summary>
     /// <param name="targetSkewer">

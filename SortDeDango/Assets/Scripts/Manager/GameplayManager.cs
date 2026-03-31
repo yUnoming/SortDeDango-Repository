@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameplayManager : SceneManagerBase<GameplayManager>
 {
@@ -9,9 +10,12 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     [SerializeField]
     private GameMode gameMode = GameMode.Normal;
 
+    private StageGenerator stageGenerator;
     private GameplayController gameplayController;
     private GameplayUIController gameplayUI;
     private ResultUIController resultUI;
+
+    private List<SkewerController> skewers;
 
     [Tooltip("現在のゲームモード")]
     public GameMode CurrentGameMode => gameMode;
@@ -20,7 +24,8 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     {
         // ステージのセットアップ
         StageData data = StageManager.Instance.CurrentStageData;
-        FindAnyObjectByType<StageGenerator>().Generate(data);   // ステージ生成
+        stageGenerator = FindAnyObjectByType<StageGenerator>();
+        skewers = stageGenerator.Generate(data);                // ステージ生成
         targetDangoCount = data.targetDangoCount;               // 目標数のセット
         // ゲームプレイUIの初期設定
         gameplayUI = FindAnyObjectByType<GameplayUIController>();
@@ -96,24 +101,32 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     }
 
     /// <summary>
-    /// ステージを初期化    </summary>
+    /// ステージ初期化    </summary>
     public void ResetStage()
     {
-        ChangeScene(SceneType.Gameplay, true, sceneName);
+        // 串と団子を全削除
+        Dango[] dangos = FindObjectsByType<Dango>(FindObjectsSortMode.None);
+        foreach (Dango dango in dangos) Destroy(dango.gameObject);
+        foreach(SkewerController skewer in skewers) Destroy(skewer.gameObject);
+        // ステージ再生成
+        skewers = stageGenerator.Generate(StageManager.Instance.CurrentStageData);
+        // 目標数の初期化
+        eatenDangoCount = 0;
+        gameplayUI.UpdateEatenDangoCount(eatenDangoCount, targetDangoCount);
     }
     /// <summary>
     /// 次のステージをロード    </summary>
     public void LoadNextStage()
     {
         StageManager.Instance.GoToNextStage();
-        ResetStage();
+        ChangeScene(SceneType.Gameplay, true, sceneName);
     }
     /// <summary>
     /// 前のステージをロード    </summary>
     public void LoadPreviousStage()
     {
         StageManager.Instance.GoToPreviousStage();
-        ResetStage();
+        ChangeScene(SceneType.Gameplay, true, sceneName);
     }
 
     /// <summary>

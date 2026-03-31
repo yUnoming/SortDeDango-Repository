@@ -12,15 +12,17 @@ public class StageGenerator : MonoBehaviour
     [SerializeField, Tooltip("団子プレハブ")]
     private GameObject dangoPrefab;
 
+    private List<SkewerController> generatedSkewers = new List<SkewerController>();
+
     /// <summary>
     /// ステージ生成    </summary>
     /// <param name="stageData">
     /// 生成に使用するステージデータ    </param>
     /// <returns>
-    /// 生成後の串リスト    </returns>
+    /// 生成した串リスト   </returns>
     public List<SkewerController> Generate(StageData stageData)
     {
-        List<SkewerController> skewers = new List<SkewerController>();
+        generatedSkewers.Clear();
         int totalSkewers = stageData.totalSkewers;
         float firstSkewerPositionX = -skewerSpacing * (totalSkewers - 1) * 0.5f; // 一番目の串の座標
 
@@ -50,8 +52,28 @@ public class StageGenerator : MonoBehaviour
                 skewer.AddDango(dango.GetComponent<Dango>());   // 団子の追加
                 skewer.SetTopDangoPosition(dango);              // 団子の配置
             }
-            skewers.Add(skewer);
+            generatedSkewers.Add(skewer);
         }
-        return skewers;
+        return generatedSkewers;
+    }
+    /// <summary>
+    /// ステージ再生成    </summary>
+    public void Regenerate(StageData stageData)
+    {
+        // 串の総数分のループ
+        for (int skewerIndex = 0; skewerIndex < stageData.totalSkewers; skewerIndex++)
+        {
+            // 団子リストに設定された団子色分のループ
+            foreach (DangoColor dangoColor in stageData.dangoLists[skewerIndex].dangoColors)
+            {
+                //=====
+                // 団子の生成・初期設定
+                GameObject dangoObj = Instantiate(dangoPrefab);
+                Dango dango = dangoObj.GetComponent<Dango>();
+                dango.SetColor(dangoColor);                                             // 団子色の設定
+                generatedSkewers[skewerIndex].AddDango(dango.GetComponent<Dango>());    // 団子の追加
+                generatedSkewers[skewerIndex].SetTopDangoPosition(dango);               // 団子の配置
+            }
+        }
     }
 }
