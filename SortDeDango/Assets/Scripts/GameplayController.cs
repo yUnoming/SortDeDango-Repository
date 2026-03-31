@@ -151,8 +151,11 @@ public class GameplayController : MonoBehaviour
     /// Restartボタン押下時の処理    </summary>
     private void HandleRestartClicked()
     {
-        GameplayManager.Instance.ResetStage();
-        Initialize();
+        if (GameplayManager.currentState == SceneState.Running)
+        {
+            GameplayManager.Instance.ResetStage();
+            Initialize();
+        }
     }
     /// <summary>
     /// Undoボタン押下時の処理    </summary>
