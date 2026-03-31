@@ -118,14 +118,14 @@ public class GameplayController : MonoBehaviour
                 Dango dango = hit.collider.GetComponent<Dango>();
                 if (dango != null)
                 {
-                    OnDangoSelected(dango);
+                    OnDangoClicked(dango);
                     return;
                 }
                 // 串選択の判定
                 SkewerController skewer = hit.collider.GetComponent<SkewerController>();
                 if (skewer != null)
                 {
-                    OnSkewerSelected(skewer);
+                    OnSkewerClicked(skewer);
                     return;
                 }
             }
@@ -139,6 +139,14 @@ public class GameplayController : MonoBehaviour
     {
         if (isEatMode) eatModule.CancelEat();
         else if(selectingSkewer != null) DeselectCurrentSkewer();
+    }
+    /// <summary>
+    /// 新たな串の選択    </summary>
+    /// <param name="skewer"></param>
+    private void SelectCurrentSekewer(SkewerController skewer)
+    {
+        selectingSkewer = skewer;
+        selectingSkewer.OnSelect();
     }
     /// <summary>
     /// 現在選択している串の選択解除    </summary>
@@ -254,47 +262,49 @@ public class GameplayController : MonoBehaviour
         gameplayUI.UpdateEatModeUI(isEatMode, eatModule.RemainingEatActionCount);
     }
     /// <summary>
-    /// 串が選択された際のイベント    </summary>
-    /// <param name="skewer">
-    /// 選択された串    </param>
-    private void OnSkewerSelected(SkewerController skewer)
+    /// 串がクリックされた際のイベント    </summary>
+    /// <param name="clickedSkewer">
+    /// クリックされた串    </param>
+    private void OnSkewerClicked(SkewerController clickedSkewer)
     {
         if (isInputLocked) return;
 
-        // 既に選択されていなければ、今回選択された串を保持
+        // 現在選択中の串がなければ、今回クリックされた串を保持
         if (selectingSkewer == null)
         {
-            selectingSkewer = skewer;
-            selectingSkewer.OnSelect();
+            SelectCurrentSekewer(clickedSkewer);
             return;
         }
-        // 保持中の串とは別の串を選択したら、移動処理へ
-        else if (skewer != selectingSkewer)
+        // 保持中の串とは別の串をクリックした
+        else if (clickedSkewer != selectingSkewer)
         {
-            StartCoroutine(MoveDangoSequence(
+            // クリックされた串へ団子が移動可能なら、移動処理へ
+            if(clickedSkewer.CanMoveDango(selectingSkewer))
+            {
+                StartCoroutine(MoveDangoSequence(
                     selectingSkewer,
-                    skewer
-                ));
+                    clickedSkewer));
+            }
+            // 移動不可なら、クリックされた串を選択対象とする
+            else
+            {
+                DeselectCurrentSkewer();
+                SelectCurrentSekewer(clickedSkewer);
+            }
             return;
         }
 
         DeselectCurrentSkewer();
     }
     /// <summary>
-    /// 団子が選択された際のイベント    </summary>
-    /// <param name="dango">
+    /// 団子がクリックされた際のイベント    </summary>
+    /// <param name="clickedDango">
     /// 選択された団子 </param>
-    private void OnDangoSelected(Dango dango)
+    private void OnDangoClicked(Dango clickedDango)
     {
-        // 選択した団子を食べる
-        if (isEatMode)
-        {
-            eatModule.SetTargetDango(dango);
-        }
-        // 自身が所属している串の選択
-        else
-        {
-            if (!isInputLocked) OnSkewerSelected(dango.CurrentSkewer);
-        }
+        // 食べる状態中
+        if (isEatMode) eatModule.SetTargetDango(clickedDango);
+        // 通常状態
+        else OnSkewerClicked(clickedDango.CurrentSkewer);
     }
 }
