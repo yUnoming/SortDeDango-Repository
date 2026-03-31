@@ -198,7 +198,7 @@ public class GameplayController : MonoBehaviour
                 eatModule.RemainingEatActionCount,
                 eatModule.MaxEatActionCount
             );
-        
+
         SetInputLocked(false);
         SetEatModeActive(false);
         SetAllDangoOutlineVisible(false);
@@ -225,10 +225,12 @@ public class GameplayController : MonoBehaviour
     {
         isInputLocked = isLocked;
     }
+    /// <summary>
+    /// 食べる状態の切り替え    </summary>
     public void SetEatModeActive(bool isActive)
     {
         isEatMode = isActive;
-        gameplayUI.UpdateEatModeUI(isEatMode);
+        gameplayUI.UpdateEatModeUI(isEatMode, eatModule.RemainingEatActionCount);
     }
     /// <summary>
     /// 串が選択された際のイベント    </summary>
