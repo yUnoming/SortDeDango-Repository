@@ -191,6 +191,7 @@ public class GameplayController : MonoBehaviour
     {
         SetInputLocked(true);
         SetEatModeActive(true);
+        SetAllDangoOutlineVisible(true);
 
         yield return eatModule.EatSequence();
         gameplayUI.UpdateEatActionCount(
@@ -200,6 +201,16 @@ public class GameplayController : MonoBehaviour
         
         SetInputLocked(false);
         SetEatModeActive(false);
+        SetAllDangoOutlineVisible(false);
+    }
+    /// <summary>
+    /// 全団子のアウトライン表示切り替え    </summary>
+    /// <param name="isVisible">
+    /// 表示するかどうか    </param>
+    private void SetAllDangoOutlineVisible(bool isVisible)
+    {
+        Dango[] dangos = FindObjectsByType<Dango>(FindObjectsSortMode.None);
+        foreach (Dango dango in dangos) dango.SetOutlineVisible(isVisible);
     }
 
     /// <summary>
