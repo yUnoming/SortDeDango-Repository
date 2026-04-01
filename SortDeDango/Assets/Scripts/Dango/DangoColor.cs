@@ -3,5 +3,7 @@
     None,
     White,
     Green,
-    Pink
+    Pink,
+    Brown,
+    Black,
 }
