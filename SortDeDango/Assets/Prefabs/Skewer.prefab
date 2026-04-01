@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd2dd4909141924a9aaf4e3ab99b82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDango: 3
+  maxDango: 4
   dangoAnchor: {fileID: 2073719867867742497}
   dangoSpacing: 0.7
   dangoList: []
