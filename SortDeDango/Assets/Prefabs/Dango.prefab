@@ -160,6 +160,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7b7abbff5c251784c9e401c01196a628, type: 2}
   - {fileID: 2100000, guid: 11a9c81ef3075304dbe21c74f6d68f1e, type: 2}
   - {fileID: 2100000, guid: cc216a667665a504d8e7436a4d351dc9, type: 2}
+  - {fileID: 2100000, guid: 2972dd073ab9c9947ba24c41c4890e11, type: 2}
+  - {fileID: 2100000, guid: f210b076d7e94f84a8a6035a21170106, type: 2}
   modelMeshRenderer: {fileID: 789151438020154855}
   outlineMeshRenderer: {fileID: 1192824572414184625}
 --- !u!114 &3849883771821116885
