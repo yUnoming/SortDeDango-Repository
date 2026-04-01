@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1a3b63bf3e20f4f8458129490554b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skewerSpacing: 2.5
+  maxSkewerPerRow: 5
+  skewerRowSpacing: 5
+  skewerColumnSpacing: 3.5
+  skewerRoot: {fileID: 0}
   skewerPrefab: {fileID: 1462614603756983241, guid: 1dc47f82425ea1c458fe011a26673073, type: 3}
   dangoPrefab: {fileID: 5626082536218945048, guid: e59e5e67ecb50f043ab07f4808de054b, type: 3}

@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class StageGenerator : MonoBehaviour
 {
-    [SerializeField, Tooltip("串の間隔")]
-    private float skewerSpacing;
+    [SerializeField, Tooltip("一行の最大串数")]
+    private int maxSkewerPerRow;
+    [SerializeField, Tooltip("串の行間隔")]
+    private float skewerRowSpacing;
+    [SerializeField, Tooltip("串の列間隔")]
+    private float skewerColumnSpacing;
     [SerializeField, Tooltip("串の格納先")]
     Transform skewerRoot;
     [SerializeField, Tooltip("串プレハブ")]
@@ -24,7 +28,8 @@ public class StageGenerator : MonoBehaviour
     {
         generatedSkewers.Clear();
         int totalSkewers = stageData.totalSkewers;
-        float firstSkewerPositionX = -skewerSpacing * (totalSkewers - 1) * 0.5f; // 一番目の串の座標
+        Vector3 firstSkewerPosition = Vector3.zero; // 一番目の串の座標
+        firstSkewerPosition.y = skewerRowSpacing * (int)(totalSkewers / maxSkewerPerRow) / 2;
 
         // 串の総数分のループ
         for(int skewerIndex = 0; skewerIndex < totalSkewers; skewerIndex++)
@@ -35,9 +40,12 @@ public class StageGenerator : MonoBehaviour
             SkewerController skewer = skewerObj.GetComponent<SkewerController>();
             // 座標セット
             skewer.transform.parent = skewerRoot;
+            int row = skewerIndex / maxSkewerPerRow;
+            int column = skewerIndex % maxSkewerPerRow;
+            if(column == 0) firstSkewerPosition.x = -skewerColumnSpacing * Mathf.Min((totalSkewers - skewerIndex) - 1, maxSkewerPerRow - 1) / 2; // 一番目の串の座標
             skewer.transform.position = new Vector3(
-                firstSkewerPositionX + skewerSpacing * skewerIndex,
-                skewer.transform.position.y,
+                firstSkewerPosition.x + skewerColumnSpacing * column,
+                firstSkewerPosition.y - skewerRowSpacing * row,
                 skewer.transform.position.z
                 );
 
