@@ -29,7 +29,7 @@ public class StageGenerator : MonoBehaviour
         generatedSkewers.Clear();
         int totalSkewers = stageData.totalSkewers;
         Vector3 firstSkewerPosition = Vector3.zero; // 一番目の串の座標
-        firstSkewerPosition.y = skewerRowSpacing * (int)(totalSkewers / maxSkewerPerRow) / 2;
+        firstSkewerPosition.y = skewerRowSpacing * (int)((totalSkewers - 1) / maxSkewerPerRow) / 2;
 
         // 串の総数分のループ
         for(int skewerIndex = 0; skewerIndex < totalSkewers; skewerIndex++)
