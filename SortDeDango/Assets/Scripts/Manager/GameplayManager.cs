@@ -14,6 +14,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     private GameplayController gameplayController;
     private GameplayUIController gameplayUI;
     private ResultUIController resultUI;
+    private ResultData resultData;
 
     private List<SkewerController> skewers;
 
@@ -34,6 +35,9 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         resultUI = FindAnyObjectByType<ResultUIController>();
         resultUI.onNextClicked += HandleNextClicked;
         resultUI.Hide();
+        // リザルトデータ
+        resultData = new ResultData();
+        resultData.minMoveCount = data.minMoveCount;
 
         gameplayController = FindAnyObjectByType<GameplayController>();
         base.StateInit();
@@ -55,6 +59,8 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     // クリア表示
                     Debug.Log("ステージクリア！！");
                     resultUI.Show();
+                    resultData.moveCount = gameplayController.MoveCount;
+                    resultUI.ShowResult(resultData);
 
                     PauseGame();
                     base.StateRunning();

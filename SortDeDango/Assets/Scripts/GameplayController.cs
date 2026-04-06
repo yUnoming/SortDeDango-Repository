@@ -31,6 +31,7 @@ public class GameplayController : MonoBehaviour
     private List<MoveData> moveDataList = new List<MoveData>();
     [Tooltip("手数")]
     private int moveCount;
+    public int MoveCount => moveCount;
 
     private void Start()
     {
