@@ -27,7 +27,7 @@ public class StageGenerator : MonoBehaviour
     public List<SkewerController> Generate(StageData stageData)
     {
         generatedSkewers.Clear();
-        int totalSkewers = stageData.totalSkewers;
+        int totalSkewers = stageData.SkewerCount;
         Vector3 firstSkewerPosition = Vector3.zero; // 一番目の串の座標
         firstSkewerPosition.y = skewerRowSpacing * (int)((totalSkewers - 1) / maxSkewerPerRow) / 2;
 
@@ -69,7 +69,7 @@ public class StageGenerator : MonoBehaviour
     public void Regenerate(StageData stageData)
     {
         // 串の総数分のループ
-        for (int skewerIndex = 0; skewerIndex < stageData.totalSkewers; skewerIndex++)
+        for (int skewerIndex = 0; skewerIndex < stageData.SkewerCount; skewerIndex++)
         {
             // 団子リストに設定された団子色分のループ
             foreach (DangoColor dangoColor in stageData.dangoLists[skewerIndex].dangoColors)
