@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bafb9b32d9e60a4383a6de653d30551, type: 3}
-  m_Name: PreStage_000_Early
+  m_Name: Stage_013_Early
   m_EditorClassIdentifier: 
-  minMoveCount: 5
-  targetDangoCount: 6
-  maxEatActionCount: 3
+  minMoveCount: 1
+  targetDangoCount: 4
+  maxEatActionCount: 2
   dangoLists:
-  - dangoColors: 020000000100000003000000
-  - dangoColors: 020000000100000003000000
-  - dangoColors: 020000000100000003000000
-  - dangoColors: 
+  - dangoColors: 0100000002000000
+  - dangoColors: 0200000002000000
+  - dangoColors: 0100000002000000

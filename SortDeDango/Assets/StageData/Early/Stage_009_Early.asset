@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bafb9b32d9e60a4383a6de653d30551, type: 3}
   m_Name: Stage_009_Early
   m_EditorClassIdentifier: 
-  minMoveCount: 1
-  targetDangoCount: 4
+  minMoveCount: 3
+  targetDangoCount: 7
   maxEatActionCount: 2
   dangoLists:
-  - dangoColors: 0100000002000000
-  - dangoColors: 0200000002000000
-  - dangoColors: 0100000002000000
+  - dangoColors: 030000000300000005000000
+  - dangoColors: 0500000005000000
+  - dangoColors: 0500000003000000
+  - dangoColors: 
