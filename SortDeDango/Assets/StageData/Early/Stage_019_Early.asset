@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bafb9b32d9e60a4383a6de653d30551, type: 3}
+  m_Name: Stage_019_Early
+  m_EditorClassIdentifier: 
+  minMoveCount: 2
+  targetDangoCount: 9
+  maxEatActionCount: 4
+  dangoLists:
+  - dangoColors: 050000000100000001000000
+  - dangoColors: 010000000500000001000000
+  - dangoColors: 010000000100000005000000
+  - dangoColors: 
