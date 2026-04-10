@@ -22,6 +22,7 @@ public class ResultUIController : MonoBehaviour
     private void Awake()
     {
         nextButton.onClick.AddListener(() => onNextClicked?.Invoke());
+        Hide();
     }
 
     /// <summary>
