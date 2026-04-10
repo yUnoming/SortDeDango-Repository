@@ -42,12 +42,6 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         gameplayController = FindAnyObjectByType<GameplayController>();
         base.StateInit();
     }
-    protected override void StateStart()
-    {
-        // 値の初期化
-        eatenDangoCount = 0;
-        base.StateStart();
-    }
     protected override void StateRunning()
     {
         // クリア判定
@@ -68,6 +62,11 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                 else if (IsGameOver()) Debug.Log("ゲームオーバー！！");
                 break;
         }
+    }
+    protected override void StateUninit()
+    {
+        eatenDangoCount = 0;    // 食べた団子の数を初期化
+        base.StateUninit();
     }
 
     /// <summary>
