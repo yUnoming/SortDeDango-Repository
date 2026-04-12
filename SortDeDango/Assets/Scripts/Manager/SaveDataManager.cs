@@ -44,10 +44,12 @@ public class SaveDataManager : MonoBehaviour
     /// ロード    </summary>
     public SaveData Load()
     {
-        currentSaveData = new SaveData();
-        currentSaveData.reachedStageIndex = PlayerPrefs.GetInt(ReachedStageKey, 1);
-        currentSaveData.lastPlayedStageIndex = PlayerPrefs.GetInt(LastPlayedStageKey, 1);
-
+        if(currentSaveData == null)
+        {
+            currentSaveData = new SaveData();
+            currentSaveData.reachedStageIndex = PlayerPrefs.GetInt(ReachedStageKey, 1);
+            currentSaveData.lastPlayedStageIndex = PlayerPrefs.GetInt(LastPlayedStageKey, 1);
+        }
         return currentSaveData;
     }
 

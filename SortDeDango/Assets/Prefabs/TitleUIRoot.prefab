@@ -1344,7 +1344,6 @@ GameObject:
   - component: {fileID: 8679820677010143997}
   - component: {fileID: 3720995636339840797}
   - component: {fileID: 967777214118556525}
-  - component: {fileID: 2710710155942835063}
   m_Layer: 0
   m_Name: NewGameButton
   m_TagString: Untagged
@@ -1454,21 +1453,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2710710155942835063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7861494270804904265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c00ae3e1ab84ec4781d14ad63ca42fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneType: 20
-  sceneName: GameplayScene
-  isReload: 0
 --- !u!1 &9206506000649934069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2415490005519178944}
+  - component: {fileID: 5951326329127469189}
   m_Layer: 0
   m_Name: TitleUIRoot
   m_TagString: Untagged
@@ -1505,6 +1490,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5951326329127469189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9206506000649934069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75fce7f9403e63541b3ee52eceebca5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newGameButton: {fileID: 967777214118556525}
 --- !u!1 &9208275212453345476
 GameObject:
   m_ObjectHideFlags: 0
