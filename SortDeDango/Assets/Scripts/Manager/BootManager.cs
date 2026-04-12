@@ -4,7 +4,7 @@ public class BootManager : SceneManagerBase<BootManager>
 {
     protected override void StateRunning()
     {
-        // 起動時のセットアップ等はここで行う
+        SaveDataManager.Instance.Load();
         ChangeScene(SceneType.Title, true, "TitleScene");
     }
 }

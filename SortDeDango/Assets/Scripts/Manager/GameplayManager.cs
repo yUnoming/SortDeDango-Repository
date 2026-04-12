@@ -23,15 +23,16 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
 
     protected override void StateInit()
     {
-        // ステージのセットアップ
+        //*** 各種セットアップ ***//
+        // ステージ
         StageData data = StageManager.Instance.CurrentStageData;
         stageGenerator = FindAnyObjectByType<StageGenerator>();
         skewers = stageGenerator.Generate(data);                // ステージ生成
         targetDangoCount = data.targetDangoCount;               // 目標数のセット
-        // ゲームプレイUIの初期設定
+        // ゲームプレイUI
         gameplayUI = FindAnyObjectByType<GameplayUIController>();
         gameplayUI.UpdateEatenDangoCount(eatenDangoCount, targetDangoCount);
-        // リザルトUIの初期設定
+        // リザルトUI
         resultUI = FindAnyObjectByType<ResultUIController>();
         resultUI.onNextClicked += HandleNextClicked;
         resultUI.Hide();
@@ -40,6 +41,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         resultData.minMoveCount = data.minMoveCount;
 
         gameplayController = FindAnyObjectByType<GameplayController>();
+        SaveDataManager.Instance.UpdateLastPlayedStageIndex(StageManager.Instance.CurrentStageNumber);
         base.StateInit();
     }
     protected override void StateRunning()
@@ -57,6 +59,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     resultUI.ShowResult(resultData);
 
                     PauseGame();
+                    SaveDataManager.Instance.UpdateStageIndex(StageManager.Instance.CurrentStageNumber);
                     base.StateRunning();
                 }
                 else if (IsGameOver()) Debug.Log("ゲームオーバー！！");
