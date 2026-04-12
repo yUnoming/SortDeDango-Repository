@@ -50,4 +50,29 @@ public class SaveDataManager : MonoBehaviour
 
         return currentSaveData;
     }
+
+    /// <summary>
+    /// ステージクリア時にステージ番号を更新    </summary>
+    /// <param name="clearedStageIndex">
+    /// クリアしたステージ番号    </param>
+    public void UpdateStageIndexOnClear(int clearedStageIndex)
+    {
+        // 新規ステージをクリアした場合に更新
+        int nextStageIndex = clearedStageIndex + 1;
+        if (nextStageIndex > currentSaveData.reachedStageIndex)
+        {
+            currentSaveData.reachedStageIndex = nextStageIndex;
+            currentSaveData.lastPlayedStageIndex = nextStageIndex;
+            Save(currentSaveData);
+        }
+    }
+    /// <summary>
+    /// 最後に遊んだステージ番号を更新    </summary>
+    /// <param name="currentStageIndex">
+    /// 現在のステージ番号    </param>
+    public void UpdateLastPlayedStageIndex(int currentStageIndex)
+    {
+        currentSaveData.lastPlayedStageIndex = currentStageIndex;
+        Save(currentSaveData);
+    }
 }
