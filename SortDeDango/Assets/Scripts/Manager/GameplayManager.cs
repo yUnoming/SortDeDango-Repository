@@ -59,7 +59,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     resultUI.ShowResult(resultData);
 
                     PauseGame();
-                    SaveDataManager.Instance.UpdateStageIndex(StageManager.Instance.CurrentStageNumber);
+                    SaveDataManager.Instance.UpdateStageIndexOnClear(StageManager.Instance.CurrentStageNumber);
                     base.StateRunning();
                 }
                 else if (IsGameOver()) Debug.Log("ゲームオーバー！！");
