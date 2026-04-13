@@ -1503,6 +1503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newGameButton: {fileID: 967777214118556525}
+  continueButton: {fileID: 7975055990718277507}
 --- !u!1 &9208275212453345476
 GameObject:
   m_ObjectHideFlags: 0

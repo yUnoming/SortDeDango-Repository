@@ -6,6 +6,8 @@ public class SaveDataManager : MonoBehaviour
     public static SaveDataManager Instance => instance;
 
     private SaveData currentSaveData;
+    public SaveData CurrentSaveData => currentSaveData;
+
     private const string ReachedStageKey = "ReachedStageIndex";
     private const string LastPlayedStageKey = "LastPlayedStageIndex";
 
@@ -36,15 +38,19 @@ public class SaveDataManager : MonoBehaviour
     /// セーブ    </summary>
     public void Save(SaveData saveData)
     {
-        PlayerPrefs.SetInt(ReachedStageKey, saveData.reachedStageIndex);
-        PlayerPrefs.SetInt(LastPlayedStageKey, saveData.lastPlayedStageIndex);
-        PlayerPrefs.Save();
+        if(saveData != null)
+        {
+            PlayerPrefs.SetInt(ReachedStageKey, saveData.reachedStageIndex);
+            PlayerPrefs.SetInt(LastPlayedStageKey, saveData.lastPlayedStageIndex);
+            PlayerPrefs.Save();
+        }
     }
     /// <summary>
     /// ロード    </summary>
     public SaveData Load()
     {
-        if(currentSaveData == null)
+        // 既にセーブデータがあればセーブデータをロード
+        if(PlayerPrefs.HasKey(ReachedStageKey))
         {
             currentSaveData = new SaveData();
             currentSaveData.reachedStageIndex = PlayerPrefs.GetInt(ReachedStageKey, 1);
