@@ -8,6 +8,8 @@ public class TitleUIController : MonoBehaviour
     private Button newGameButton;
     [SerializeField]
     private Button continueButton;
+    [SerializeField]
+    private Button stageSelectButton;
 
     [Tooltip("NewGameボタン押下時のイベント")]
     public event Action onNewGameClicked;
@@ -21,8 +23,12 @@ public class TitleUIController : MonoBehaviour
     }
     
     /// <summary>
-    /// Continueボタンの入力受付状態を設定    </summary>
-    /// <param name="isInteractable">
-    /// 入力を受け付けるかどうか    </param>
-    public void SetContinueButtonInteractable(bool isInteractable) { continueButton.interactable = isInteractable; }
+    /// セーブデータの有無でボタンの入力受付を更新    </summary>
+    /// <param name="isAvailable">
+    /// セーブデータの有無   </param>
+    public void UpdateButtonInteractableBySaveData(bool isAvailable)
+    {
+        continueButton.interactable = isAvailable;
+        stageSelectButton.interactable = isAvailable;
+    }
 }
