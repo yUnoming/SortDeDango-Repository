@@ -118,7 +118,15 @@ public class SceneManagerBase : MonoBehaviour
     /// 取得するシーンの種類    </param>
     private string GetSceneName(SceneType sceneType)
     {
-        return sceneType.ToString() + "Scene";
+        // 各シーンタイプに適切なシーン名を設定
+        switch(sceneType)
+        {
+            case SceneType.Title: return "TitleScene";
+            case SceneType.Select: return "StageSelectScene";
+            case SceneType.Gameplay: return "GameplayScene";
+            case SceneType.Result: return "ResultScene";
+        }
+        return null;
     }
     /// <summary>
     /// アプリケーション終了    </summary>

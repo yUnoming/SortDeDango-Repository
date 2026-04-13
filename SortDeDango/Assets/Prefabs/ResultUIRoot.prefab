@@ -526,8 +526,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneType: 10
-  sceneName: StageSelectScene
-  isReload: 0
+  isLoadScene: 1
+  overrideSceneName: 
 --- !u!1 &3230431023463613351
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,8 +663,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneType: 20
-  sceneName: GameplayScene
-  isReload: 1
+  isLoadScene: 1
+  overrideSceneName: 
 --- !u!1 &4691214582791985977
 GameObject:
   m_ObjectHideFlags: 0

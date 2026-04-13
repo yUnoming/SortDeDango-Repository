@@ -1,16 +1,15 @@
-﻿using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SceneChangeButton : MonoBehaviour
 {
     [SerializeField, Tooltip("遷移シーンタイプ")]
     private SceneType sceneType;
-    [SerializeField, Tooltip("遷移シーン名")]
-    private string sceneName;
-    [SerializeField, Tooltip("シーンを再ロードするかどうか")]
-    private bool isReload;
+    [SerializeField, Tooltip("シーンを遷移するかどうか")]
+    private bool isLoadScene = true;
+    [Header("デフォルトシーン以外に遷移したい場合に設定")]
+    [SerializeField, Tooltip("上書き用遷移シーン名")]
+    private string overrideSceneName;
 
     private SceneManagerBase sceneManager;
 
@@ -21,11 +20,7 @@ public class SceneChangeButton : MonoBehaviour
     }
     private void ChangeScene()
     {
-        if(isReload)
-        {
-            if(SceneManagerBase.sceneName != null) sceneManager.ChangeScene(sceneType, true, SceneManagerBase.sceneName);
-            else sceneManager.ChangeScene(sceneType, true, SceneManager.GetActiveScene().name);
-        }
-        else sceneManager.ChangeScene(sceneType, true, sceneName);
+        if (string.IsNullOrEmpty(overrideSceneName)) sceneManager.ChangeScene(sceneType, isLoadScene);
+        else sceneManager.ChangeScene(sceneType, isLoadScene, overrideSceneName);
     }
 }
