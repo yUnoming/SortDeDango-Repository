@@ -99,6 +99,7 @@ public class SceneManagerBase : MonoBehaviour
         switch (nextSceneType)
         {
             case SceneType.Title: GetComponent<SceneManagerBase<TitleManager>>().enabled = true; break;
+            case SceneType.Select: GetComponent<SceneManagerBase<StageSelectManager>>().enabled = true; break;
             case SceneType.Gameplay: GetComponent<SceneManagerBase<GameplayManager>>().enabled = true; break;
             case SceneType.Result: GetComponent<SceneManagerBase<ResultManager>>().enabled = true; break;
         }

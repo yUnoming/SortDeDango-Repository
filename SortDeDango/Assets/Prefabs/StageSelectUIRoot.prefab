@@ -5105,8 +5105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneType: 1
-  sceneName: TitleScene
-  isReload: 0
+  isLoadScene: 1
+  overrideSceneName: 
 --- !u!1 &8588703703227319993
 GameObject:
   m_ObjectHideFlags: 0
