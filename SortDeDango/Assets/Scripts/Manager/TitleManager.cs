@@ -21,13 +21,13 @@ public class TitleManager : SceneManagerBase<TitleManager>
     {
         SaveData newSaveData = SaveDataManager.Instance.CreateSaveData();
         StageManager.Instance.SetStage(newSaveData.reachedStageIndex);
-        ChangeScene(SceneType.Gameplay, true, "GameplayScene");
+        ChangeScene(SceneType.Gameplay);
     }
     /// <summary>
     /// Continueボタン押下時の処理    </summary>
     private void HandleContinueClicked()
     {
         StageManager.Instance.SetStage(SaveDataManager.Instance.Load().reachedStageIndex);
-        ChangeScene(SceneType.Gameplay, true, "GameplayScene");
+        ChangeScene(SceneType.Gameplay);
     }
 }
