@@ -177,7 +177,10 @@ public class GameplayController : MonoBehaviour
     /// Eatボタン押下時の処理    </summary>
     private void HandleEatClicked()
     {
-        if (!isInputLocked && eatModule.CanEat())
+        // 食べるモード実行中ならキャンセル
+        if (isEatMode) eatModule.CancelEat();
+        // 食べられる状態なら食べるモードへ以降
+        else if (!isInputLocked && eatModule.CanEat())
             StartCoroutine(EatDangoSequence());
     }
     /// <summary>
