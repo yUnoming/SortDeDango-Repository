@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 419549563628749736}
   - component: {fileID: 623588298345935324}
   m_Layer: 0
-  m_Name: BackButton
+  m_Name: BackToSelectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,8 +525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c00ae3e1ab84ec4781d14ad63ca42fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneType: 1
-  sceneName: TitleScene
+  sceneType: 10
+  sceneName: StageSelectScene
   isReload: 0
 --- !u!1 &3230431023463613351
 GameObject:
