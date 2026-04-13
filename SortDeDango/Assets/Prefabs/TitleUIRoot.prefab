@@ -951,6 +951,7 @@ GameObject:
   - component: {fileID: 8651555475467710833}
   - component: {fileID: 7866750615108548330}
   - component: {fileID: 1006045740653299939}
+  - component: {fileID: 6637258038462247580}
   m_Layer: 0
   m_Name: StageSelectButton
   m_TagString: Untagged
@@ -1060,6 +1061,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6637258038462247580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5542104311348246774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c00ae3e1ab84ec4781d14ad63ca42fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneType: 10
+  isLoadScene: 1
+  overrideSceneName: 
 --- !u!1 &5879612310065630301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,6 +1520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newGameButton: {fileID: 967777214118556525}
   continueButton: {fileID: 7975055990718277507}
+  stageSelectButton: {fileID: 1006045740653299939}
 --- !u!1 &9208275212453345476
 GameObject:
   m_ObjectHideFlags: 0

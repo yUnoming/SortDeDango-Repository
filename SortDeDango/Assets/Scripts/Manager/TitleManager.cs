@@ -8,9 +8,11 @@ public class TitleManager : SceneManagerBase<TitleManager>
         TitleUIController titleUI = FindAnyObjectByType<TitleUIController>();
         titleUI.onNewGameClicked += HandleNewGameClicked;
         titleUI.onContinueClicked += HandleContinueClicked;
-        // セーブデータがあれば、Continueボタンを入力可能に
-        if (SaveDataManager.Instance.CurrentSaveData != null)
-            titleUI.SetContinueButtonInteractable(true);
+        // セーブデータの有無で入力受付更新
+        titleUI.UpdateButtonInteractableBySaveData(
+            SaveDataManager.Instance.CurrentSaveData != null ?
+            true :
+            false);
 
         base.StateInit();
     }
