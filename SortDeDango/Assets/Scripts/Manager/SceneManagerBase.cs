@@ -112,6 +112,7 @@ public class SceneManagerBase : MonoBehaviour
     {
         sceneName = loadSceneName;
         SceneManager.LoadScene(loadSceneName);
+        ChangeSceneManager(tmpNextSceneType);
     }
     /// <summary>
     /// シーン名を取得    </summary>
@@ -174,14 +175,17 @@ public class SceneManagerBase : MonoBehaviour
             if (tmpNextSceneType == SceneType.Quit) QuitApplication();
             else
             {
-                // マネージャーの切り替え
-                ChangeSceneManager(tmpNextSceneType);
-                // 対象シーンのロード
+                // 対象シーンのロード有無
                 if (tmpIsLoadScene)
                 {
-                    if (tmpLoadSceneName != "") LoadScene(tmpLoadSceneName);
-                    else LoadScene(GetSceneName(tmpNextSceneType));
+                    string sceneName;
+                    if (tmpLoadSceneName != "") sceneName = tmpLoadSceneName;
+                    else sceneName = GetSceneName(tmpNextSceneType);
+
+                    FadeManager.Instance.FadeOut(-1, () => LoadScene(sceneName), true);
                 }
+                // マネージャーだけ切り替え
+                else ChangeSceneManager(tmpNextSceneType);
             }
             isWaitSceneChange = false;
         }
