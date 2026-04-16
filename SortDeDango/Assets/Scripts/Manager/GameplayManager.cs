@@ -18,6 +18,8 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
 
     private List<SkewerController> skewers;
 
+    [Tooltip("ポーズ状態かどうか")]
+    private bool isPaused;
     [Tooltip("現在のゲームモード")]
     public GameMode CurrentGameMode => gameMode;
 
@@ -58,7 +60,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     resultData.moveCount = gameplayController.MoveCount;
                     resultUI.ShowResult(resultData);
 
-                    PauseGame();
+                    if(!isPaused) TogglePause();
                     SaveDataManager.Instance.UpdateStageIndexOnClear(StageManager.Instance.CurrentStageNumber);
                     base.StateRunning();
                 }
@@ -96,19 +98,6 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     }
 
     /// <summary>
-    /// ゲームを停止    </summary>
-    public void PauseGame()
-    {
-        gameplayController.SetInputLocked(true);
-    }
-    /// <summary>
-    /// ゲームを再開   </summary>
-    public void ResumeGame()
-    {
-        gameplayController.SetInputLocked(false);
-    }
-
-    /// <summary>
     /// ステージ初期化    </summary>
     public void ResetStage()
     {
@@ -135,6 +124,13 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     {
         StageManager.Instance.GoToPreviousStage();
         ChangeScene(SceneType.Gameplay, true, sceneName);
+    }
+    /// <summary>
+    /// ポーズ状態の切り替え    </summary>
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        gameplayController.SetInputLocked(isPaused);
     }
 
     /// <summary>
