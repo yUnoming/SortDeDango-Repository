@@ -153,6 +153,6 @@ public class AudioManager : MonoBehaviour
     {
         // デシベル変換後、AudioMixerにセット
         float dB = Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20f;
-        audioMixer.SetFloat(type.ToString(), dB);
+        audioMixer.SetFloat(type.ToString() + "Volume", dB);
     }
 }
