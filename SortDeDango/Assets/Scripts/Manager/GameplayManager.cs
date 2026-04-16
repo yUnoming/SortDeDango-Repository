@@ -19,7 +19,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     private List<SkewerController> skewers;
 
     [Tooltip("ポーズ状態かどうか")]
-    private bool isPaused;
+    public bool isPaused { get; private set; }
     [Tooltip("現在のゲームモード")]
     public GameMode CurrentGameMode => gameMode;
 
@@ -60,7 +60,6 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     resultData.moveCount = gameplayController.MoveCount;
                     resultUI.ShowResult(resultData);
 
-                    if(!isPaused) TogglePause();
                     SaveDataManager.Instance.UpdateStageIndexOnClear(StageManager.Instance.CurrentStageNumber);
                     base.StateRunning();
                 }
