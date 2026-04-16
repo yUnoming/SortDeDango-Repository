@@ -52,9 +52,14 @@ public class DangoMoveAnimator : MonoBehaviour
         float elapsedTime = 0f;
         while(elapsedTime < duration)
         {
+            if (GameplayManager.Instance.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / duration);
-
             target.position = Vector3.Lerp(from, to, t);
 
             yield return null;
