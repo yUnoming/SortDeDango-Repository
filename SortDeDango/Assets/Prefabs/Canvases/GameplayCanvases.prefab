@@ -185,6 +185,48 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3829420365808601045, guid: 2d0628512b83e794d833672e949ff90f, type: 3}
   m_PrefabInstance: {fileID: 2994533409688893763}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3131292036000780423
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7252364511419726195}
+    m_Modifications:
+    - target: {fileID: 354348851511764540, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
+      propertyPath: m_Name
+      value: PauseUIRoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351626378699243710, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351626378699243710, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351626378699243710, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351626378699243710, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3351626378699243710, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
+--- !u!224 &430036500686868537 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3351626378699243710, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
+  m_PrefabInstance: {fileID: 3131292036000780423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3939942622111896482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -315,6 +357,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6962553787270682608, guid: c4cd56cd621a45d4a973514f3fbd8543, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 9028985599170227161, guid: c4cd56cd621a45d4a973514f3fbd8543, type: 3}
       propertyPath: m_Name
       value: OverlayCanvas
@@ -325,6 +371,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 120985561475388909, guid: c4cd56cd621a45d4a973514f3fbd8543, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6507575845748401475}
+    - targetCorrespondingSourceObject: {fileID: 120985561475388909, guid: c4cd56cd621a45d4a973514f3fbd8543, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 430036500686868537}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4cd56cd621a45d4a973514f3fbd8543, type: 3}
 --- !u!224 &7252364511419726195 stripped
