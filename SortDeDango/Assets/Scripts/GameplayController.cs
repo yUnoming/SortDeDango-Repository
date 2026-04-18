@@ -220,6 +220,7 @@ public class GameplayController : MonoBehaviour
                     gameplayUI.UpdateEatActionCount(
                         eatModule.RemainingEatActionCount,
                         eatModule.MaxEatActionCount);
+                    gameplayUI.UpdateEatModeUI(isEatMode, eatModule.RemainingEatActionCount);
                 }
                 break;
         }
