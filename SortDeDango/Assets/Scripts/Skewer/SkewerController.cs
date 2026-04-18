@@ -118,6 +118,33 @@ public class SkewerController : MonoBehaviour
         else ChangeState(SkewerState.Stack);
     }
     /// <summary>
+    /// 指定位置に団子を追加    </summary>
+    public void AddDangoAt(Dango dango, int index)
+    {
+        if(dango == null) return;
+
+        Dango currentTarget = null;
+        Dango previousTarget = null;
+        if (dangoList.Count < index) AddDango(dango);
+        else
+        {
+            for (int i = 0; i < dangoList.Count; i++)
+            {
+                currentTarget = dangoList[i];
+
+                if (previousTarget != null) dangoList[i] = previousTarget;
+                if (i == index - 1)
+                {
+                    dangoList[i] = dango;
+                    previousTarget = currentTarget;
+                }
+            }
+        }
+        AddDango(previousTarget);
+        RefreshDangoPosition();
+    }
+
+    /// <summary>
     /// 一番上の団子を取得    </summary>
     /// <returns>
     /// 取得した一番上の団子  </returns>
@@ -154,10 +181,25 @@ public class SkewerController : MonoBehaviour
         return removedDango;
     }
     /// <summary>
-    /// 指定した団子に連なる同色団子を削除    </summary>
-    public List<Dango> RemoveMatchedDangos(Dango dango)
+    /// 指定した団子の全削除    </summary>
+    public List<Dango> RemoveDangoAtIndices(List<int> indices)
     {
-        List<Dango> removedDangoList = new List<Dango>();
+        // 指定番号数が所持数に収まっているか判定
+        if (indices.Count > dangoList.Count) return null;
+
+        List<Dango> removedDangos = new List<Dango>();
+        foreach (int index in indices)
+        {
+            Dango removedDango = RemoveDangoAt(index);
+            removedDangos.Add(removedDango);
+        }
+        return removedDangos;
+    }
+    /// <summary>
+    /// 指定した団子と同色団子のインデックス（下からの順番）を取得    </summary>
+    public List<int> GetMatchingDangoIndices(Dango dango)
+    {
+        List<int> matchingDangoIndices = new List<int>();
         DangoColor targetColor = dango.DangoColor;
 
         // 現在の団子の番号取得
@@ -170,25 +212,25 @@ public class SkewerController : MonoBehaviour
                 break;
             }
         }
-        // 揃っている団子の中で、一番上の団子の番号取得
+        // 同色団子の中で、一番上の団子の番号取得
         int currentIndex = targetIndex;
         while (currentIndex < dangoList.Count)
         {
             if (dangoList[currentIndex].DangoColor == targetColor) currentIndex++;
             else break;
         }
-        // 揃っている団子を上から順に削除
+        // 同色団子のインデックスを上から順に追加
         while (currentIndex > 0)
         {
             if (dangoList[currentIndex - 1].DangoColor == targetColor)
             {
-                removedDangoList.Add(RemoveDango(currentIndex));
+                matchingDangoIndices.Add(currentIndex);
                 currentIndex--;
             }
             else break;
         }
-        RefreshDangoPosition();
-        return removedDangoList;
+
+        return matchingDangoIndices;
     }
 
     /// <summary>
