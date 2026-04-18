@@ -202,6 +202,8 @@ public class GameplayController : MonoBehaviour
                         lastMoveLog.from.AddDango(movedDango);
                         lastMoveLog.from.SetTopDangoPosition(movedDango);
                     }
+                    --moveCount;
+                    gameplayUI.UpdateMoveCount(moveCount);
                     break;
                 }
             case ActionType.Eat:
