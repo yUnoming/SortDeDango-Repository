@@ -19,6 +19,8 @@ public class EatModule : MonoBehaviour
     private Dango targetDango;
     [Tooltip("キャンセルされたかどうか")]
     private bool isCanceled;
+    [Tooltip("直近の食べた履歴")]
+    public EatLog lastEatLog { get; private set; }
 
     private void Start()
     {
@@ -35,12 +37,21 @@ public class EatModule : MonoBehaviour
     private bool TryEat(SkewerController targetSkewer, Dango targetDango)
     {
         // 団子を食べることに成功
-        List<Dango> eatenDangoList = targetSkewer.RemoveMatchedDangos(targetDango);
-        if (eatenDangoList != null)
+        List<int> matchingDangoIndices = targetSkewer.GetMatchingDangoIndices(targetDango);
+        List<Dango> eatenDangos = new List<Dango>();
+        if (matchingDangoIndices != null)
         {
-            foreach(Dango eatenDango  in eatenDangoList)
-                Destroy(eatenDango.gameObject);    // オブジェクト削除
-            GameplayManager.Instance.OnDangoEaten(eatenDangoList.Count);
+            // 揃っている同色団子を全て食べる
+            eatenDangos = targetSkewer.RemoveDangoAtIndices(matchingDangoIndices);
+            // 食べた団子を画面外に移動
+            foreach (Dango eatenDango  in eatenDangos)
+            {
+                eatenDango.transform.parent = null;
+                eatenDango.transform.position = new Vector3(0, -50, 0);
+            }
+            lastEatLog = new EatLog(targetSkewer, matchingDangoIndices, eatenDangos);  // ログ更新
+
+            GameplayManager.Instance.OnDangoEaten(matchingDangoIndices.Count);
             AudioManager.Instance.PlaySE(eatSE);
             remainingEatActionCount--;
             return true;
@@ -82,6 +93,8 @@ public class EatModule : MonoBehaviour
             yield return null;
         }
         if(!isCanceled) TryEat(targetDango.CurrentSkewer, targetDango);
+        
+        targetDango = null;
         isCanceled = false;
     }
     /// <summary>
@@ -89,9 +102,12 @@ public class EatModule : MonoBehaviour
     public void SetTargetDango(Dango dango) { targetDango = dango; }
     /// <summary>
     /// 食べるアクションの中止    </summary>
-    public void CancelEat()
+    public void CancelEat() { isCanceled = true; }
+    /// <summary>
+    /// 団子を食べたことが戻された際のイベント    </summary>
+    public void OnUndoEaten(int eatenCount)
     {
-        isCanceled = true;
+        remainingEatActionCount++;
+        GameplayManager.Instance.OnUndoDangoEaten(eatenCount);
     }
-
 }

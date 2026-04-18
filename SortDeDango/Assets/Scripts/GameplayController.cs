@@ -27,8 +27,8 @@ public class GameplayController : MonoBehaviour
     private bool isInputLocked;
     [Tooltip("食べる状態かどうか")]
     private bool isEatMode;
-    [Tooltip("移動データリスト")]
-    private List<MoveData> moveDataList = new List<MoveData>();
+    [Tooltip("行動履歴")]
+    private List<ActionLog> actionLogs = new List<ActionLog>();
     [Tooltip("手数")]
     private int moveCount;
     public int MoveCount => moveCount;
@@ -74,16 +74,15 @@ public class GameplayController : MonoBehaviour
     {
         SetInputLocked(true);
 
-        // 移動データを作成
-        MoveData moveData = new MoveData(from, to);
         // 移動させられるだけ、揃っている団子を全て移動
+        List<Dango> movedDangos = new List<Dango>();
         for (int index = from.CurrentDangoCount; index > 0; index--)
         {
             if(to.CanMoveDango(from))
             {
                 Dango movingDango = from.RemoveTopDango();
                 to.AddDango(movingDango);
-                moveData.dangoList.Add(movingDango);
+                movedDangos.Add(movingDango);
                 // 移動アニメーション
                 yield return movingDango.GetComponent<DangoMoveAnimator>()
                     .PlayAnimation(
@@ -92,8 +91,9 @@ public class GameplayController : MonoBehaviour
                     );
             }
         }
-        // 作成した移動データを追加
-        moveDataList.Add(moveData);
+        // 行動履歴の保存
+        MoveLog moveLog = new MoveLog(from, to, movedDangos);
+        actionLogs.Add(moveLog);
         // 手数を増やして表示
         ++moveCount;
         gameplayUI.UpdateMoveCount(moveCount);
@@ -187,18 +187,42 @@ public class GameplayController : MonoBehaviour
     /// 一手戻す    </summary>
     private void Undo()
     {
-        if (isInputLocked || moveDataList.Count == 0) return;
+        if (isInputLocked || actionLogs.Count == 0) return;
 
-        // 最終移動データを元に、団子を元の串へ戻す
-        MoveData lastData = moveDataList[moveDataList.Count - 1];
-        for(int movedCount = lastData.dangoList.Count; movedCount > 0; movedCount--)
+        // 直近の行動履歴を元に適切な戻す処理を行う
+        ActionLog lastLog = actionLogs[actionLogs.Count - 1];
+        switch (lastLog.type)
         {
-            Dango movedDango = lastData.to.RemoveTopDango();
-            lastData.from.AddDango(movedDango);
-            lastData.from.SetTopDangoPosition(movedDango);
+            case ActionType.Move:
+                {
+                    MoveLog lastMoveLog = (MoveLog)lastLog;
+                    for (int movedCount = lastMoveLog.movedDangos.Count; movedCount > 0; movedCount--)
+                    {
+                        Dango movedDango = lastMoveLog.to.RemoveTopDango();
+                        lastMoveLog.from.AddDango(movedDango);
+                        lastMoveLog.from.SetTopDangoPosition(movedDango);
+                    }
+                    break;
+                }
+            case ActionType.Eat:
+                {
+                    EatLog lastEatLog = (EatLog)lastLog;
+                    int eatenCount = lastEatLog.eatenDangos.Count;
+                    for (int index = eatenCount; index > 0; index--)
+                    {
+                        lastEatLog.skewer.AddDangoAt(
+                            lastEatLog.eatenDangos[index - 1],
+                            lastEatLog.matchingDangoIndices[index - 1]);
+                    }
+                    eatModule.OnUndoEaten(eatenCount);
+                    gameplayUI.UpdateEatActionCount(
+                        eatModule.RemainingEatActionCount,
+                        eatModule.MaxEatActionCount);
+                }
+                break;
         }
-        // 使用済みの移動データを除外
-        moveDataList.RemoveAt(moveDataList.Count - 1);
+        // 使用済みの行動履歴を除外
+        actionLogs.RemoveAt(actionLogs.Count - 1);
     }
     /// <summary>
     /// 団子を食べる    </summary>
@@ -214,6 +238,7 @@ public class GameplayController : MonoBehaviour
                 eatModule.MaxEatActionCount
             );
 
+        actionLogs.Add(eatModule.lastEatLog);   // 行動履歴を保存
         SetInputLocked(false);
         SetEatModeActive(false);
         SetAllDangoOutlineVisible(false);
@@ -232,8 +257,8 @@ public class GameplayController : MonoBehaviour
     /// 初期化    </summary>
     public void Initialize()
     {
-        // 移動データ
-        moveDataList.Clear();
+        // 行動履歴
+        actionLogs.Clear();
         moveCount = 0;
         // 食べるアクション・UI
         eatModule.Initialize();

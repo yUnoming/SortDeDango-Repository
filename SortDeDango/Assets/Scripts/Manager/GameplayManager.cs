@@ -141,4 +141,11 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         eatenDangoCount += eatenCount;
         gameplayUI.UpdateEatenDangoCount(eatenDangoCount, targetDangoCount);
     }
+    /// <summary>
+    /// 団子を食べたことが戻された際のイベント    </summary>
+    public void OnUndoDangoEaten(int eatenCount)
+    {
+        eatenDangoCount -= eatenCount;
+        gameplayUI.UpdateEatenDangoCount(eatenDangoCount, targetDangoCount);
+    }
 }
