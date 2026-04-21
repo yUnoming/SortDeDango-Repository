@@ -23,6 +23,8 @@ public class GameplayUIController : MonoBehaviour
     private Button eatButton;
     [SerializeField]
     private Outline eatButtonOutline;
+    [SerializeField]
+    private FadeUIAnimation[] eatModeOverlays;
 
     [Tooltip("Restartボタン押下時のイベント")]
     public event Action onRestartClicked;
@@ -85,5 +87,11 @@ public class GameplayUIController : MonoBehaviour
         eatButtonOutline.enabled = isEatMode;
         if(remainingCount == 0) eatButton.interactable = false;
         else eatButton.interactable = true;
+
+        foreach(FadeUIAnimation anim in eatModeOverlays)
+        {
+            if(isEatMode) anim.FadeIn();
+            else anim.FadeOut();
+        }
     }
 }
