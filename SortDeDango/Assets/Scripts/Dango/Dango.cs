@@ -12,6 +12,8 @@ public class Dango : MonoBehaviour
     private MeshRenderer modelMeshRenderer;
     [SerializeField]
     private MeshRenderer outlineMeshRenderer;
+    [SerializeField]
+    private GameObject dangoEatEffect;
 
     [Tooltip("現在所属している串")]
     private SkewerController currentSkewer;
@@ -37,5 +39,13 @@ public class Dango : MonoBehaviour
     public void SetOutlineVisible(bool isVisible)
     {
         outlineMeshRenderer.enabled = isVisible;
+    }
+
+    /// <summary>
+    /// 団子を食べた時のエフェクト再生    </summary>
+    public void PlayEatEffect()
+    {
+        GameObject obj = Instantiate(dangoEatEffect, this.transform.position, Quaternion.identity);
+        obj.GetComponent<DangoEatEffect>().Play(colorMaterials[(int)dangoColor - 1]);
     }
 }

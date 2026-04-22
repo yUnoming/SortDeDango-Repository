@@ -164,6 +164,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f210b076d7e94f84a8a6035a21170106, type: 2}
   modelMeshRenderer: {fileID: 789151438020154855}
   outlineMeshRenderer: {fileID: 1192824572414184625}
+  dangoEatEffect: {fileID: 8929834228411693805, guid: 5aa17870a354e2d42936b15bdcbfb924, type: 3}
 --- !u!114 &3849883771821116885
 MonoBehaviour:
   m_ObjectHideFlags: 0
