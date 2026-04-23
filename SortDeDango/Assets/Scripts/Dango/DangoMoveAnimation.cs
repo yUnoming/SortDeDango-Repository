@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class DangoMoveAnimator : MonoBehaviour
+public class DangoMoveAnimation : AnimationBase
 {
     [SerializeField, Tooltip("持ち上げる高さ")]
     private float liftHeight = 1f;
@@ -11,10 +11,6 @@ public class DangoMoveAnimator : MonoBehaviour
     private float moveDuration = 0.2f;
     [SerializeField, Tooltip("落とすのにかかる時間")]
     private float dropDuration = 0.2f;
-
-    [Tooltip("アニメーション中かどうか")]
-    private bool isAnimation;
-    public bool IsAnimation {  get { return isAnimation; } }
 
     /// <summary>
     /// アニメーション挙動    </summary>
@@ -74,7 +70,7 @@ public class DangoMoveAnimator : MonoBehaviour
     /// 自身のTransform    </param>
     /// <param name="endPos">
     /// アニメーションの最終到達地点    </param>
-    public IEnumerator PlayAnimation(Transform myTransform, Vector3 endPos)
+    public IEnumerator Play(Transform myTransform, Vector3 endPos)
     {
         if(!isAnimation)
         {
@@ -82,5 +78,4 @@ public class DangoMoveAnimator : MonoBehaviour
             yield return StartCoroutine(AnimationSequence(myTransform, endPos));
         }
     }
-
 }
