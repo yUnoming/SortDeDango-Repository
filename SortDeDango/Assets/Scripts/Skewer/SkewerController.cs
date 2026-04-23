@@ -141,6 +141,9 @@ public class SkewerController : MonoBehaviour
             }
         }
         AddDango(previousTarget);
+
+        dango.transform.SetParent(dangoAnchor.transform, false);
+        dango.SetCurrentSkewer(this);
         RefreshDangoPosition();
     }
 

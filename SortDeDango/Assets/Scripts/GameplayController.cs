@@ -84,8 +84,8 @@ public class GameplayController : MonoBehaviour
                 to.AddDango(movingDango);
                 movedDangos.Add(movingDango);
                 // 移動アニメーション
-                yield return movingDango.GetComponent<DangoMoveAnimator>()
-                    .PlayAnimation(
+                yield return movingDango.GetComponent<DangoMoveAnimation>()
+                    .Play(
                         movingDango.transform,
                         to.GetTopDangoPosition()
                     );

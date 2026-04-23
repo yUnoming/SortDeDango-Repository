@@ -46,9 +46,8 @@ public class EatModule : MonoBehaviour
             // 食べた団子を画面外に移動
             foreach (Dango eatenDango  in eatenDangos)
             {
+                eatenDango.GetComponent<DangoEatAnimation>().Play();
                 eatenDango.PlayEatEffect();
-                eatenDango.transform.parent = null;
-                eatenDango.transform.position = new Vector3(0, -50, 0);
             }
             lastEatLog = new EatLog(targetSkewer, matchingDangoIndices, eatenDangos);  // ログ更新
 
