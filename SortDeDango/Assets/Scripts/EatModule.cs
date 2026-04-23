@@ -93,7 +93,16 @@ public class EatModule : MonoBehaviour
         {
             yield return null;
         }
-        if(!isCanceled) TryEat(targetDango.CurrentSkewer, targetDango);
+        if (!isCanceled)
+        {
+            // ヒットストップ
+            {
+                Time.timeScale = 0;
+                yield return new WaitForSecondsRealtime(0.05f);
+                Time.timeScale = 1;
+            }
+            TryEat(targetDango.CurrentSkewer, targetDango);
+        }
         
         targetDango = null;
         isCanceled = false;
