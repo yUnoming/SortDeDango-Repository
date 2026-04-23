@@ -396,17 +396,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 222990318284371632, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      propertyPath: isDebugStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 222990318284371632, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
+      propertyPath: startSceneType
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1880472542080523501, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
       propertyPath: clearText
       value: 
       objectReference: {fileID: 68191235}
-    - target: {fileID: 1880472542080523501, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2614761942457649540, guid: 90733d547a7c1874fb32fcdbe560b2cf, type: 3}
       propertyPath: m_Name
       value: GlobalManagers
