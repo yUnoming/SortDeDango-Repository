@@ -51,6 +51,7 @@ MonoBehaviour:
   nextStageKey: 275
   previousStageKey: 276
   eatModule: {fileID: 2854741597718964985}
+  invalidActionSE: {fileID: 11400000, guid: 024038cc68ecc4a47a95c34f8a3d72a5, type: 2}
 --- !u!114 &2854741597718964985
 MonoBehaviour:
   m_ObjectHideFlags: 0

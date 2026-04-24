@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 public class SkewerController : MonoBehaviour
 {
@@ -82,6 +80,14 @@ public class SkewerController : MonoBehaviour
     public bool HasDango()
     {
         return dangoList.Count > 0;
+    }
+    /// <summary>
+    /// 選択可能な串かどうか判定    </summary>
+    public bool CanSelect()
+    {
+        // 「団子が刺さっていて空きがある」かどうかで判定
+        if (currentState == SkewerState.Stack) return true;
+        return false;
     }
     /// <summary>
     /// 団子を移動可能か判定    </summary>

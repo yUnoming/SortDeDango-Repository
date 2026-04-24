@@ -67,23 +67,37 @@ public class AudioManager : MonoBehaviour
 
     /// <summary>
     /// 利用可能な2Dソースを取得    </summary>
-    /// <returns></returns>
-    private AudioSource GetAvailable2DSource()
+    /// <param name="data">
+    /// 再生する音声データ    </param>
+    /// <param name="isAllowDuplicate">
+    /// 重複を許可するかどうか </param>
+    private AudioSource GetAvailable2DSource(AudioData data, bool isAllowDuplicate)
     {
         foreach(AudioSource source in d2Sources)
         {
             if(!source.isPlaying) return source;
+            else if (isAllowDuplicate)
+            {
+                if(source.clip == data.clip) return source;
+            }
         }
         return null;
     }
     /// <summary>
     /// 利用可能な3Dソースを取得    </summary>
-    /// <returns></returns>
-    private AudioSource GetAvailable3DSource()
+    /// <param name="data">
+    /// 再生する音声データ    </param>
+    /// <param name="isAllowDuplicate">
+    /// 重複を許可するかどうか </param>
+    private AudioSource GetAvailable3DSource(AudioData data, bool isAllowDuplicate)
     {
         foreach (AudioSource source in d3Sources)
         {
             if (!source.isPlaying) return source;
+            else if (isAllowDuplicate)
+            {
+                if (source.clip == data.clip) return source;
+            }
         }
         return null;
     }
@@ -109,10 +123,12 @@ public class AudioManager : MonoBehaviour
     /// SEを再生(2Dがメイン)    </summary>
     /// <param name="data">
     /// 再生する音声データ    </param>
-    public void PlaySE(AudioData data)
+    /// <param name="isAllowDuplicate">
+    /// 重複を許可するかどうか </param>
+    public void PlaySE(AudioData data, bool isAllowDuplicate = true)
     {
         // 再生可能であれば、再生
-        AudioSource source = GetAvailable2DSource();
+        AudioSource source = GetAvailable2DSource(data, isAllowDuplicate);
         if(source != null)
         {
             source.clip = data.clip;
@@ -128,10 +144,12 @@ public class AudioManager : MonoBehaviour
     /// 再生する音声データ    </param>
     /// <param name="position">
     /// 再生する位置    </param>
-    public void PlaySE(AudioData data, Vector3 position)
+    /// <param name="isAllowDuplicate">
+    /// 重複を許可するかどうか </param>
+    public void PlaySE(AudioData data, Vector3 position, bool isAllowDuplicate = true)
     {
         // 再生可能であれば、再生
-        AudioSource source = GetAvailable3DSource();
+        AudioSource source = GetAvailable3DSource(data, isAllowDuplicate);
         if (source != null)
         {
             source.gameObject.transform.position = position;
