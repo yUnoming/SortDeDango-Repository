@@ -18,6 +18,8 @@ public class GameplayController : MonoBehaviour
     private KeyCode previousStageKey = KeyCode.LeftArrow;
     [SerializeField]
     private EatModule eatModule;
+    [SerializeField]
+    private AudioData invalidActionSE;
 
     GameplayUIController gameplayUI;
 
@@ -84,11 +86,9 @@ public class GameplayController : MonoBehaviour
                 to.AddDango(movingDango);
                 movedDangos.Add(movingDango);
                 // 移動アニメーション
-                yield return movingDango.GetComponent<DangoMoveAnimation>()
-                    .Play(
+                yield return movingDango.GetComponent<DangoMoveAnimation>().Play(
                         movingDango.transform,
-                        to.GetTopDangoPosition()
-                    );
+                        to.GetTopDangoPosition());
             }
         }
         // 行動履歴の保存
@@ -304,7 +304,12 @@ public class GameplayController : MonoBehaviour
         // 現在選択中の串がなければ、今回クリックされた串を保持
         if (selectingSkewer == null)
         {
-            SelectCurrentSekewer(clickedSkewer);
+            if (clickedSkewer.CanSelect()) SelectCurrentSekewer(clickedSkewer);
+            else
+            {
+                clickedSkewer.GetComponent<InvalidActionAnimation>().Play();
+                AudioManager.Instance.PlaySE(invalidActionSE, false);
+            }
             return;
         }
         // 保持中の串とは別の串をクリックした
@@ -318,10 +323,16 @@ public class GameplayController : MonoBehaviour
                     clickedSkewer));
             }
             // 移動不可なら、クリックされた串を選択対象とする
-            else
+            else if (clickedSkewer.CanSelect())
             {
                 DeselectCurrentSkewer();
                 SelectCurrentSekewer(clickedSkewer);
+            }
+            else
+            {
+                clickedSkewer.GetComponent<InvalidActionAnimation>().Play();
+                AudioManager.Instance.PlaySE(invalidActionSE, false);
+                DeselectCurrentSkewer();
             }
             return;
         }
