@@ -78,8 +78,8 @@ public class SkewerController : MonoBehaviour
     /// 選択可能な串かどうか判定    </summary>
     public bool CanSelect()
     {
-        // 「団子が刺さっていて空きがある」かどうかで判定
-        if (currentState == SkewerState.Stack) return true;
+        // "団子が刺さっていて、全てが同色ではない"なら選択可能
+        if (currentState == SkewerState.Stack || currentState == SkewerState.Full) return true;
         return false;
     }
     /// <summary>
