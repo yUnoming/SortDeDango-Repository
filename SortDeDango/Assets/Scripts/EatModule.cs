@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EatModule : MonoBehaviour
@@ -34,7 +35,7 @@ public class EatModule : MonoBehaviour
     /// 食べる対象の串    </param>
     /// <param name="targetDango">
     /// 食べる団子   </param>
-    private bool TryEat(SkewerController targetSkewer, Dango targetDango)
+    private IEnumerator EatSequence(SkewerController targetSkewer, Dango targetDango)
     {
         // 団子を食べることに成功
         List<int> matchingDangoIndices = targetSkewer.GetMatchingDangoIndices(targetDango);
@@ -44,20 +45,27 @@ public class EatModule : MonoBehaviour
             // 揃っている同色団子を全て食べる
             eatenDangos = targetSkewer.RemoveDangoAtIndices(matchingDangoIndices);
             // 食べた団子を画面外に移動
-            foreach (Dango eatenDango  in eatenDangos)
+            for(int index = 0; index < eatenDangos.Count; index++)
             {
-                eatenDango.GetComponent<DangoEatAnimation>().Play();
-                eatenDango.PlayEatEffect();
+                // 最後に食べた団子のアニメーション終了まで待機
+                if(index + 1 == eatenDangos.Count)
+                {
+                    AudioManager.Instance.PlaySE(eatSE);
+                    eatenDangos[index].PlayEatEffect();
+                    yield return eatenDangos[index].GetComponent<DangoEatAnimation>().PlayCoroutine();
+                }
+                // それ以外
+                else
+                {
+                    eatenDangos[index].PlayEatEffect();
+                    eatenDangos[index].GetComponent<DangoEatAnimation>().Play();
+                }
             }
             lastEatLog = new EatLog(targetSkewer, matchingDangoIndices, eatenDangos);  // ログ更新
 
             GameplayManager.Instance.OnDangoEaten(matchingDangoIndices.Count);
-            AudioManager.Instance.PlaySE(eatSE);
             remainingEatActionCount--;
-            return true;
         }
-        // 団子を食べることに失敗
-        return false;
     }
 
     /// <summary>
@@ -100,7 +108,7 @@ public class EatModule : MonoBehaviour
                 yield return new WaitForSecondsRealtime(0.05f);
                 Time.timeScale = 1;
             }
-            TryEat(targetDango.CurrentSkewer, targetDango);
+            yield return EatSequence(targetDango.CurrentSkewer, targetDango);
         }
         
         targetDango = null;
