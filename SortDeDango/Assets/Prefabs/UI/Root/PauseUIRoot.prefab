@@ -454,6 +454,7 @@ GameObject:
   - component: {fileID: 4094342188376657304}
   - component: {fileID: 6888622760349229545}
   - component: {fileID: 8070185234694294454}
+  - component: {fileID: 7795000381013342028}
   m_Layer: 0
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -578,6 +579,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &7795000381013342028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3731701243925037002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4486c2661ab1bb04abd02a077c8c83ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScaleUp: {x: 1.05, y: 1.05, z: 1}
+  button: {fileID: 6888622760349229545}
 --- !u!1 &5132074724239759259
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,8 +605,9 @@ GameObject:
   - component: {fileID: 3733192316557578700}
   - component: {fileID: 9102985092592724162}
   - component: {fileID: 258364792765840231}
-  - component: {fileID: 2534305881983756570}
   - component: {fileID: 763518417769475241}
+  - component: {fileID: 2534305881983756570}
+  - component: {fileID: 6854617578502365318}
   m_Layer: 0
   m_Name: StageSelectButton
   m_TagString: Untagged
@@ -701,21 +717,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2534305881983756570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5132074724239759259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c00ae3e1ab84ec4781d14ad63ca42fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneType: 10
-  isLoadScene: 1
-  overrideSceneName: 
 --- !u!114 &763518417769475241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,6 +732,35 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &2534305881983756570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5132074724239759259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c00ae3e1ab84ec4781d14ad63ca42fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneType: 10
+  isLoadScene: 1
+  overrideSceneName: 
+--- !u!114 &6854617578502365318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5132074724239759259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4486c2661ab1bb04abd02a077c8c83ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScaleUp: {x: 1.05, y: 1.05, z: 1}
+  button: {fileID: 258364792765840231}
 --- !u!1 &5845152704754251609
 GameObject:
   m_ObjectHideFlags: 0
