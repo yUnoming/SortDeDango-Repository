@@ -43,7 +43,7 @@ public class EatModule : MonoBehaviour
         if (matchingDangoIndices != null)
         {
             // 揃っている同色団子を全て食べる
-            eatenDangos = targetSkewer.RemoveDangoAtIndices(matchingDangoIndices);
+            eatenDangos = targetSkewer.RemoveDangoAtIndices(matchingDangoIndices, false);
             // 食べた団子を画面外に移動
             for(int index = 0; index < eatenDangos.Count; index++)
             {
@@ -61,6 +61,7 @@ public class EatModule : MonoBehaviour
                     eatenDangos[index].GetComponent<DangoEatAnimation>().Play();
                 }
             }
+            targetSkewer.RefreshDangoPosition();
             lastEatLog = new EatLog(targetSkewer, matchingDangoIndices, eatenDangos);  // ログ更新
 
             GameplayManager.Instance.OnDangoEaten(matchingDangoIndices.Count);
