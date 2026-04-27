@@ -65,15 +65,6 @@ public class SkewerController : MonoBehaviour
 
         return removeDango;
     }
-    /// <summary>
-    /// 団子を再配置    </summary>
-    private void RefreshDangoPosition()
-    {
-        for(int index = 0;  index < dangoList.Count; index++)
-        {
-            dangoList[index].transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * index;
-        }
-    }
 
     /// <summary>
     /// 団子を所持しているか判定    </summary>
@@ -180,18 +171,18 @@ public class SkewerController : MonoBehaviour
     /// 団子の指定番号    </param>
     /// <returns>
     /// 削除した団子  </returns>
-    public Dango RemoveDangoAt(int index)
+    public Dango RemoveDangoAt(int index, bool isRefresh = true)
     {
         // 指定番号が所持数に収まっているか判定
         if (index > dangoList.Count) return null;
 
         Dango removedDango = RemoveDango(index);
-        RefreshDangoPosition();
+        if(isRefresh) RefreshDangoPosition();
         return removedDango;
     }
     /// <summary>
     /// 指定した団子の全削除    </summary>
-    public List<Dango> RemoveDangoAtIndices(List<int> indices)
+    public List<Dango> RemoveDangoAtIndices(List<int> indices, bool isRefresh = true)
     {
         // 指定番号数が所持数に収まっているか判定
         if (indices.Count > dangoList.Count) return null;
@@ -199,7 +190,7 @@ public class SkewerController : MonoBehaviour
         List<Dango> removedDangos = new List<Dango>();
         foreach (int index in indices)
         {
-            Dango removedDango = RemoveDangoAt(index);
+            Dango removedDango = RemoveDangoAt(index, isRefresh);
             removedDangos.Add(removedDango);
         }
         return removedDangos;
@@ -242,6 +233,15 @@ public class SkewerController : MonoBehaviour
         return matchingDangoIndices;
     }
 
+    /// <summary>
+    /// 団子を再配置    </summary>
+    public void RefreshDangoPosition()
+    {
+        for (int index = 0; index < dangoList.Count; index++)
+        {
+            dangoList[index].transform.position = dangoAnchor.transform.position + Vector3.up * dangoSpacing * index;
+        }
+    }
     /// <summary>
     /// 一番上の団子の座標を設定    </summary>
     public void SetTopDangoPosition(Dango topDango)
