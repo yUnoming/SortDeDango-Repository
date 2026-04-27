@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class DangoMoveAnimation : AnimationBase
 {
@@ -7,29 +8,38 @@ public class DangoMoveAnimation : AnimationBase
     private float liftHeight = 1f;
     [SerializeField, Tooltip("持ち上げに掛かる時間")]
     private float liftDuration = 0.2f;
+    [SerializeField, Tooltip("持ち上げに掛かる時間の重み")]
+    private float liftDurationWeight = 0.25f;
     [SerializeField, Tooltip("移動に掛かる時間")]
     private float moveDuration = 0.2f;
     [SerializeField, Tooltip("落とすのにかかる時間")]
     private float dropDuration = 0.2f;
+    [SerializeField, Tooltip("落とすのにかかる時間の重み")]
+    private float dropDurationWeight = 0.05f;
 
     /// <summary>
     /// アニメーション挙動    </summary>
-    /// <param name="myTransform">
-    /// 自身のTransform    </param>
+    /// <param name="from">
+    /// 移動元の串   </param>
+    /// <param name="to">
+    /// 移動先の串    </param>
+    /// <param name="index">
+    /// 団子番号   </param>
     /// <param name="endPos">
-    /// アニメーションの最終到達地点    </param>
-    private IEnumerator AnimationSequence(Transform myTransform, Vector3 endPos)
+    /// アニメーションの終了座標    </param>
+    private IEnumerator AnimationSequence(SkewerController from, SkewerController to, int index, Vector3 endPos)
     {
-        Vector3 startPos = myTransform.position;
-        Vector3 liftedStartPos = startPos + Vector3.up * liftHeight;
-        Vector3 liftedEndPos = endPos + Vector3.up * liftHeight;
+        Transform target = this.transform;
+        Vector3 startPos = target.position;
+        Vector3 liftedStartPos = from.transform.position + Vector3.up * liftHeight;
+        Vector3 liftedEndPos = to.transform.position + Vector3.up * liftHeight;
 
         // 持ち上げ
-        yield return MoveOverTime(myTransform, startPos, liftedStartPos, liftDuration);
+        yield return MoveOverTime(target, startPos, liftedStartPos, liftDuration * (index * liftDurationWeight + 1));
         // 移動
-        yield return MoveOverTime(myTransform, liftedStartPos, liftedEndPos, moveDuration);
+        yield return MoveOverTime(target, liftedStartPos, liftedEndPos, moveDuration);
         // 落とす
-        yield return MoveOverTime(myTransform, liftedEndPos, endPos, dropDuration);
+        yield return MoveOverTime(target, liftedEndPos, endPos, dropDuration - index * dropDurationWeight);
 
         isAnimation = false;
     }
@@ -66,16 +76,38 @@ public class DangoMoveAnimation : AnimationBase
 
     /// <summary>
     /// アニメーション再生    </summary>
-    /// <param name="myTransform">
-    /// 自身のTransform    </param>
+    /// <param name="from">
+    /// 移動元の串   </param>
+    /// <param name="to">
+    /// 移動先の串    </param>
+    /// <param name="index">
+    /// 団子番号   </param>
     /// <param name="endPos">
-    /// アニメーションの最終到達地点    </param>
-    public IEnumerator Play(Transform myTransform, Vector3 endPos)
+    /// アニメーションの終了座標    </param>
+    public void Play(SkewerController from, SkewerController to, int index, Vector3 endPos)
     {
-        if(!isAnimation)
+        if (!isAnimation)
         {
             isAnimation = true;
-            yield return StartCoroutine(AnimationSequence(myTransform, endPos));
+            StartCoroutine(AnimationSequence(from, to, index, endPos));
+        }
+    }
+    /// <summary>
+    /// アニメーション再生    </summary>
+    /// <param name="from">
+    /// 移動元の串   </param>
+    /// <param name="to">
+    /// 移動先の串    </param>
+    /// <param name="index">
+    /// 団子番号   </param>
+    /// <param name="endPos">
+    /// アニメーションの終了座標    </param>
+    public IEnumerator PlayCoroutine(SkewerController from, SkewerController to, int index, Vector3 endPos)
+    {
+        if (!isAnimation)
+        {
+            isAnimation = true;
+            yield return AnimationSequence(from, to, index, endPos);
         }
     }
 }
