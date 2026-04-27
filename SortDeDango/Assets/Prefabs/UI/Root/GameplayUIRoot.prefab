@@ -559,6 +559,7 @@ GameObject:
   - component: {fileID: 35400187250152706}
   - component: {fileID: 330773119245412586}
   - component: {fileID: 4041910684181934227}
+  - component: {fileID: 4965531587493209576}
   m_Layer: 0
   m_Name: PauseButton
   m_TagString: Untagged
@@ -683,6 +684,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &4965531587493209576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2952067670590490840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4486c2661ab1bb04abd02a077c8c83ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScaleUp: {x: 1.05, y: 1.05, z: 1}
+  button: {fileID: 330773119245412586}
 --- !u!1 &3585011273944082685
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,8 +984,9 @@ GameObject:
   - component: {fileID: 15863288928114902}
   - component: {fileID: 901169549465453198}
   - component: {fileID: 9002592402041980020}
-  - component: {fileID: 1765232705153580808}
   - component: {fileID: 8394683917469078123}
+  - component: {fileID: 1765232705153580808}
+  - component: {fileID: 6385920291785496787}
   m_Layer: 0
   m_Name: EatButton
   m_TagString: Untagged
@@ -1080,21 +1096,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1765232705153580808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3711605157485703531}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0.7329927, b: 0, a: 0.5882353}
-  m_EffectDistance: {x: 5, y: -5}
-  m_UseGraphicAlpha: 1
 --- !u!114 &8394683917469078123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1110,6 +1111,35 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 5, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &1765232705153580808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711605157485703531}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.7329927, b: 0, a: 0.5882353}
+  m_EffectDistance: {x: 5, y: -5}
+  m_UseGraphicAlpha: 1
+--- !u!114 &6385920291785496787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711605157485703531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4486c2661ab1bb04abd02a077c8c83ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScaleUp: {x: 1.05, y: 1.05, z: 1}
+  button: {fileID: 9002592402041980020}
 --- !u!1 &4336266501781594889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,6 +1289,7 @@ GameObject:
   - component: {fileID: 5963785902759034647}
   - component: {fileID: 976496117165968945}
   - component: {fileID: 3226679798687987827}
+  - component: {fileID: 8666952359607044777}
   m_Layer: 0
   m_Name: UndoButton
   m_TagString: Untagged
@@ -1383,6 +1414,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &8666952359607044777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6213914846692763583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4486c2661ab1bb04abd02a077c8c83ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScaleUp: {x: 1.05, y: 1.05, z: 1}
+  button: {fileID: 976496117165968945}
 --- !u!1 &8248190302247840357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1681,7 @@ GameObject:
   - component: {fileID: 7052299446896083328}
   - component: {fileID: 6640105487618229664}
   - component: {fileID: 3315050437811022142}
+  - component: {fileID: 4536150383286146632}
   m_Layer: 0
   m_Name: RestartButton
   m_TagString: Untagged
@@ -1760,3 +1806,17 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &4536150383286146632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9130795093117686360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4486c2661ab1bb04abd02a077c8c83ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScaleUp: {x: 1.05, y: 1.05, z: 1}
+  button: {fileID: 6640105487618229664}
