@@ -18,6 +18,8 @@ public class SkewerController : MonoBehaviour
 
     [Tooltip("現在の団子数")]
     public int CurrentDangoCount => dangoList.Count;
+    [Tooltip("追加可能な残り団子数")]
+    public int RemainingDangoAddCount => maxDango - dangoList.Count;
 
     private void Awake()
     {

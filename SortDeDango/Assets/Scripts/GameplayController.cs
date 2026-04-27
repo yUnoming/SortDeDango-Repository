@@ -76,19 +76,35 @@ public class GameplayController : MonoBehaviour
     {
         SetInputLocked(true);
 
-        // 移動させられるだけ、揃っている団子を全て移動
+        // 合計移動回数を取得し、その数だけ移動処理
+        List<int> matchingDangoIndices = from.GetMatchingDangoIndices(from.GetTopDango());
         List<Dango> movedDangos = new List<Dango>();
-        for (int index = from.CurrentDangoCount; index > 0; index--)
+        int totalMoveCount = to.RemainingDangoAddCount < matchingDangoIndices.Count
+            ? to.RemainingDangoAddCount
+            : matchingDangoIndices.Count;
+        for (int moveCount = 0; moveCount < totalMoveCount ; moveCount++)
         {
-            if(to.CanMoveDango(from))
+            Dango movedDango = from.RemoveDangoAt(matchingDangoIndices[moveCount], false);
+            to.AddDango(movedDango);
+            movedDangos.Add(movedDango);
+
+            // 最後に移動させる団子のアニメーション終了まで待機
+            if (moveCount + 1 == totalMoveCount)
             {
-                Dango movingDango = from.RemoveTopDango();
-                to.AddDango(movingDango);
-                movedDangos.Add(movingDango);
-                // 移動アニメーション
-                yield return movingDango.GetComponent<DangoMoveAnimation>().Play(
-                        movingDango.transform,
-                        to.GetTopDangoPosition());
+                yield return movedDango.GetComponent<DangoMoveAnimation>().PlayCoroutine(
+                    from,
+                    to,
+                    moveCount,
+                    to.GetTopDangoPosition());
+            }
+            // それ以外
+            else
+            {
+                movedDango.GetComponent<DangoMoveAnimation>().Play(
+                    from,
+                    to,
+                    moveCount,
+                    to.GetTopDangoPosition());
             }
         }
         // 行動履歴の保存

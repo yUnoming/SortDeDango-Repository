@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86d4348111b0ed4592768af5741da7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  liftHeight: 1
+  liftHeight: 3
   liftDuration: 0.2
   moveDuration: 0.2
   dropDuration: 0.2
