@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class GameplayController : MonoBehaviour
 {
@@ -155,7 +156,7 @@ public class GameplayController : MonoBehaviour
     private void DeselectCurrentSelection()
     {
         if (isEatMode) eatModule.CancelEat();
-        else if(selectingSkewer != null) DeselectCurrentSkewer();
+        else if(!isInputLocked && selectingSkewer != null) DeselectCurrentSkewer();
     }
     /// <summary>
     /// 新たな串の選択    </summary>
@@ -258,9 +259,9 @@ public class GameplayController : MonoBehaviour
             );
 
         actionLogs.Add(eatModule.lastEatLog);   // 行動履歴を保存
-        SetInputLocked(false);
         SetEatModeActive(false);
         SetAllDangoOutlineVisible(false);
+        SetInputLocked(false);
     }
     /// <summary>
     /// 全団子のアウトライン表示切り替え    </summary>
