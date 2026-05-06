@@ -38,8 +38,8 @@ public class ResultUIController : MonoBehaviour
     /// リザルト情報    </param>
     public void ShowResult(ResultData result)
     {
-        moveCountTMP.text = $"Move: {result.moveCount}";
-        minMoveCountTMP.text = $"MinMove: {result.minMoveCount}";
+        moveCountTMP.text = $"Move <font=\"NotoSansJP-Medium SDF\">{result.moveCount}</font>";
+        minMoveCountTMP.text = $"MinMove <font=\"NotoSansJP-Medium SDF\">{result.minMoveCount}</font>";
 
         if (result.moveCount == result.minMoveCount) resultMessageTMP.text = "Perfect Move!!";
         else if (result.moveCount > result.minMoveCount) resultMessageTMP.text = $"{result.moveCount - result.minMoveCount} move away from perfect!";
