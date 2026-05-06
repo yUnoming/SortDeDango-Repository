@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,7 +53,7 @@ public class GameplayUIController : MonoBehaviour
     /// ステージ番号の表示更新    </summary>
     public void UpdateStageNumber(int stageNumber)
     {
-        stageNumberTMP.text = $"Stage {stageNumber}";
+        stageNumberTMP.text = $"Stage <font=\"NotoSansJP-Medium SDF\">{stageNumber}</font>";
     }
     /// <summary>
     /// 食べる使用回数の表示更新    </summary>
@@ -62,7 +63,7 @@ public class GameplayUIController : MonoBehaviour
     /// 最大回数    </param>
     public void UpdateEatActionCount(int remaining, int max)
     {
-        eatActionCountTMP.text = $"{remaining} / {max}";
+        eatActionCountTMP.text = $"{remaining}/{max}";
     }
     /// <summary>
     /// 食べた団子数の表示更新    </summary>
@@ -72,13 +73,13 @@ public class GameplayUIController : MonoBehaviour
     /// 目標数    </param>
     public void UpdateEatenDangoCount(int current, int target)
     {
-        eatenDangoCountTMP.text = $"Dango {current} / {target}";
+        eatenDangoCountTMP.text = $"Dango <font=\"NotoSansJP-Medium SDF\">{current}/{target}</font>";
     }
     /// <summary>
     /// 手数の表示更新    </summary>
     public void UpdateMoveCount(int count)
     {
-        moveCountTMP.text = $"Moves {count}";
+        moveCountTMP.text = $"Moves <font=\"NotoSansJP-Medium SDF\">{count}</font>";
     }
     /// <summary>
     /// 食べる状態によるUI更新    </summary>
