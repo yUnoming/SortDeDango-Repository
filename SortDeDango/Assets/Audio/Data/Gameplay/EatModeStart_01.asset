@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EatModeStart_01
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: efab833bee9441045911dea25b37daf0, type: 3}
-  volume: 0.2
+  volume: 0.3
   isLoop: 0
