@@ -9,6 +9,8 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     private int eatenDangoCount;
     [SerializeField]
     private GameMode gameMode = GameMode.Normal;
+    [SerializeField, Tooltip("ステージクリアSE")]
+    private AudioData stageClearSE;
 
     private StageGenerator stageGenerator;
     private GameplayController gameplayController;
@@ -60,6 +62,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     resultData.moveCount = gameplayController.MoveCount;
                     resultUI.ShowResult(resultData);
 
+                    AudioManager.Instance.PlaySE(stageClearSE);
                     SaveDataManager.Instance.UpdateStageIndexOnClear(StageManager.Instance.CurrentStageNumber);
                     base.StateRunning();
                 }

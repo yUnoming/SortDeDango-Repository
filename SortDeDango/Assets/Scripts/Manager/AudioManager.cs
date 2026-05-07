@@ -76,7 +76,7 @@ public class AudioManager : MonoBehaviour
         foreach(AudioSource source in d2Sources)
         {
             if(!source.isPlaying) return source;
-            else if (isAllowDuplicate)
+            else if (!isAllowDuplicate)
             {
                 if(source.clip == data.clip) return source;
             }
@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour
         foreach (AudioSource source in d3Sources)
         {
             if (!source.isPlaying) return source;
-            else if (isAllowDuplicate)
+            else if (!isAllowDuplicate)
             {
                 if (source.clip == data.clip) return source;
             }

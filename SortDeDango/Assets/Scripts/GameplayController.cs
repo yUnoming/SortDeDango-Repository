@@ -19,8 +19,10 @@ public class GameplayController : MonoBehaviour
     private KeyCode previousStageKey = KeyCode.LeftArrow;
     [SerializeField]
     private EatModule eatModule;
-    [SerializeField]
+    [SerializeField, Tooltip("操作無効SE")]
     private AudioData invalidActionSE;
+    [SerializeField, Tooltip("団子の移動SE")]
+    private AudioData dangoMoveSE;
 
     GameplayUIController gameplayUI;
 
@@ -76,6 +78,7 @@ public class GameplayController : MonoBehaviour
     private IEnumerator MoveDangoSequence(SkewerController from, SkewerController to)
     {
         SetInputLocked(true);
+        AudioManager.Instance.PlaySE(dangoMoveSE);  // 移動開始SE
 
         // 合計移動回数を取得し、その数だけ移動処理
         List<int> matchingDangoIndices = from.GetMatchingDangoIndices(from.GetTopDango());
@@ -97,6 +100,7 @@ public class GameplayController : MonoBehaviour
                     to,
                     moveCount,
                     to.GetTopDangoPosition());
+                AudioManager.Instance.PlaySE(dangoMoveSE);  // 移動終了SE
             }
             // それ以外
             else
@@ -108,6 +112,7 @@ public class GameplayController : MonoBehaviour
                     to.GetTopDangoPosition());
             }
         }
+
         // 行動履歴の保存
         MoveLog moveLog = new MoveLog(from, to, movedDangos);
         actionLogs.Add(moveLog);
@@ -257,8 +262,9 @@ public class GameplayController : MonoBehaviour
                 eatModule.RemainingEatActionCount,
                 eatModule.MaxEatActionCount
             );
-
-        actionLogs.Add(eatModule.lastEatLog);   // 行動履歴を保存
+        // アクション成功時に履歴を保存
+        if (eatModule.lastEatLog != null)
+            actionLogs.Add(eatModule.lastEatLog);
         SetEatModeActive(false);
         SetAllDangoOutlineVisible(false);
         SetInputLocked(false);

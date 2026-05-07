@@ -611,6 +611,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6499247423817364153, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
+      propertyPath: buttonClickSE
+      value: 
+      objectReference: {fileID: 11400000, guid: 117569c37598e74449497420aeeec3c5, type: 2}
     - target: {fileID: 8554413547958254955, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
       propertyPath: m_text
       value: 'Continue

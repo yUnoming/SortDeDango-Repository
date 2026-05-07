@@ -52,6 +52,7 @@ MonoBehaviour:
   previousStageKey: 276
   eatModule: {fileID: 2854741597718964985}
   invalidActionSE: {fileID: 11400000, guid: 024038cc68ecc4a47a95c34f8a3d72a5, type: 2}
+  dangoMoveSE: {fileID: 11400000, guid: 2773a963fa4b4464fb95a3d7d5f9701c, type: 2}
 --- !u!114 &2854741597718964985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,4 +67,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxEatActionCount: 0
   eatSE: {fileID: 11400000, guid: fdb45a146f3d98046af1471cb0f2d52f, type: 2}
-  eatFailSE: {fileID: 11400000, guid: a4c07c22a0afa32479528a9a15f3cff7, type: 2}
+  eatFailSE: {fileID: 11400000, guid: 024038cc68ecc4a47a95c34f8a3d72a5, type: 2}
+  eatModeStartSE: {fileID: 11400000, guid: c758f90e2469c0b44a3c9874130eef2d, type: 2}
+  eatModeCancelSE: {fileID: 11400000, guid: 75648027c4f56f040ac7cc9345a85409, type: 2}

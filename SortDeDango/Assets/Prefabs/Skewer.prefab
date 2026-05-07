@@ -75,6 +75,7 @@ MonoBehaviour:
   dangoAnchor: {fileID: 2073719867867742497}
   dangoSpacing: 0.7
   dangoList: []
+  skewerSelectSE: {fileID: 11400000, guid: e71ba8638190dc34c9cf4a6a26f995ad, type: 2}
 --- !u!114 &2217291884029287298
 MonoBehaviour:
   m_ObjectHideFlags: 0
