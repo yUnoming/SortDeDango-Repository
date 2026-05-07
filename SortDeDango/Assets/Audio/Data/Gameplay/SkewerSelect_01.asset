@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SkewerSelect_01
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: 4a5959ca0afd7b743b6afdbb9ce5b72c, type: 3}
-  volume: 1
+  volume: 0.1
   isLoop: 0

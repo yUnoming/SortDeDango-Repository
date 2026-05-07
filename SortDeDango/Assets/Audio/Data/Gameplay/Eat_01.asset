@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Eat_01
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: dc09d215122accb498d94c8ef9be5ed0, type: 3}
-  volume: 1
+  volume: 0.3
   isLoop: 0
