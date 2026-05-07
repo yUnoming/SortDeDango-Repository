@@ -791,6 +791,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5422222503523554965, guid: 94b4c47f1b5a38f469877f3bb1054612, type: 3}
+      propertyPath: buttonClickSE
+      value: 
+      objectReference: {fileID: 11400000, guid: 117569c37598e74449497420aeeec3c5, type: 2}
     - target: {fileID: 7474018761846036807, guid: 94b4c47f1b5a38f469877f3bb1054612, type: 3}
       propertyPath: m_text
       value: Back

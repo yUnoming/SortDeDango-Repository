@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Effect : MonoBehaviour
+public class EffectBase : MonoBehaviour
 {
     protected ParticleSystem effect;
 

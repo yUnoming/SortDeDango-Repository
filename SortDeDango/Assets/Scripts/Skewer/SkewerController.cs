@@ -11,6 +11,8 @@ public class SkewerController : MonoBehaviour
     private float dangoSpacing;
     [SerializeField, Tooltip("団子リスト")]
     private List<Dango> dangoList = new List<Dango>();
+    [SerializeField, Tooltip("選択SE")]
+    private AudioData skewerSelectSE;
 
     [Tooltip("串の現在の状態")]
     private SkewerState currentState;
@@ -262,6 +264,7 @@ public class SkewerController : MonoBehaviour
     public void OnSelect()
     {
         transform.position += Vector3.up;
+        AudioManager.Instance.PlaySE(skewerSelectSE, false);
     }
     /// <summary>
     /// 選択解除時のイベント    </summary>

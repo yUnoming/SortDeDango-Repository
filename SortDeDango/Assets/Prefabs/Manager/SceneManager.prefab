@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e15db1f012520104b9895c4945880f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDebugStart: 0
+  startSceneType: 1
 --- !u!114 &8998307802837331377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,3 +88,4 @@ MonoBehaviour:
   targetDangoCount: 0
   eatenDangoCount: 0
   gameMode: 1
+  stageClearSE: {fileID: 11400000, guid: 387e2c07a1fa84a48a292ad67286040c, type: 2}

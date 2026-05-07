@@ -12,6 +12,10 @@ public class EatModule : MonoBehaviour
     private AudioData eatSE;
     [SerializeField]
     private AudioData eatFailSE;
+    [SerializeField]
+    private AudioData eatModeStartSE;
+    [SerializeField]
+    private AudioData eatModeCancelSE;
 
     [Tooltip("食べられる残り回数")]
     private int remainingEatActionCount;
@@ -96,6 +100,7 @@ public class EatModule : MonoBehaviour
     /// 食べる対象の串    </param>
     public IEnumerator EatSequence()
     {
+        AudioManager.Instance.PlaySE(eatModeStartSE, false);
         // 食べる対象の発見またはキャンセルされるまで待機
         while (targetDango == null && !isCanceled)
         {
@@ -111,7 +116,8 @@ public class EatModule : MonoBehaviour
             }
             yield return EatSequence(targetDango.CurrentSkewer, targetDango);
         }
-        
+        else AudioManager.Instance.PlaySE(eatModeCancelSE, false);
+
         targetDango = null;
         isCanceled = false;
     }

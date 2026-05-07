@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3430848275300171213}
   - component: {fileID: 8144842201648627007}
   - component: {fileID: 1241817271180986103}
+  - component: {fileID: 6499247423817364153}
   - component: {fileID: 8018022354614220742}
   - component: {fileID: 8047210020895409674}
   m_Layer: 0
@@ -139,6 +140,21 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 0, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &6499247423817364153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049566287440327778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b954f818f6fb14dbeb1852faf9df71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSE: {fileID: 11400000, guid: a3f20357b25bb8646870f8954af21481, type: 2}
+  buttonClickInvalidSE: {fileID: 11400000, guid: 024038cc68ecc4a47a95c34f8a3d72a5, type: 2}
+  button: {fileID: 8144842201648627007}
 --- !u!114 &8018022354614220742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressDownValue: 10
+  button: {fileID: 8144842201648627007}
   shadow: {fileID: 1241817271180986103}
 --- !u!1 &4804331453522749430
 GameObject:

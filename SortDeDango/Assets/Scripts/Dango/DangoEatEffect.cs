@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DangoEatEffect : Effect
+public class DangoEatEffect : EffectBase
 {
     /// <summary>
     /// エフェクト再生    </summary>
