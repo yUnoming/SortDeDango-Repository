@@ -1193,6 +1193,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UndoButton
       objectReference: {fileID: 0}
+    - target: {fileID: 8144842201648627007, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8554413547958254955, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
       propertyPath: m_text
       value: 'Undo
@@ -1207,11 +1211,35 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 40
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6499247423817364153, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3049566287440327778, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
+      insertIndex: 5
+      addedObject: {fileID: 5218821719256146720}
   m_SourcePrefab: {fileID: 100100000, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
+--- !u!1 &500507374143188105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3049566287440327778, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
+  m_PrefabInstance: {fileID: 3215592877986388203}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5218821719256146720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500507374143188105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184b9d871edf296429cf85369f52900f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClickSE: {fileID: 11400000, guid: a3f20357b25bb8646870f8954af21481, type: 2}
+  buttonClickInvalidSE: {fileID: 11400000, guid: 024038cc68ecc4a47a95c34f8a3d72a5, type: 2}
+  button: {fileID: 6748747927315277268}
 --- !u!224 &3103978299824825454 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 554962546591005829, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
@@ -1222,7 +1250,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8144842201648627007, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
   m_PrefabInstance: {fileID: 3215592877986388203}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 500507374143188105}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
