@@ -95,4 +95,9 @@ public class GameplayUIController : MonoBehaviour
             else anim.FadeOut();
         }
     }
+    public void UpdateUndoButton(int logCount)
+    {
+        if(logCount == 0) undoButton.interactable = false;
+        else undoButton.interactable = true;
+    }
 }

@@ -116,6 +116,7 @@ public class GameplayController : MonoBehaviour
         // 行動履歴の保存
         MoveLog moveLog = new MoveLog(from, to, movedDangos);
         actionLogs.Add(moveLog);
+        gameplayUI.UpdateUndoButton(actionLogs.Count);  // Undoの押下状態更新
         // 手数を増やして表示
         ++moveCount;
         gameplayUI.UpdateMoveCount(moveCount);
@@ -246,8 +247,9 @@ public class GameplayController : MonoBehaviour
                 }
                 break;
         }
-        // 使用済みの行動履歴を除外
-        actionLogs.RemoveAt(actionLogs.Count - 1);
+
+        actionLogs.RemoveAt(actionLogs.Count - 1);      // 使用済みの行動履歴を除外
+        gameplayUI.UpdateUndoButton(actionLogs.Count);  // Undoの押下状態更新
     }
     /// <summary>
     /// 団子を食べる    </summary>
@@ -264,7 +266,10 @@ public class GameplayController : MonoBehaviour
             );
         // アクション成功時に履歴を保存
         if (eatModule.lastEatLog != null)
+        {
             actionLogs.Add(eatModule.lastEatLog);
+            gameplayUI.UpdateUndoButton(actionLogs.Count);  // Undoの押下状態更新
+        }
         SetEatModeActive(false);
         SetAllDangoOutlineVisible(false);
         SetInputLocked(false);
