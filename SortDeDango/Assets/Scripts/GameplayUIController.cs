@@ -53,7 +53,7 @@ public class GameplayUIController : MonoBehaviour
     /// ステージ番号の表示更新    </summary>
     public void UpdateStageNumber(int stageNumber)
     {
-        stageNumberTMP.text = $"Stage <font=\"NotoSansJP-Medium SDF\">{stageNumber}</font>";
+        stageNumberTMP.text = $"{stageNumber}";
     }
     /// <summary>
     /// 食べる使用回数の表示更新    </summary>
@@ -73,13 +73,13 @@ public class GameplayUIController : MonoBehaviour
     /// 目標数    </param>
     public void UpdateEatenDangoCount(int current, int target)
     {
-        eatenDangoCountTMP.text = $"Dango <font=\"NotoSansJP-Medium SDF\">{current}/{target}</font>";
+        eatenDangoCountTMP.text = $"{current}/{target}";
     }
     /// <summary>
     /// 手数の表示更新    </summary>
     public void UpdateMoveCount(int count)
     {
-        moveCountTMP.text = $"Moves <font=\"NotoSansJP-Medium SDF\">{count}</font>";
+        moveCountTMP.text = $"{count}";
     }
     /// <summary>
     /// 食べる状態によるUI更新    </summary>
