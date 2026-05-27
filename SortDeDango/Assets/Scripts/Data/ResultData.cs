@@ -6,4 +6,8 @@ public class ResultData
     public int moveCount;
     [Tooltip("最小手数")]
     public int minMoveCount;
+
+    /// <summary>
+    /// 最小手数でクリアしたかどうか    </summary>
+    public bool IsMinMoveCleared() { return moveCount == minMoveCount; }
 }

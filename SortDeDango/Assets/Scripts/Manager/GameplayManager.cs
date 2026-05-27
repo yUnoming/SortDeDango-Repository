@@ -63,7 +63,10 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
                     resultUI.ShowResult(resultData);
 
                     AudioManager.Instance.PlaySE(stageClearSE);
-                    SaveDataManager.Instance.UpdateStageIndexOnClear(StageManager.Instance.CurrentStageNumber);
+                    SaveDataManager.Instance.UpdateOnClear(
+                        StageManager.Instance.CurrentStageNumber,
+                        resultData.IsMinMoveCleared()
+                        );
                     base.StateRunning();
                 }
                 else if (IsGameOver()) Debug.Log("ゲームオーバー！！");

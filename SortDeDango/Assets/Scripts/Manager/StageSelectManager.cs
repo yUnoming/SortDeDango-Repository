@@ -4,7 +4,7 @@
     {
         // 現在のセーブデータから値を取得し、ステージ選択ボタンのロックを解除
         StageSelectUIController stageSelectUI = FindAnyObjectByType<StageSelectUIController>();
-        stageSelectUI.UpdateStageSelectButtonsLock(SaveDataManager.Instance.CurrentSaveData.reachedStageIndex);
+        stageSelectUI.UpdateStageSelectButtons(SaveDataManager.Instance.CurrentSaveData.reachedStageIndex);
         base.StateInit();
     }
 }
