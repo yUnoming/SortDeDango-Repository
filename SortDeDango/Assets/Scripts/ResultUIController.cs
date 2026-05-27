@@ -15,6 +15,8 @@ public class ResultUIController : MonoBehaviour
     private TextMeshProUGUI minMoveCountTMP;
     [SerializeField]
     private TextMeshProUGUI resultMessageTMP;
+    [SerializeField]
+    private GameObject cherryBlossomPetals;
 
     [Tooltip("Nextボタン押下時のイベント")]
     public event Action onNextClicked;
@@ -41,7 +43,11 @@ public class ResultUIController : MonoBehaviour
         moveCountTMP.text = $"{result.moveCount}";
         minMoveCountTMP.text = $"{result.minMoveCount}";
 
-        if (result.moveCount == result.minMoveCount) resultMessageTMP.text = "Perfect Move!!";
+        if (result.IsMinMoveCleared())
+        {
+            resultMessageTMP.text = "Perfect Move!!";
+            cherryBlossomPetals.SetActive(true);
+        }
         else if (result.moveCount > result.minMoveCount) resultMessageTMP.text = $"{result.moveCount - result.minMoveCount} move away from perfect!";
         else resultMessageTMP.text = "You are smarter than the developer!!";
     }
