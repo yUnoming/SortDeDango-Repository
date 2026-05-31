@@ -19,3 +19,4 @@ MonoBehaviour:
   - dangoColors: 0300000003000000
   - dangoColors: 0100000001000000
   - dangoColors: 03000000
+  tutorialMessage: You can stack Dango only on Dango of the same color.

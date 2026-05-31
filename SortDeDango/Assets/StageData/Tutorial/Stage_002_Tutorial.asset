@@ -18,3 +18,4 @@ MonoBehaviour:
   dangoLists:
   - dangoColors: 0200000002000000
   - dangoColors: 02000000
+  tutorialMessage: Select a skewer, then select another skewer to stack Dango.

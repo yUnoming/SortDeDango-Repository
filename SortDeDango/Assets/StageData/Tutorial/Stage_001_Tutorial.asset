@@ -17,3 +17,6 @@ MonoBehaviour:
   maxEatActionCount: 1
   dangoLists:
   - dangoColors: 01000000
+  tutorialMessage: 'Press "Eat" button to
+
+    eat Dango.'
