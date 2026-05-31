@@ -40,7 +40,7 @@ public class GameplayController : MonoBehaviour
 
     private void Start()
     {
-        // ゲームプレイUIへのイベント設定・表示セット
+        //** ゲームプレイUIへのイベント設定・表示セット
         gameplayUI = FindAnyObjectByType<GameplayUIController>();
         gameplayUI.onRestartClicked += HandleRestartClicked;
         gameplayUI.onUndoClicked += HandleUndoClicked;
@@ -50,6 +50,12 @@ public class GameplayController : MonoBehaviour
             eatModule.RemainingEatActionCount,
             eatModule.MaxEatActionCount);
         gameplayUI.UpdateMoveCount(moveCount);
+        // 現在のステージにチュートリアルが設定されていたら、チュートリアル表示
+        string tutorialMessage = StageManager.Instance.CurrentStageData.tutorialMessage;
+        if (string.IsNullOrEmpty(tutorialMessage) != true)
+        {
+            gameplayUI.DisplayTutorial(tutorialMessage);
+        }
     }
     private void Update()
     {

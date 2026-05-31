@@ -26,6 +26,8 @@ public class GameplayUIController : MonoBehaviour
     private Outline eatButtonOutline;
     [SerializeField]
     private FadeUIAnimation[] eatModeOverlays;
+    [SerializeField]
+    private MessageWindowController tutorialWindow;
 
     [Tooltip("Restartボタン押下時のイベント")]
     public event Action onRestartClicked;
@@ -95,9 +97,20 @@ public class GameplayUIController : MonoBehaviour
             else anim.FadeOut();
         }
     }
+    /// <summary>
+    /// 一手戻るボタンの更新    </summary>
+    /// <param name="logCount">
+    /// 現在保存されている行動回数   </param>
     public void UpdateUndoButton(int logCount)
     {
         if(logCount == 0) undoButton.interactable = false;
         else undoButton.interactable = true;
+    }
+    /// <summary>
+    /// チュートリアルを表示    </summary>
+    public void DisplayTutorial(string tutorialMessage)
+    {
+        tutorialWindow.ShowWindow();
+        tutorialWindow.SetMessage(tutorialMessage);
     }
 }
