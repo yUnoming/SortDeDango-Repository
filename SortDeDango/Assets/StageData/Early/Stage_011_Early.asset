@@ -18,4 +18,6 @@ MonoBehaviour:
   dangoLists:
   - dangoColors: 0100000003000000
   - dangoColors: 0100000001000000
-  tutorialMessage: You can remove unneeded Dango by eating it.
+  tutorialMessage: 'You can remove unneeded Dango
+
+    by eating it.'

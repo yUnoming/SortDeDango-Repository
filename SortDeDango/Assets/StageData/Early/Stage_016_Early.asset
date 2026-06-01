@@ -17,4 +17,6 @@ MonoBehaviour:
   maxEatActionCount: 2
   dangoLists:
   - dangoColors: 010000000300000001000000
-  tutorialMessage: You can eat Dango at any position on a skewer.
+  tutorialMessage: 'You can eat Dango at any position
+
+    on a skewer.'
