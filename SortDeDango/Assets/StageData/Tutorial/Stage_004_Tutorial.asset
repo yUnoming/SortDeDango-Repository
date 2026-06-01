@@ -19,4 +19,6 @@ MonoBehaviour:
   - dangoColors: 010000000100000004000000
   - dangoColors: 040000000400000001000000
   - dangoColors: 
-  tutorialMessage: You can also stack Dango on an empty skewer.
+  tutorialMessage: 'You can also stack Dango on
+
+    an empty skewer.'
