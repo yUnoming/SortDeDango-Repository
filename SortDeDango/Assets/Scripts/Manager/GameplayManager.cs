@@ -64,6 +64,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
 
                     AudioManager.Instance.PlaySE(stageClearSE);
                     SaveDataManager.Instance.UpdateOnClear(
+                        StageManager.Instance.TotalStages,
                         StageManager.Instance.CurrentStageNumber,
                         resultData.IsMinMoveCleared()
                         );

@@ -5,6 +5,9 @@ public class StageManager : MonoBehaviour
 {
     [SerializeField, Tooltip("ステージ番号")]
     private int stageNumber = 1;
+    [SerializeField, Tooltip("ステージ総数")]
+    private int totalStages;
+    public int TotalStages => totalStages;
     [SerializeField, Tooltip("ステージデータリスト")]
     private List<StageData> stageDataList = new List<StageData>();
 
