@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageNumber: 1
+  totalStages: 20
   stageDataList:
   - {fileID: 11400000, guid: 27cf51daee5770d4bab2ce13f8ef9fc2, type: 2}
   - {fileID: 11400000, guid: f497d2b3bdc19424e97e0b8593ba8920, type: 2}

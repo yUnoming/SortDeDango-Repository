@@ -84,31 +84,29 @@ public class SaveDataManager : MonoBehaviour
 
     /// <summary>
     /// ステージクリア時の更新    </summary>
+    /// <param name="totalStages">
+    /// ステージ総数  </param>
     /// <param name="clearedStageIndex">
     /// クリアしたステージ番号    </param>
-    /// <param name="isMinMove">
+    /// <param name="isMinMoveCleared">
     /// 最小手数クリアかどうか    </param>
-    public void UpdateOnClear(int clearedStageIndex, bool isMinMoveCleared)
+    public void UpdateOnClear(int totalStages, int clearedStageIndex, bool isMinMoveCleared)
     {
         // 新規ステージをクリアした場合に更新
         int nextStageIndex = clearedStageIndex + 1;
-        if (nextStageIndex > currentSaveData.reachedStageIndex)
+        if (nextStageIndex <= totalStages && nextStageIndex > currentSaveData.reachedStageIndex)
         {
             currentSaveData.reachedStageIndex = nextStageIndex;
             currentSaveData.lastPlayedStageIndex = nextStageIndex;
         }
 
-        // ** 最小手数クリア状況の更新
+        //** 最小手数クリア状況の更新
         // 新規ステージをクリアした場合
         if (isMinMoveClearedList.values.Count < clearedStageIndex)
-        {
             isMinMoveClearedList.values.Add(isMinMoveCleared);
-        }
         // 既プレイステージを"最小手数"でクリアした場合
         else if(isMinMoveCleared)
-        {
             isMinMoveClearedList.values[clearedStageIndex - 1] = isMinMoveCleared;
-        }
 
         Save(currentSaveData);
     }
