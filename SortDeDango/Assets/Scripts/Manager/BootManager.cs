@@ -10,7 +10,7 @@ public class BootManager : SceneManagerBase<BootManager>
     protected override void StateRunning()
     {
         Initialize();
-        if(isDebugStart) ChangeScene(startSceneType, false);
+        if(isDebugStart) ChangeScene(startSceneType, true);
         else ChangeScene(startSceneType, true);
     }
     
