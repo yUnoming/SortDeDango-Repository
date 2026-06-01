@@ -169,6 +169,8 @@ public class AudioManager : MonoBehaviour
     /// 設定するボリューム値    </param>
     public void SetVolume(AudioType type, float volume)
     {
+        // 渡されたボリューム値を0～1の値に丸める
+        volume = Mathf.Clamp01(volume);
         // デシベル変換後、AudioMixerにセット
         float dB = Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20f;
         audioMixer.SetFloat(type.ToString() + "Volume", dB);
