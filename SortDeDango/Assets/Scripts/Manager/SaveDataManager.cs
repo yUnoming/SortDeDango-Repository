@@ -1,26 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
-
-[System.Serializable]
-public class IsMinMoveClearedList
-{
-    public List<bool> values;
-}
 
 public class SaveDataManager : MonoBehaviour
 {
     private static SaveDataManager instance;
     public static SaveDataManager Instance => instance;
 
+    private const string SaveFilePath = "save.json";
+
     private SaveData currentSaveData;
     public SaveData CurrentSaveData => currentSaveData;
-
-    private IsMinMoveClearedList isMinMoveClearedList = new IsMinMoveClearedList();
-
-    private const string ReachedStageKey = "ReachedStageIndex";
-    private const string LastPlayedStageKey = "LastPlayedStageIndex";
-    private const string IsMinMoveClearedListKey = "IsMinMoveClearedList";
 
     private void Awake()
     {
@@ -31,12 +22,7 @@ public class SaveDataManager : MonoBehaviour
             return;
         }
         // シングルトン化
-        else if (instance == null)
-        {
-            instance = this;
-            isMinMoveClearedList = new IsMinMoveClearedList();
-            isMinMoveClearedList.values = new List<bool>();
-        }
+        else if (instance == null) instance = this;
     }
     private void OnApplicationQuit()
     {
@@ -56,30 +42,24 @@ public class SaveDataManager : MonoBehaviour
     {
         if(saveData != null)
         {
-            PlayerPrefs.SetInt(ReachedStageKey, saveData.reachedStageIndex);
-            PlayerPrefs.SetInt(LastPlayedStageKey, saveData.lastPlayedStageIndex);
-            
-            string json = JsonUtility.ToJson(isMinMoveClearedList);
-            PlayerPrefs.SetString(IsMinMoveClearedListKey, json);
-
-            PlayerPrefs.Save();
+            string json = JsonUtility.ToJson(saveData);
+            string path = Path.Combine(Application.persistentDataPath, SaveFilePath);
+            File.WriteAllText(path, json);
         }
     }
     /// <summary>
     /// ロード    </summary>
     public SaveData Load()
     {
-        // 既にセーブデータがあればセーブデータをロード
-        if(PlayerPrefs.HasKey(ReachedStageKey))
+        SaveData loadedData = new SaveData();
+        string path = Path.Combine(Application.persistentDataPath, SaveFilePath);
+        if (File.Exists(path))
         {
-            currentSaveData = new SaveData();
-            currentSaveData.reachedStageIndex = PlayerPrefs.GetInt(ReachedStageKey, 1);
-            currentSaveData.lastPlayedStageIndex = PlayerPrefs.GetInt(LastPlayedStageKey, 1);
-
-            string json = PlayerPrefs.GetString(IsMinMoveClearedListKey, "");
-            if(json != "")  isMinMoveClearedList = JsonUtility.FromJson<IsMinMoveClearedList>(json);
+            string json = File.ReadAllText(path);
+            currentSaveData = loadedData = JsonUtility.FromJson<SaveData>(json);
         }
-        return currentSaveData;
+
+        return loadedData;
     }
 
     /// <summary>
@@ -102,11 +82,11 @@ public class SaveDataManager : MonoBehaviour
 
         //** 最小手数クリア状況の更新
         // 新規ステージをクリアした場合
-        if (isMinMoveClearedList.values.Count < clearedStageIndex)
-            isMinMoveClearedList.values.Add(isMinMoveCleared);
+        if (currentSaveData.isMinMoveClearedList.Count < clearedStageIndex)
+            currentSaveData.isMinMoveClearedList.Add(isMinMoveCleared);
         // 既プレイステージを"最小手数"でクリアした場合
         else if(isMinMoveCleared)
-            isMinMoveClearedList.values[clearedStageIndex - 1] = isMinMoveCleared;
+            currentSaveData.isMinMoveClearedList[clearedStageIndex - 1] = isMinMoveCleared;
 
         Save(currentSaveData);
     }
@@ -125,7 +105,7 @@ public class SaveDataManager : MonoBehaviour
     /// 取得したいステージ番号 </param>
     public bool GetIsMinMoveCleared(int stageNumber)
     {
-        if (isMinMoveClearedList.values.Count < stageNumber) return false;
-        return isMinMoveClearedList.values[stageNumber - 1];
+        if (currentSaveData.isMinMoveClearedList.Count < stageNumber) return false;
+        return currentSaveData.isMinMoveClearedList[stageNumber - 1];
     }
 }

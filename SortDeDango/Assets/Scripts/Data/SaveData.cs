@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SaveData
 {
@@ -7,5 +8,5 @@ public class SaveData
     [Tooltip("最後に遊んだステージ番号")]
     public int lastPlayedStageIndex = 1;
     [Tooltip("各ステージの最小手数クリア状況")]
-    public string isMinMoveClearedList;
+    public List<bool> isMinMoveClearedList = new List<bool>();
 }
