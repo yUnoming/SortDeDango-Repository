@@ -11,6 +11,8 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     private GameMode gameMode = GameMode.Normal;
     [SerializeField, Tooltip("ステージクリアSE")]
     private AudioData stageClearSE;
+    [SerializeField]
+    private AudioData bgm;
 
     private StageGenerator stageGenerator;
     private GameplayController gameplayController;
@@ -48,6 +50,12 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         SaveDataManager.Instance.UpdateLastPlayedStageIndex(StageManager.Instance.CurrentStageNumber);
         base.StateInit();
     }
+    protected override void StateStart()
+    {
+        AudioManager.Instance.PlayBGM(bgm);
+        base.StateStart();
+    }
+
     protected override void StateRunning()
     {
         // クリア判定

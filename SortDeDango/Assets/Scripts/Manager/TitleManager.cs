@@ -2,6 +2,9 @@
 
 public class TitleManager : SceneManagerBase<TitleManager>
 {
+    [SerializeField]
+    private AudioData bgm;
+
     protected override void StateInit()
     {
         // 各種ボタンのイベント設定
@@ -15,6 +18,11 @@ public class TitleManager : SceneManagerBase<TitleManager>
             false);
 
         base.StateInit();
+    }
+    protected override void StateStart()
+    {
+        AudioManager.Instance.PlayBGM(bgm);
+        base.StateStart();
     }
 
     /// <summary>
