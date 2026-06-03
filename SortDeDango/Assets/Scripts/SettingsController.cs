@@ -11,7 +11,7 @@ public class SettingsController : MonoBehaviour
     [SerializeField]
     private Slider seVolumeSlider;
 
-    private const string SettingsFilePath = "setting.json";
+    private const string SettingsFilePath = "settings.json";
     private SettingsData settingsData;
 
     private void Awake()
