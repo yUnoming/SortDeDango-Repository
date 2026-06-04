@@ -568,6 +568,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 3133664984824997460}
+  controller: {fileID: 6713437137800551879}
+  masterVolumeSlider: {fileID: 7251400497847526683}
+  bgmVolumeSlider: {fileID: 4724806587123483078}
+  seVolumeSlider: {fileID: 7713746977313886466}
 --- !u!114 &6713437137800551879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,9 +584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b370feb1357fe140941b6a3555920d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterVolumeSlider: {fileID: 7251400497847526683}
-  bgmVolumeSlider: {fileID: 4724806587123483078}
-  seVolumeSlider: {fileID: 7713746977313886466}
 --- !u!1 &2360640364869282879
 GameObject:
   m_ObjectHideFlags: 0

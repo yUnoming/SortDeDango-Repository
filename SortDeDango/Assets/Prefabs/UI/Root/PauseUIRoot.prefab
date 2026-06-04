@@ -736,12 +736,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8144842201648627007, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 354348851511764540}
+    - target: {fileID: 8144842201648627007, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8144842201648627007, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleDisplay
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8144842201648627007, guid: 7b00d1907c0acd440bf5325825081589, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

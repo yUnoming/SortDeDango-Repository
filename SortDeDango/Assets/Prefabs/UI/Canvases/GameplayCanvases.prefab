@@ -488,7 +488,7 @@ PrefabInstance:
       objectReference: {fileID: 60533116246730888}
     - target: {fileID: 3811996444088314987, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleDisplay
+      value: Show
       objectReference: {fileID: 0}
     - target: {fileID: 7037188027931735077, guid: 03cdc0626976eb042bada5b3846b0a0f, type: 3}
       propertyPath: m_AnchorMax.y

@@ -449,7 +449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7134199854822764923, guid: b884b7d96fd8c4c41996d7f158bf8aa9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleDisplay
+      value: Show
       objectReference: {fileID: 0}
     - target: {fileID: 7134199854822764923, guid: b884b7d96fd8c4c41996d7f158bf8aa9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
