@@ -31,20 +31,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// インスタンス    </summary>
     private static AudioManager instance;
-    public static AudioManager Instance
-    {
-        get
-        {
-            // インスタンスが無ければ、グローバルマネージャーをシーン内に生成
-            if (instance == null)
-            {
-                GameObject prefab = Resources.Load<GameObject>("GlobalManagersVariant");
-                GameObject obj = Instantiate(prefab);
-                instance = obj.GetComponentInChildren<AudioManager>();
-            }
-            return instance;
-        }
-    }
+    public static AudioManager Instance => instance;
 
     private void Awake()
     {

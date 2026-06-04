@@ -27,7 +27,7 @@ public class SettingsController : MonoBehaviour
     public void SetAudioVolume(AudioType type, float volume)
     {
         // 実際の音量ボリュームに設定
-        AudioManager.Instance.SetVolume(type, volume);
+        AudioManager.Instance?.SetVolume(type, volume);
         // 設定データに保存
         switch (type)
         {
