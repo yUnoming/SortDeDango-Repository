@@ -322,7 +322,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 350, y: -30}
+  m_AnchoredPosition: {x: 400, y: -30}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1712411824468461170
@@ -343,7 +343,7 @@ MonoBehaviour:
     m_Top: -210
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 20
+  m_Spacing: 30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -1568,6 +1568,9 @@ MonoBehaviour:
   newGameButton: {fileID: 8092118983050825507}
   continueButton: {fileID: 519694007364139690}
   stageSelectButton: {fileID: 9122821206404213566}
+  quitButton: {fileID: 8300936005235192504}
+  menuButtonGroup: {fileID: 1642483946690966042}
+  menuButtonGroupDown: 100
 --- !u!1 &9208275212453345476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,6 +1851,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1638732770015762601, guid: 94b4c47f1b5a38f469877f3bb1054612, type: 3}
   m_PrefabInstance: {fileID: 1384010528557132715}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8300936005235192504 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6919261236123621651, guid: 94b4c47f1b5a38f469877f3bb1054612, type: 3}
+  m_PrefabInstance: {fileID: 1384010528557132715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2205887379310965293
 PrefabInstance:
   m_ObjectHideFlags: 0

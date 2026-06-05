@@ -10,6 +10,12 @@ public class TitleUIController : MonoBehaviour
     private Button continueButton;
     [SerializeField]
     private Button stageSelectButton;
+    [SerializeField]
+    private Button quitButton;
+    [SerializeField]
+    private GameObject menuButtonGroup;
+    [SerializeField]
+    private float menuButtonGroupDown;
 
     [Tooltip("NewGameボタン押下時のイベント")]
     public event Action onNewGameClicked;
@@ -20,6 +26,12 @@ public class TitleUIController : MonoBehaviour
     {
         newGameButton.onClick.AddListener(() => onNewGameClicked?.Invoke());
         continueButton.onClick.AddListener(() => onContinueClicked?.Invoke());
+
+#if !UNITY_STANDALONE
+        // PC向けビルドでなければ、終了ボタンを非表示
+        quitButton.gameObject.SetActive(false);
+        menuButtonGroup.transform.position = menuButtonGroup.transform.position + Vector3.down * menuButtonGroupDown;
+#endif
     }
     
     /// <summary>
