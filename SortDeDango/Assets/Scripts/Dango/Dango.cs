@@ -46,6 +46,6 @@ public class Dango : MonoBehaviour
     public void PlayEatEffect()
     {
         GameObject obj = Instantiate(dangoEatEffect, this.transform.position, Quaternion.identity);
-        obj.GetComponent<DangoEatEffect>().Play(colorMaterials[(int)dangoColor - 1]);
+        obj.GetComponent<DangoEatEffect>().PlayOnce(colorMaterials[(int)dangoColor - 1]);
     }
 }

@@ -28,7 +28,7 @@ public class EffectBase : MonoBehaviour
     /// 削除までの期間 </param>
     public virtual void Destroy(float t = 0)
     {
-        Destroy(effect, t);
+        Destroy(effect.gameObject, t);
     }
 
 }
