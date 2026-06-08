@@ -45,7 +45,7 @@ public class ResultUIController : MonoBehaviour
 
         if (result.IsMinMoveCleared())
         {
-            resultMessageTMP.text = "Perfect Move!!";
+            resultMessageTMP.text = "Perfect  Move!!";
             cherryBlossomPetals.SetActive(true);
         }
         else if (result.moveCount > result.minMoveCount) resultMessageTMP.text = $"{result.moveCount - result.minMoveCount} move away from perfect!";
