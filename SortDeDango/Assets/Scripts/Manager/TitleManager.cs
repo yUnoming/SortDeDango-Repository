@@ -12,8 +12,9 @@ public class TitleManager : SceneManagerBase<TitleManager>
         titleUI.onNewGameClicked += HandleNewGameClicked;
         titleUI.onContinueClicked += HandleContinueClicked;
         // セーブデータの有無で入力受付更新
+        // 到達ステージ番号が`0(初期状態)`なら一部ボタンを非表示
         titleUI.UpdateButtonInteractableBySaveData(
-            SaveDataManager.Instance.CurrentSaveData != null ?
+            SaveDataManager.Instance.Get<GameplayData>().reachedStageIndex != 0 ?
             true :
             false);
 
@@ -29,15 +30,15 @@ public class TitleManager : SceneManagerBase<TitleManager>
     /// NewGameボタン押下時の処理    </summary>
     private void HandleNewGameClicked()
     {
-        SaveData newSaveData = SaveDataManager.Instance.CreateSaveData();
-        StageManager.Instance.SetStage(newSaveData.reachedStageIndex);
+        SaveDataManager.Instance.CreateNewSaveData();
+        StageManager.Instance.SetStage(SaveDataManager.Instance.Get<GameplayData>().reachedStageIndex);
         ChangeScene(SceneType.Gameplay);
     }
     /// <summary>
     /// Continueボタン押下時の処理    </summary>
     private void HandleContinueClicked()
     {
-        StageManager.Instance.SetStage(SaveDataManager.Instance.Load().reachedStageIndex);
+        StageManager.Instance.SetStage(SaveDataManager.Instance.Get<GameplayData>().lastPlayedStageIndex);
         ChangeScene(SceneType.Gameplay);
     }
 }

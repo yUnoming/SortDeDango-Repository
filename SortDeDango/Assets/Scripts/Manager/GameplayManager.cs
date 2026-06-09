@@ -14,6 +14,9 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     [SerializeField]
     private AudioData bgm;
 
+    private GameplayData gameplayData;
+    public GameplayData GameplayData => gameplayData;
+
     private StageGenerator stageGenerator;
     private GameplayController gameplayController;
     private GameplayUIController gameplayUI;
@@ -29,7 +32,11 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
 
     protected override void StateInit()
     {
-        //*** 各種セットアップ ***//
+        // ゲーム進行データのロード
+        if(GameplayData == null)
+            gameplayData = SaveDataManager.Instance.Get<GameplayData>();
+
+        //** 各種セットアップ
         // ステージ
         StageData data = StageManager.Instance.CurrentStageData;
         stageGenerator = FindAnyObjectByType<StageGenerator>();
@@ -47,7 +54,7 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
         resultData.minMoveCount = data.minMoveCount;
 
         gameplayController = FindAnyObjectByType<GameplayController>();
-        SaveDataManager.Instance.UpdateLastPlayedStageIndex(StageManager.Instance.CurrentStageNumber);
+        SaveLastPlayedStageIndex(StageManager.Instance.CurrentStageNumber);
         base.StateInit();
     }
     protected override void StateStart()
@@ -58,20 +65,23 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
 
     protected override void StateRunning()
     {
-        // クリア判定
-        switch(CurrentGameMode)
+        //** クリア判定
+        switch(gameMode)
         {
             case GameMode.Normal:
                 if (IsClear())
                 {
-                    // クリア表示
+                    //** クリア演出
+                    // リザルトUI表示
                     Debug.Log("ステージクリア！！");
                     resultUI.Show();
                     resultData.moveCount = gameplayController.MoveCount;
                     resultUI.ShowResult(resultData);
-
+                    // クリアSE再生
                     AudioManager.Instance.PlaySE(stageClearSE);
-                    SaveDataManager.Instance.UpdateOnClear(
+
+                    // ゲーム進行データを保存
+                    SaveOnClear(
                         StageManager.Instance.TotalStages,
                         StageManager.Instance.CurrentStageNumber,
                         resultData.IsMinMoveCleared()
@@ -162,5 +172,52 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     {
         eatenDangoCount -= eatenCount;
         gameplayUI.UpdateEatenDangoCount(eatenDangoCount, targetDangoCount);
+    }
+
+    /// <summary>
+    /// ステージクリア時にゲーム進行データを保存    </summary>
+    /// <param name="totalStages">
+    /// ステージ総数  </param>
+    /// <param name="clearedStageIndex">
+    /// クリアしたステージ番号    </param>
+    /// <param name="isMinMoveCleared">
+    /// 最小手数クリアかどうか    </param>
+    public void SaveOnClear(int totalStages, int clearedStageIndex, bool isMinMoveCleared)
+    {
+        // 新規ステージをクリアした場合に更新
+        int nextStageIndex = clearedStageIndex + 1;
+        if (nextStageIndex <= totalStages && nextStageIndex > gameplayData.reachedStageIndex)
+        {
+            gameplayData.reachedStageIndex = nextStageIndex;
+            gameplayData.lastPlayedStageIndex = nextStageIndex;
+        }
+
+        //** 最小手数クリア状況の更新
+        // 新規ステージをクリアした場合
+        if (gameplayData.isMinMoveClearedList.Count < clearedStageIndex)
+            gameplayData.isMinMoveClearedList.Add(isMinMoveCleared);
+        // 既プレイステージを"最小手数"でクリアした場合
+        else if (isMinMoveCleared)
+            gameplayData.isMinMoveClearedList[clearedStageIndex - 1] = isMinMoveCleared;
+
+        SaveDataManager.Instance.Save<GameplayData>(gameplayData);
+    }
+    /// <summary>
+    /// 最後に遊んだステージ番号を保存    </summary>
+    /// <param name="currentStageIndex">
+    /// 現在のステージ番号    </param>
+    public void SaveLastPlayedStageIndex(int currentStageIndex)
+    {
+        gameplayData.lastPlayedStageIndex = currentStageIndex;
+        SaveDataManager.Instance.Save<GameplayData>(gameplayData);
+    }
+    /// <summary>
+    /// 最小手数クリア状況を取得    </summary>
+    /// <param name="stageNumber">
+    /// 取得したいステージ番号 </param>
+    public bool GetIsMinMoveCleared(int stageNumber)
+    {
+        if (gameplayData.isMinMoveClearedList.Count < stageNumber) return false;
+        return gameplayData.isMinMoveClearedList[stageNumber - 1];
     }
 }

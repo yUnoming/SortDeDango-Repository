@@ -1,13 +1,7 @@
-﻿using System.Collections;
-using System.IO;
-using NUnit.Framework.Constraints;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class SettingsController : MonoBehaviour
 {
-    [Tooltip("設定データのファイルパス")]
-    private const string SettingsFilePath = "settings.json";
     [Tooltip("設定データ")]
     private SettingsData settingsData;
     public SettingsData SettingsData => settingsData;
@@ -40,23 +34,13 @@ public class SettingsController : MonoBehaviour
     /// 設定内容の保存    </summary>
     public void Save()
     {
-        string json = JsonUtility.ToJson(settingsData);
-        string path = Path.Combine(Application.persistentDataPath, SettingsFilePath);
-        File.WriteAllText(path, json);
+        SaveDataManager.Instance.Save<SettingsData>(settingsData);
     }
     /// <summary>
-    /// 設定内容のロード    </summary>
+    /// 設定内容の読み込み    </summary>
     public SettingsData Load()
     {
-        SettingsData loadedData = new SettingsData();
-        string path = Path.Combine(Application.persistentDataPath, SettingsFilePath);
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            loadedData = JsonUtility.FromJson<SettingsData>(json);
-        }
-
-        return loadedData;
+        return SaveDataManager.Instance.Get<SettingsData>();
     }
 
 }

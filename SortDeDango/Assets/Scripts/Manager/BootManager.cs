@@ -7,15 +7,17 @@ public class BootManager : SceneManagerBase<BootManager>
     [SerializeField, Tooltip("開始シーンの種類")]
     private SceneType startSceneType = SceneType.Title;
 
-    protected override void StateRunning()
+    protected override void StateInit()
     {
-        Initialize();
-        if(isDebugStart) ChangeScene(startSceneType, true);
-        else ChangeScene(startSceneType, true);
+        SaveDataManager.Instance.LoadAll();
+        base.StateInit();
     }
-    
-    private void Initialize()
+    protected override void StateStart()
     {
-        SaveDataManager.Instance.Load();
+        // デバッグ時は、現在のシーンから開始可能
+        if (isDebugStart) ChangeScene(startSceneType, true);
+        else ChangeScene(startSceneType, true);
+
+        base.StateStart();
     }
 }
