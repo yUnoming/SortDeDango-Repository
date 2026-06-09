@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
+﻿using System.IO;
 using UnityEngine;
 
 public class SaveDataManager : MonoBehaviour
@@ -8,10 +6,14 @@ public class SaveDataManager : MonoBehaviour
     private static SaveDataManager instance;
     public static SaveDataManager Instance => instance;
 
-    private const string SaveFilePath = "save.json";
-
-    private SaveData currentSaveData;
-    public SaveData CurrentSaveData => currentSaveData;
+    [Tooltip("設定データのキー/ファイルパス/現行データ")]
+    private const string SettingsDataFilePath = "settings.json";
+    private const string SettingsDataKey = "SettingsData";
+    private SettingsData settingsData;
+    [Tooltip("ゲーム進行データのキー/ファイルパス/現行データ")]
+    private const string GameplayDataFilePath = "save.json";
+    private const string GameplayDataKey = "GameplayData";
+    private GameplayData gameplayData;
 
     private void Awake()
     {
@@ -24,88 +26,94 @@ public class SaveDataManager : MonoBehaviour
         // シングルトン化
         else if (instance == null) instance = this;
     }
-    private void OnApplicationQuit()
+    /// <summary>
+    /// ファイルパスを取得( JSON用 )    </summary>
+    private string GetFilePath<T>()
     {
-        Save(currentSaveData);
+        if (typeof(T) == typeof(SettingsData)) return SettingsDataFilePath;
+        if (typeof(T) == typeof(GameplayData)) return GameplayDataFilePath;
+        return string.Empty;
+    }
+    /// <summary>
+    /// ファイルパスを取得( PlayerPrefs用 )   </summary>
+    private string GetKey<T>()
+    {
+        if (typeof(T) == typeof(SettingsData)) return SettingsDataKey;
+        if (typeof(T) == typeof(GameplayData)) return GameplayDataKey;
+        return string.Empty;
     }
 
     /// <summary>
-    /// セーブデータ作成    </summary>
-    public SaveData CreateSaveData()
+    /// 新規セーブデータ作成    </summary>
+    public void CreateNewSaveData()
     {
-        currentSaveData = new SaveData();
-        return currentSaveData;
+        // 設定データは残しつつ、ゲーム進行データだけ初期化
+        gameplayData = new GameplayData();
+        gameplayData.reachedStageIndex = 1;
+        Save<GameplayData>(gameplayData);
     }
     /// <summary>
-    /// セーブ    </summary>
-    public void Save(SaveData saveData)
+    /// データの取得    </summary>
+    public T Get<T>() where T : class
     {
-        if(saveData != null)
+        if (typeof(T) == typeof(SettingsData)) return settingsData as T;
+        if (typeof(T) == typeof(GameplayData)) return gameplayData as T;
+        return null;
+    }
+    /// <summary>
+    /// データの保存    </summary>
+    public void Save<T>(T data)
+    {
+        string key = GetKey<T>();
+        string filePath = GetFilePath<T>();
+
+        // ゲーム進行データをJSON変換し、格納(全プラットフォーム共通)
+        string json = JsonUtility.ToJson(data);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        //** WebGLビルド時
+        // JSONをそのままPlayerPrefsに保存
+        PlayerPrefs.SetString(key, json);
+        PlayerPrefs.Save();
+#else
+        //** PC向けビルド、エディタ実行時
+        // persistentDataPathにjsonファイルとして保存
+        string path = Path.Combine(Application.persistentDataPath, filePath);
+        File.WriteAllText(path, json);
+#endif
+    }
+    /// <summary>
+    /// データの読み込み    </summary>
+    public T Load<T>() where T : new()
+    {
+        string key = GetKey<T>();
+        string filePath = GetFilePath<T>();
+        string json = "";
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // WebGLからのロード
+        if (PlayerPrefs.HasKey(key))
         {
-            string json = JsonUtility.ToJson(saveData);
-            string path = Path.Combine(Application.persistentDataPath, SaveFilePath);
-            File.WriteAllText(path, json);
+            json = PlayerPrefs.GetString(key);
         }
-    }
-    /// <summary>
-    /// ロード    </summary>
-    public SaveData Load()
-    {
-        SaveData loadedData = new SaveData();
-        string path = Path.Combine(Application.persistentDataPath, SaveFilePath);
+#else
+        // PC/エディタからのロード
+        string path = Path.Combine(Application.persistentDataPath, filePath);
         if (File.Exists(path))
         {
-            string json = File.ReadAllText(path);
-            currentSaveData = loadedData = JsonUtility.FromJson<SaveData>(json);
+            json = File.ReadAllText(path);
         }
+#endif
 
-        return loadedData;
-    }
-
-    /// <summary>
-    /// ステージクリア時の更新    </summary>
-    /// <param name="totalStages">
-    /// ステージ総数  </param>
-    /// <param name="clearedStageIndex">
-    /// クリアしたステージ番号    </param>
-    /// <param name="isMinMoveCleared">
-    /// 最小手数クリアかどうか    </param>
-    public void UpdateOnClear(int totalStages, int clearedStageIndex, bool isMinMoveCleared)
-    {
-        // 新規ステージをクリアした場合に更新
-        int nextStageIndex = clearedStageIndex + 1;
-        if (nextStageIndex <= totalStages && nextStageIndex > currentSaveData.reachedStageIndex)
-        {
-            currentSaveData.reachedStageIndex = nextStageIndex;
-            currentSaveData.lastPlayedStageIndex = nextStageIndex;
-        }
-
-        //** 最小手数クリア状況の更新
-        // 新規ステージをクリアした場合
-        if (currentSaveData.isMinMoveClearedList.Count < clearedStageIndex)
-            currentSaveData.isMinMoveClearedList.Add(isMinMoveCleared);
-        // 既プレイステージを"最小手数"でクリアした場合
-        else if(isMinMoveCleared)
-            currentSaveData.isMinMoveClearedList[clearedStageIndex - 1] = isMinMoveCleared;
-
-        Save(currentSaveData);
+        // JSONが空でなければクラスに復元し、空なら新規作成
+        if (!string.IsNullOrEmpty(json)) return JsonUtility.FromJson<T>(json);
+        else return new T();
     }
     /// <summary>
-    /// 最後に遊んだステージ番号を更新    </summary>
-    /// <param name="currentStageIndex">
-    /// 現在のステージ番号    </param>
-    public void UpdateLastPlayedStageIndex(int currentStageIndex)
+    /// 全データのロード    </summary>
+    public void LoadAll()
     {
-        currentSaveData.lastPlayedStageIndex = currentStageIndex;
-        Save(currentSaveData);
-    }
-    /// <summary>
-    /// 最小手数クリア状況を取得    </summary>
-    /// <param name="stageNumber">
-    /// 取得したいステージ番号 </param>
-    public bool GetIsMinMoveCleared(int stageNumber)
-    {
-        if (currentSaveData.isMinMoveClearedList.Count < stageNumber) return false;
-        return currentSaveData.isMinMoveClearedList[stageNumber - 1];
+        settingsData = Load<SettingsData>();
+        gameplayData = Load<GameplayData>();
     }
 }

@@ -9,7 +9,8 @@ public class StageSelectManager : SceneManagerBase<StageSelectManager>
     {
         // 現在のセーブデータから値を取得し、ステージ選択ボタンのロックを解除
         StageSelectUIController stageSelectUI = FindAnyObjectByType<StageSelectUIController>();
-        stageSelectUI.UpdateStageSelectButtons(SaveDataManager.Instance.CurrentSaveData.reachedStageIndex);
+        stageSelectUI.UpdateStageSelectButtons(
+            SaveDataManager.Instance.Get<GameplayData>().reachedStageIndex);
 
         base.StateInit();
     }

@@ -15,7 +15,7 @@ public class StageSelectUIController : MonoBehaviour
     /// 到達したステージ番号    </param>
     public void UpdateStageSelectButtons(int reachedStageIndex)
     {
-        SaveDataManager manager = SaveDataManager.Instance;
+        GameplayData data = SaveDataManager.Instance.Load<GameplayData>();
 
         // 到達済みステージの数だけループ
         for (int i = 0; i < reachedStageIndex; i++)
@@ -23,7 +23,7 @@ public class StageSelectUIController : MonoBehaviour
             // ステージ選択ボタンのロック解除
             stageSelectButtons[i].interactable = true;
             // 最小手数クリアによる装飾
-            if (manager.GetIsMinMoveCleared(i + 1))
+            if (data.isMinMoveClearedList.Count > i && data.isMinMoveClearedList[i])
                 cherryBlossomPetals[i].SetActive(true);
         }
     }
