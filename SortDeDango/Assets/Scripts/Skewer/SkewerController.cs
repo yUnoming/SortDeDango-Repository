@@ -133,12 +133,10 @@ public class SkewerController : MonoBehaviour
             {
                 currentTarget = dangoList[i];
 
-                if (previousTarget != null) dangoList[i] = previousTarget;
-                if (i == index - 1)
-                {
-                    dangoList[i] = dango;
-                    previousTarget = currentTarget;
-                }
+                if (i == index - 1) dangoList[i] = dango;
+                else if (previousTarget != null) dangoList[i] = previousTarget;
+                
+                previousTarget = currentTarget;
             }
         }
         AddDango(previousTarget);
