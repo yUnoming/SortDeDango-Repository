@@ -94,7 +94,9 @@ public class GameplayManager : SceneManagerBase<GameplayManager>
     }
     protected override void StateUninit()
     {
-        eatenDangoCount = 0;    // 食べた団子の数を初期化
+        // 連続したゲームプレイが安全に行えるよう、先に初期化
+        eatenDangoCount = 0;
+        isPaused = false;
         base.StateUninit();
     }
 
