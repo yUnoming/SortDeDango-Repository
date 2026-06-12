@@ -9,6 +9,9 @@ public class BootManager : SceneManagerBase<BootManager>
 
     protected override void StateInit()
     {
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+
         SaveDataManager.Instance.LoadAll();
         base.StateInit();
     }
